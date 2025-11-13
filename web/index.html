@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>智能职位推荐</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="header">
+  <div class="hero">
+    <div class="brand">
+      <span class="logo">💼</span>
+      <h1>智能职位推荐</h1>
+    </div>
+    <p class="tagline">找到理想工作，从今天开始</p>
+    <div class="hero-actions">
+      <a href="#chat-section" class="primary-btn">开始匹配</a>
+      <span class="hint">智能对话将为您呈现更精准的求职方向与岗位洞察</span>
+    </div>
+  </div>
+  <div class="header-wave"></div>
+</header>
+
+<main class="container">
+  
+  
+  <section class="panel" id="data">
+    <h2>求职意向</h2>
+    <div class="grid">
+      <div class="field">
+        <label>所在城市</label>
+        <input type="text" id="currentCity" placeholder="如：上海" value="上海" />
+      </div>
+      <div class="field">
+        <label>考虑异地机会</label>
+        <select id="relocate"><option value="true">是</option><option value="false" selected>否</option></select>
+      </div>
+      <div class="field">
+        <label>期望年薪</label>
+        <div class="salary-control">
+          <button type="button" class="salary-btn" id="salaryDecrement">−</button>
+          <input type="number" id="minAnnual" value="300000" />
+          <button type="button" class="salary-btn" id="salaryIncrement">+</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>目标职位</label>
+        <input type="text" id="positions" placeholder="如：Java开发、全栈工程师等" value="Java开发" />
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>权重设置</h2>
+    <div class="weights">
+      <div class="w"><label>职位匹配</label><input type="number" id="wPos" step="0.1" value="1.5" /></div>
+      <div class="w"><label>地理位置</label><input type="number" id="wLoc" step="0.1" value="0.8" /></div>
+      <div class="w"><label>薪酬待遇</label><input type="number" id="wSal" step="0.1" value="1.0" /></div>
+      <div class="w"><label>工作经验</label><input type="number" id="wExp" step="0.1" value="0.6" /></div>
+      <div class="w"><label>教育背景</label><input type="number" id="wEdu" step="0.1" value="0.5" /></div>
+      <div class="w"><label>院校声誉</label><input type="number" id="wSch" step="0.1" value="0.4" /></div>
+      <div class="w"><label>技能匹配</label><input type="number" id="wTxt" step="0.1" value="0.9" /></div>
+      <div class="w"><label>岗位契合</label><input type="number" id="wTit" step="0.1" value="0.3" /></div>
+    </div>
+    <div class="actions"> 
+      <label for="limit" class="inline-label">返回条数</label>
+      <input type="number" id="limit" value="10" class="limit" /> 
+      <label for="minScore" class="inline-label">最低匹配度</label>
+      <input type="number" id="minScore" step="0.1" value="0.3" class="limit" /> 
+      <button id="aiSuggest" class="primary-btn" style="background:linear-gradient(90deg,#c7f9cc,#b9fbc0)">一键优化权重</button> 
+      <button id="rescoreBtn" class="primary-btn" style="background:linear-gradient(90deg,#e0f7ff,#c2ecff)">重新计算匹配度</button>
+      <button id="enhanceResume" class="primary-btn" style="background:linear-gradient(90deg,#fff8e1,#ffecb3)">完善简历</button>
+  
+    </div> 
+  </section>
+ <section class="panel" id="chat-section">
+    <h2>求职智囊团</h2>
+    <div id="chat" class="chat">
+      <div id="chatList" class="chat-list"></div>
+      <div class="chat-input">
+        <input type="text" id="chatText" placeholder="分享您的简历亮点或职业愿景..." />
+        
+        <label for="chatFile" class="file-upload-label">
+          <span class="file-upload-text">传入文件（.txt格式）</span>
+        </label>
+        <input type="file" id="chatFile" accept=".txt" style="display:none;" />
+        <button id="chatSend" class="primary-btn">发送</button>
+        <button id="clearChat" class="primary-btn" style="background:#eef; color:#333">清空对话</button>
+        <button id="deleteLast" class="primary-btn" style="background:#eef; color:#333">删除上一条</button>
+        <button id="runBtn" class="primary-btn">匹配职位</button> 
+      </div>
+    </div>
+    <div class="chat-toggles">
+          <label class="toggle"><input type="checkbox" id="useLLM" checked /> 启用智能对话</label>
+          <label class="toggle"><input type="checkbox" id="autoSync" checked /> 自动提取简历信息到表单</label>
+          <label class="toggle"><input type="checkbox" id="useXGB" checked /> 启用 XGBoost 排序</label>
+        </div>
+  </section>
+
+  <section class="panel">
+    <h2>结果</h2>
+    <div id="results" class="results"></div>
+  </section>
+
+  <section class="panel">
+    <h2>📊 训练数据管理</h2>
+    
+    <!-- 数据统计 -->
+    <div id="dataStats" class="data-stats" style="display:none; margin-bottom:20px; padding:15px; background:#f5f5f5; border-radius:8px;">
+      <div style="font-weight:bold; margin-bottom:10px;">数据统计</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px;">
+        <div class="stat-item">
+          <span class="stat-label">总样本数:</span>
+          <span class="stat-value" id="totalSamples">-</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">正样本(喜欢):</span>
+          <span class="stat-value" id="positiveSamples" style="color:#4caf50;">-</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">负样本(跳过):</span>
+          <span class="stat-value" id="negativeSamples" style="color:#f44336;">-</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 训练指标 -->
+    <div id="trainingMetrics" class="training-metrics" style="display:none; margin-bottom:20px; padding:15px; background:#e8f5e9; border-radius:8px;">
+      <div style="font-weight:bold; margin-bottom:10px;">🎯 最新训练指标</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px;">
+        <div class="metric-item">
+          <span class="metric-label">AUC:</span>
+          <span class="metric-value" id="metricAUC">-</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-label">准确率:</span>
+          <span class="metric-value" id="metricAccuracy">-</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-label">精确率:</span>
+          <span class="metric-value" id="metricPrecision">-</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-label">召回率:</span>
+          <span class="metric-value" id="metricRecall">-</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-label">F1分数:</span>
+          <span class="metric-value" id="metricF1">-</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="actions">
+      <button id="eventsImport" class="primary-btn" style="background:linear-gradient(90deg,#fff8e1,#ffecb3)" title="从recommend_events.jsonl导入历史数据">📥 导入历史数据</button>
+      <button id="eventsRefresh" class="primary-btn" title="刷新反馈列表">🔄 刷新列表</button>
+      <button id="exportXGB" class="primary-btn" style="background:linear-gradient(90deg,#e0ffe0,#c8fac8)" title="将反馈数据导出为训练CSV">📤 准备训练数据</button>
+      <button id="trainXGB" class="primary-btn" style="background:linear-gradient(90deg,#ffe0e0,#fac8c8)" title="使用当前数据训练XGBoost模型">🚀 训练模型</button>
+    </div>
+    <div id="eventsList" class="results"></div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="motivation">今天的每一次尝试，都是离理想职位更近一步</div>
+  </div>
+</footer>
+
+<script src="button_effects.js"></script>
+<script src="app.js?v=20251113g"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment Variables (重要：防止泄露API密钥)
+# .env  # 已确认为示例配置，可上传
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/*.log
+
+# Training Data & Models (可选：如果模型文件太大)
+# models/*.json
+# logs/recommend_events.jsonl
+# logs/feedback_events.jsonl
+# logs/xgb_dataset.csv
+
+
+# resume.txt  # 示例简历，可以上传
+
+# Temporary Files
+*.tmp
+*.temp
+.cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pytest
+.pytest_cache/
+
+# Coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# OS
+Thumbs.db
+Desktop.ini
+
