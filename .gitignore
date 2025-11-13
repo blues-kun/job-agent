@@ -57,6 +57,10 @@ logs/*.log
 *.temp
 .cache/
 
+# Git 辅助脚本（不需要上传）
+git_push.bat
+git_upload.cmd
+
 # Jupyter Notebook
 .ipynb_checkpoints
 
