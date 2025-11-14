@@ -56,7 +56,10 @@
 - ✅ **反馈闭环**：点击"喜欢/跳过"按钮收集反馈，一键重训 XGBoost 模型
 
 **启动步骤**：
-**⚠️ 重要**：先在 `.env` 文件中配置好 API 密钥，若运行服务器后再配置，需重启服务器并刷新页面才能生效。
+
+**⚠️ 重要提示**：
+- 启动服务器前，请先配置 `.env` 文件中的 API_KEY（见"环境配置"章节）
+- 如果先启动服务器后配置密钥，需要**重启服务器并刷新浏览器页面**才能生效
 
 ```bash
 # 1. 进入 web 目录
@@ -84,10 +87,7 @@ python unified_server.py
 2. **配置偏好**：填写意向城市、期望年薪、目标职位，调整权重滑块
 3. **匹配职位**：点击"匹配职位"按钮，查看推荐结果
 4. **收集反馈**：对推荐结果点击"👍 喜欢"或"👎 跳过"按钮
-5. **训练模型**：
-   - 点击"📥 导入历史数据"（如有）
-   - 点击"📤 准备训练数据"导出特征 CSV
-   - 点击"🚀 训练模型"重训 XGBoost，查看训练指标
+5. **训练模型**：积累足够反馈后，点击"🚀 训练模型"重训 XGBoost，查看训练指标
 
 ---
 
@@ -149,6 +149,36 @@ python main.py
 - **命令行模式**：按提示粘贴简历，自动保存 `resume.json`
 - **网页模式**：在顶部对话框粘贴简历或上传 `.txt` 文件
 
+### 训练数据生成
+
+系统提供两种训练数据生成方式：
+
+**方式一：纯算法规则生成**（快速但质量一般）
+```bash
+python logs/regenerate_training_data.py
+```
+- **特点**：使用Python规则和随机算法生成训练样本
+- **优势**：生成速度快，不依赖LLM API
+- **适用场景**：快速测试、初期原型验证
+
+**方式二：LLM智能生成**（慢速但质量高）🌟 **推荐**
+```bash
+python logs/generate_realistic_samples.py
+```
+- **特点**：调用大语言模型分析职位和简历的真实匹配度
+- **优势**：生成数据更接近真实用户行为，模型训练效果更好
+- **要求**：需要配置 `.env` 中的 API_KEY
+- **数据来源**：从 `data/job_data.csv` 和 `data/builtin_positions.txt` 获取真实职位数据
+- **生成策略**：
+  - 分层采样：高匹配、中匹配、低匹配职位均衡分布
+  - LLM判断：根据城市匹配、薪资匹配、职位类型等维度智能决策
+  - 正负样本平衡：确保约 30-40% 的正样本比例
+
+**推荐做法**：
+1. 首次使用运行 `generate_realistic_samples.py` 生成高质量冷启动数据
+2. 系统运行后收集真实用户反馈
+3. 定期重新训练模型，融合冷启动数据和用户反馈
+
 ---
 
 ## ⚙️ 环境配置（LLM）
@@ -195,14 +225,17 @@ TEMPERATURE=0
 
 ### 训练数据管理（XGBoost）
 在"反馈记录"面板管理训练数据：
-- **📥 导入历史数据**：从 `logs/feedback_events.jsonl` 导入历史反馈
-- **🔄 刷新列表**：重新加载当前反馈事件
-- **📤 准备训练数据**：从反馈中提取特征，导出为 CSV
-- **🚀 训练模型**：一键训练 XGBoost 模型，查看 AUC、准确率等指标
+- **🔄 刷新列表**：重新加载反馈事件和冷启动数据
+- **🚀 训练模型**：一键训练 XGBoost 模型，自动从 `logs/recommend_events.jsonl` 加载数据并提取特征
 
 **数据统计显示**：
 - 总样本数、正样本数（喜欢）、负样本数（跳过）、样本比例
 - 验证集 AUC、准确率、精确率、召回率、F1 分数
+
+**数据来源说明**：
+- 🔵 **冷启动数据**：系统初始数据，用于模型训练
+- 🟢 **用户反馈**：实际使用中收集的喜欢/跳过数据
+- 两类数据统一存储在 `logs/recommend_events.jsonl`，自动合并用于训练
 
 ---
 
@@ -211,30 +244,36 @@ TEMPERATURE=0
 ### 基础接口
 - **获取岗位数据**：`GET /api/jobs`
   - 返回：结构化岗位列表（JSON）
-- **健康检查**：`GET /api/health`
-  - 返回：`{"ok": true}`
 
 ### 核心推荐接口
 - **对话与简历抽取**：`POST /api/chat_resume`
   - 请求体：`{"messages": [...], "use_llm": true/false, "extract_resume": true/false}`
   - 返回：`{"assistant_reply": str, "resume_profile": obj|null}`
   
+- **简历信息增强**：`POST /api/resume_enhance`
+  - 请求体：`{"resume_text": str, "current_profile": obj, "messages": [...]}`
+  - 返回：`{"enhanced_profile": obj, "is_complete": bool, "assistant_reply": str}`
+  - 功能：智能补全简历信息，不询问隐私数据（姓名、电话、邮箱）
+  
 - **职位推荐**：`POST /api/recommend`
-  - 请求体：`{"resume": obj, "limit": 10, "use_llm": true/false}`
+  - 请求体：`{"resume": obj, "limit": 10, "min_score": 0.5, "use_llm": true/false, "use_xgb": true/false}`
   - 返回：`{"jobs": [...], "assistant_reply": str|null}`
 
 ### 反馈与模型训练
+- **用户反馈提交**：`POST /api/feedback`
+  - 请求体：`{"action": "like"|"skip", "job": obj, "resume": obj}`
+  - 返回：`{"ok": true}`
+  - 功能：记录用户对职位的喜好，自动保存到 `logs/recommend_events.jsonl`
+
 - **推荐事件管理**：`POST /api/recommend_events`
   - 操作类型：
-    - `list`：获取所有反馈事件
+    - `list`：获取所有推荐事件（包含冷启动数据和用户反馈）
     - `update`：更新事件（标注备注）
-    - `delete`：删除事件
-    - `import_feedback`：从 `feedback_events.jsonl` 导入历史数据
+    - `delete`：删除指定事件
   
-- **XGBoost 操作**：`POST /api/xgb_ops`
+- **XGBoost 训练**：`POST /api/xgb_ops`
   - 操作类型：
-    - `export`：导出训练数据（CSV）
-    - `train`：训练 XGBoost 模型，返回训练指标
+    - `train`：训练 XGBoost 模型，自动从 `recommend_events.jsonl` 加载数据并提取特征，返回训练指标
 
 ---
 
@@ -292,7 +331,10 @@ TEMPERATURE=0
   - `extract` 函数：从简历和职位提取 9 维特征
 
 ### 数据处理
-- **虚拟数据生成**：`data/generate_fake_jobs.py`
+- **岗位数据生成**：`data/generate_fake_jobs.py` - 生成虚拟岗位数据
+- **训练数据生成**：
+  - `logs/regenerate_training_data.py` - 纯算法规则生成用户反馈样本
+  - `logs/generate_realistic_samples.py` - LLM智能生成高质量用户反馈样本（推荐）
 - **清洗与薪资解析**：`data_preprocess/cleaner.py`
 - **简历提取器**：`resume_extract/extractor.py`（LLM 驱动，主动推断缺失信息）
 
@@ -308,7 +350,8 @@ TEMPERATURE=0
 ## 📝 完整使用流程（网页模式）
 
 ### 1. 启动服务
-**⚠️ 重要**：先在 `.env` 文件中配置好 API 密钥，若运行服务器后再配置，需重启服务器并刷新页面才能生效。
+
+**⚠️ 重要**：启动前请先配置 `.env` 文件（见上方"环境配置"章节），否则智能对话功能无法使用。如果先启动后配置，需要重启服务器并刷新页面。
 
 ```bash
 cd web
@@ -333,14 +376,17 @@ python unified_server.py
 
 ### 5. 收集反馈
 对推荐结果点击：
-- **👍 喜欢**：记录为正样本（label=1）
-- **👎 跳过**：记录为负样本（label=0）
+- **👍 喜欢**：记录为正样本（action=like）
+- **👎 跳过**：记录为负样本（action=skip）
+- 反馈数据自动保存到 `logs/recommend_events.jsonl`
 
 ### 6. 训练模型（可选）
 在"**反馈记录**"面板：
-1. 点击"**📤 准备训练数据**" → 从反馈中提取特征，导出 CSV
-2. 点击"**🚀 训练模型**" → 训练 XGBoost，查看 AUC、准确率等指标
+1. 点击"**🔄 刷新列表**" → 查看已收集的反馈和冷启动数据统计
+2. 点击"**🚀 训练模型**" → 训练 XGBoost，自动提取特征并训练，查看 AUC、准确率等指标
 3. 模型保存到 `models/xgb_model.json`，下次推荐自动启用
+
+**说明**：系统支持冷启动数据和用户反馈的统一管理，首次使用即可利用预置的冷启动数据训练模型
 
 ---
 
@@ -363,12 +409,15 @@ python unified_server.py
   - **LLM 推荐文案** → "对话区"（Markdown 表格与行动建议）
 
 ### XGBoost 模型优化
-- **首次使用**：依赖规则评分（无需训练模型）
+- **首次使用**：
+  - 系统提供冷启动数据（`logs/recommend_events.jsonl` 中的预置样本）
+  - 可直接点击"🚀 训练模型"利用冷启动数据训练基础模型
 - **积累反馈后**：
-  - 收集 10+ 条反馈（喜欢/跳过）
-  - 点击"📤 准备训练数据" → "🚀 训练模型"
-  - 模型训练成功后，下次推荐自动融合 XGBoost 分数（提升准确度）
-- **查看效果**：训练完成后显示 AUC、准确率等指标，验证模型质量
+  - 收集用户实际反馈（喜欢/跳过）
+  - 反馈数据自动追加到 `recommend_events.jsonl`
+  - 再次点击"🚀 训练模型"，系统自动合并冷启动数据和用户反馈进行训练
+  - 模型训练成功后，下次推荐自动融合 XGBoost 分数（持续提升准确度）
+- **查看效果**：训练完成后显示 AUC、准确率、精确率、召回率、F1 等指标，验证模型质量
 
 ---
 
@@ -453,12 +502,15 @@ python unified_server.py
   3. 尝试关闭"启用智能对话"开关，仅使用本地匹配
 
 ### XGBoost 训练失败
-- **问题**：点击"🚀 训练模型"提示"样本数量不足"
+- **问题**：点击"🚀 训练模型"提示"样本数量不足"或训练失败
 - **解决**：
-  1. 确保至少收集 **10 条反馈**（喜欢/跳过）
-  2. 点击"📤 准备训练数据"导出 CSV
-  3. 检查 `logs/xgb_dataset.csv` 是否生成
-  4. 如反馈数量不足，先多进行几次推荐并收集反馈
+  1. 检查 `logs/recommend_events.jsonl` 是否存在且包含数据
+  2. 系统提供冷启动数据，首次使用即可训练
+  3. 如需生成更多冷启动数据：
+     - **快速生成**：`python logs/regenerate_training_data.py`（纯算法规则）
+     - **高质量生成**：`python logs/generate_realistic_samples.py`（LLM智能生成，推荐）
+  4. 确保至少有 **20+ 条样本**（冷启动数据 + 用户反馈）才能有效训练
+  5. 如果训练指标异常（如 AUC=1.0），说明数据过于简单，建议使用 LLM 生成更真实的数据
 
 ### 反馈事件无法删除
 - **问题**：点击"删除"按钮无效果
@@ -506,14 +558,15 @@ job_agent/
 ├── resume_extract/          # 简历解析
 │   └── extractor.py        # LLM 简历提取器
 ├── data/                    # 数据文件
-│   ├── job_data.xlsx       # 岗位数据（XLSX格式）
+│   ├── job_data.xlsx       # 岗位数据（XLSX格式，默认使用）
 │   ├── job_data.csv        # 岗位数据（CSV格式）
+│   ├── job_data.jsonl      # 岗位数据（JSONL格式，优先级最高）
 │   ├── builtin_positions.txt  # 职位三级分类列表
 │   └── generate_fake_jobs.py  # 虚拟数据生成脚本
 ├── logs/                    # 日志与训练数据
-│   ├── recommend_events.jsonl  # 推荐事件
-│   ├── feedback_events.jsonl   # 反馈事件
-│   └── xgb_dataset.csv         # 训练数据集
+│   ├── recommend_events.jsonl  # 统一的推荐事件（包含冷启动数据和用户反馈）
+│   ├── regenerate_training_data.py  # 训练数据生成脚本（纯算法规则）
+│   └── generate_realistic_samples.py  # 训练数据生成脚本（LLM智能生成）
 ├── models/                  # 模型文件
 │   ├── xgb_model.json      # XGBoost 模型
 │   └── model_meta.json     # 训练元数据

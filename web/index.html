@@ -69,7 +69,6 @@
       <label for="minScore" class="inline-label">最低匹配度</label>
       <input type="number" id="minScore" step="0.1" value="0.3" class="limit" /> 
       <button id="aiSuggest" class="primary-btn" style="background:linear-gradient(90deg,#c7f9cc,#b9fbc0)">一键优化权重</button> 
-      <button id="rescoreBtn" class="primary-btn" style="background:linear-gradient(90deg,#e0f7ff,#c2ecff)">重新计算匹配度</button>
       <button id="enhanceResume" class="primary-btn" style="background:linear-gradient(90deg,#fff8e1,#ffecb3)">完善简历</button>
   
     </div> 
@@ -153,9 +152,7 @@
     </div>
     
     <div class="actions">
-      <button id="eventsImport" class="primary-btn" style="background:linear-gradient(90deg,#fff8e1,#ffecb3)" title="从recommend_events.jsonl导入历史数据">📥 导入历史数据</button>
       <button id="eventsRefresh" class="primary-btn" title="刷新反馈列表">🔄 刷新列表</button>
-      <button id="exportXGB" class="primary-btn" style="background:linear-gradient(90deg,#e0ffe0,#c8fac8)" title="将反馈数据导出为训练CSV">📤 准备训练数据</button>
       <button id="trainXGB" class="primary-btn" style="background:linear-gradient(90deg,#ffe0e0,#fac8c8)" title="使用当前数据训练XGBoost模型">🚀 训练模型</button>
     </div>
     <div id="eventsList" class="results"></div>

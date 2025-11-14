@@ -1,12 +1,15 @@
 """
 XGBoost API处理逻辑
-负责：导出训练数据、训练模型、获取模型信息
+负责：训练模型
 """
 import json
-import csv
 from pathlib import Path
 from typing import Dict, Any
 import numpy as np
+import sys
+
+# 获取项目根目录
+PROJECT_ROOT = Path(__file__).parent.parent
 
 try:
     import xgboost as xgb
@@ -29,58 +32,15 @@ class XGBoostAPI:
     
     def __init__(
         self,
-        feedback_path: str = 'logs/feedback_events.jsonl',
-        dataset_path: str = 'logs/training_dataset.csv',
-        model_dir: str = 'models'
+        feedback_path: str = None,
+        dataset_path: str = None,
+        model_dir: str = None
     ):
-        self.feedback_path = Path(feedback_path)
-        self.dataset_path = Path(dataset_path)
+        # 使用项目根目录的绝对路径
+        self.feedback_path = Path(feedback_path) if feedback_path else PROJECT_ROOT / 'logs' / 'recommend_events.jsonl'
+        self.dataset_path = Path(dataset_path) if dataset_path else PROJECT_ROOT / 'logs' / 'training_dataset.csv'
+        model_dir = model_dir or str(PROJECT_ROOT / 'models')
         self.model_manager = ModelManager(model_dir)
-    
-    def export_training_data(self) -> Dict[str, Any]:
-        """
-        导出训练数据为CSV格式
-        
-        Returns:
-            包含状态、路径、样本数的字典
-        """
-        try:
-            if not self.feedback_path.exists():
-                return {
-                    'success': False,
-                    'error': '反馈数据不存在',
-                    'path': str(self.feedback_path)
-                }
-            
-            # 加载训练数据
-            X, y, feature_names = load_training_data(self.feedback_path)
-            
-            # 保存为CSV
-            self.dataset_path.parent.mkdir(parents=True, exist_ok=True)
-            with self.dataset_path.open('w', encoding='utf-8', newline='') as f:
-                writer = csv.writer(f)
-                # 写入表头
-                writer.writerow(feature_names + ['label'])
-                # 写入数据
-                for features, label in zip(X, y):
-                    writer.writerow(features + [label])
-            
-            # 统计信息
-            stats = calculate_data_stats(y)
-            
-            return {
-                'success': True,
-                'path': str(self.dataset_path),
-                'samples': len(X),
-                'features': len(feature_names),
-                'stats': stats
-            }
-        
-        except Exception as e:
-            return {
-                'success': False,
-                'error': str(e)
-            }
     
     def train_model(
         self,
@@ -195,14 +155,6 @@ class XGBoostAPI:
                 'success': False,
                 'error': str(e)
             }
-    
-    def get_model_info(self) -> Dict[str, Any]:
-        """获取模型信息"""
-        return self.model_manager.get_model_info()
-    
-    def export_report(self) -> str:
-        """导出训练报告"""
-        return self.model_manager.export_training_report()
 
 
 # 创建全局实例
@@ -214,7 +166,7 @@ def handle_xgb_ops(op: str, params: Dict[str, Any] = None) -> Dict[str, Any]:
     统一的XGBoost操作处理接口
     
     Args:
-        op: 操作类型 ('export', 'train', 'info', 'report')
+        op: 操作类型 ('train')
         params: 操作参数
     
     Returns:
@@ -222,11 +174,7 @@ def handle_xgb_ops(op: str, params: Dict[str, Any] = None) -> Dict[str, Any]:
     """
     params = params or {}
     
-    if op == 'export':
-        # 导出训练数据
-        return xgb_api.export_training_data()
-    
-    elif op == 'train':
+    if op == 'train':
         # 训练模型
         return xgb_api.train_model(
             max_depth=params.get('max_depth', 5),
@@ -234,23 +182,10 @@ def handle_xgb_ops(op: str, params: Dict[str, Any] = None) -> Dict[str, Any]:
             num_boost_round=params.get('num_boost_round', 100),
             eval_metric=params.get('eval_metric', 'auc')
         )
-    
-    elif op == 'info':
-        # 获取模型信息
-        return xgb_api.get_model_info()
-    
-    elif op == 'report':
-        # 导出报告
-        report = xgb_api.export_report()
-        return {
-            'success': True,
-            'report': report
-        }
-    
     else:
         return {
             'success': False,
-            'error': f'不支持的操作: {op}'
+            'error': f'不支持的操作: {op}，当前仅支持 train'
         }
 
 

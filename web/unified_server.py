@@ -59,40 +59,6 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json({'jobs': data})
             except Exception as e:
                 self._json({'error': str(e)}, 500)
-        elif p.path == '/api/health':
-            try:
-                loader = JobDataLoader(JOBS_FILE)
-                jobs = loader.to_dict_list()
-                jobs_count = len(jobs)
-            except Exception:
-                jobs_count = None
-            try:
-                positions_file = Path(__file__).resolve().parents[1] / 'position_dictionary.txt'
-                pos_count = 0
-                if positions_file.exists():
-                    import re
-                    for line in positions_file.read_text('utf-8').splitlines():
-                        s = line.strip()
-                        if not s:
-                            continue
-                        if s.startswith('[') and s.endswith(']'):
-                            continue
-                        s = re.sub(r'^\s*\d+\s*→\s*', '', s)
-                        pos_count += 1
-                else:
-                    pos_count = None
-            except Exception:
-                pos_count = None
-            from config import USE_XGB_SCORER, XGB_BLEND_ALPHA
-            self._json({
-                'ok': True,
-                'port': 8002,
-                'xgb_enabled': bool(USE_XGB_SCORER),
-                'xgb_blend_alpha': XGB_BLEND_ALPHA,
-                'jobs_source': str(JOBS_FILE),
-                'jobs_count': jobs_count,
-                'position_dict_count': pos_count,
-            })
         else:
             super().do_GET()
 
@@ -297,20 +263,24 @@ class Handler(SimpleHTTPRequestHandler):
                     llm = ChatOpenAI(model=MODEL, base_url=BASE_URL, api_key=API_KEY, temperature=TEMPERATURE)
                     
                     system_prompt = (
-                        "你是一个简历助手，负责问用户要到全部的数据。严格只输出JSON，且键使用如下结构："
+                        "你是一个简历助手，负责提取职位匹配相关的关键信息。"
+                        "**重要**：不要询问姓名、联系电话、电子邮箱等个人隐私信息。"
+                        "只关注：期望职位、工作城市、薪资期望、工作经验、技能等职业相关信息。"
+                        "严格只输出JSON，且键使用如下结构："
                         "{"
                         "\"profile_update\": 对现有画像的增量更新对象，"
-                        "\"missing_fields\": 缺失但需要补充的字段数组，"
+                        "\"missing_fields\": 缺失但需要补充的字段数组（不包括姓名/电话/邮箱），"
                         "\"is_complete\": 布尔值是否完整，"
-                        "\"next_question\": 如果不完整，给出面向用户的下一条具体提问"
+                        "\"next_question\": 如果不完整，给出面向用户的下一条具体提问（仅关于职位匹配信息）"
                         "}"
                     )
 
                     user_prompt = (
                         f"当前简历文本:\n{resume_text}\n"
                         f"当前已有画像(JSON):\n{json.dumps(current_profile, ensure_ascii=False)}\n"
-                        "请判断哪些关键字段缺失，并补充能从文本推断出的信息。"
-                        "如果不完整，给出下一条提问并列出缺失字段；如果完整，设置is_complete为true并给出profile_update。"
+                        "请判断职位匹配相关的关键字段是否缺失（期望职位、城市、薪资、经验、技能等），并补充能从文本推断出的信息。"
+                        "**不要**询问或提及姓名、电话、邮箱等个人联系方式。"
+                        "如果职位匹配信息不完整，给出下一条提问并列出缺失字段；如果完整，设置is_complete为true并给出profile_update。"
                     )
 
                     lm_msgs = [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
@@ -368,11 +338,14 @@ class Handler(SimpleHTTPRequestHandler):
                 meta = {
                     'action': action,
                     'ts': datetime.now(timezone.utc).isoformat(),
+                    'type': 'feedback',
                     'job': job,
                     'resume': resume
                 }
-                out = Path('logs'); out.mkdir(parents=True, exist_ok=True)
-                fp = out / 'feedback_events.jsonl'
+                # 使用项目根目录的logs（不是web/logs）
+                out = Path(__file__).parent.parent / 'logs'
+                out.mkdir(parents=True, exist_ok=True)
+                fp = out / 'recommend_events.jsonl'
                 with fp.open('a', encoding='utf-8') as w:
                     w.write(json.dumps(meta, ensure_ascii=False) + '\n')
                 self._json({'ok': True})
@@ -380,7 +353,9 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json({'error': str(e)}, 500)
         elif p.path == '/api/recommend_events':
             try:
-                out = Path('logs'); out.mkdir(parents=True, exist_ok=True)
+                # 使用项目根目录的logs（不是web/logs）
+                out = Path(__file__).parent.parent / 'logs'
+                out.mkdir(parents=True, exist_ok=True)
                 target = out / 'recommend_events.jsonl'
                 op = (payload.get('op') or 'list').strip()
                 def read_jsonl(fp: Path):
@@ -395,7 +370,7 @@ class Handler(SimpleHTTPRequestHandler):
                         try:
                             data.append(json.loads(ln))
                         except Exception:
-                            pass
+                            pass  # 静默跳过解析失败的行
                     return data
                 def write_jsonl(fp: Path, items):
                     with fp.open('w', encoding='utf-8') as w:
@@ -406,10 +381,10 @@ class Handler(SimpleHTTPRequestHandler):
                         w.write(json.dumps(item, ensure_ascii=False) + '\n')
                 if op == 'list':
                     items = read_jsonl(target)
-                    # 确保每个item都有id（用于前端删除）
+                    # 规范化数据格式
                     for idx, item in enumerate(items):
+                        # 1. 确保有id
                         if 'id' not in item or not item.get('id'):
-                            # 生成基于内容的临时id
                             import hashlib
                             content_str = json.dumps({
                                 'action': item.get('action'),
@@ -417,9 +392,22 @@ class Handler(SimpleHTTPRequestHandler):
                                 'company': item.get('job', {}).get('企业')
                             }, ensure_ascii=False, sort_keys=True)
                             item['id'] = hashlib.md5(content_str.encode()).hexdigest()[:16]
-                    # 按时间戳倒序排列：最新的在上面，最旧的在下面
-                    # 没有时间戳的记录默认为 2025-11-11，会排在最下面
-                    items.sort(key=lambda x: x.get('ts', '2025-11-11T00:00:00Z'), reverse=True)
+                        
+                        # 2. 冷启动数据：label转action
+                        if 'action' not in item and 'label' in item:
+                            item['action'] = 'like' if item.get('label') == 1 else 'skip'
+                            item['type'] = 'cold_start'
+                        
+                        # 3. 确保有type
+                        if 'type' not in item:
+                            item['type'] = 'feedback'
+                        
+                        # 4. 确保有ts（用于排序）
+                        if 'ts' not in item:
+                            item['ts'] = '2025-11-11T00:00:00Z'
+                    
+                    # 按时间倒序排列
+                    items.sort(key=lambda x: x.get('ts', ''), reverse=True)
                     self._json({'items': items})
                     return
                 if op == 'create':
@@ -491,29 +479,6 @@ class Handler(SimpleHTTPRequestHandler):
                         print(f'[删除] ✗ 未找到匹配的记录')
                     
                     self._json({'ok': True, 'deleted': deleted, 'remaining': len(new_items)})
-                    return
-                if op == 'import_feedback':
-                    src = out / 'feedback_events.jsonl'
-                    fitems = read_jsonl(src)
-                    items = read_jsonl(target)
-                    existing_ids = {it.get('source_id') for it in items if it.get('source_id')}
-                    imported = 0
-                    for fev in fitems:
-                        sig = json.dumps({'action': fev.get('action'), 'job': fev.get('job')}, ensure_ascii=False)
-                        if sig in existing_ids:
-                            continue
-                        rec = {
-                            'id': str(uuid.uuid4()),
-                            'ts': datetime.now(timezone.utc).isoformat(),
-                            'type': 'feedback',
-                            'source_id': sig,
-                            'action': fev.get('action'),
-                            'job': fev.get('job'),
-                            'resume': fev.get('resume')
-                        }
-                        append_jsonl(target, rec)
-                        imported += 1
-                    self._json({'ok': True, 'imported': imported})
                     return
                 self._json({'error': 'unsupported op'}, 400)
             except Exception as e:
