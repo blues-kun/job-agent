@@ -115,15 +115,37 @@ python main.py
 ---
 
 ## 📦 数据准备
+
+### 岗位数据
 - **默认岗位数据**：`data/job_data.xlsx`（可通过生成脚本或清洗脚本更新）
 - **生成虚拟数据**：
   ```bash
   python data/generate_fake_jobs.py
-  # 生成 data/job_data.csv / .xlsx / .jsonl
+  # 生成 data/job_data.csv / .xlsx / .jsonl（包含10000条虚拟岗位数据）
   ```
-- **简历输入**：
-  - 命令行模式：按提示粘贴简历，自动保存 `resume.json`
-  - 网页模式：在顶部对话框粘贴简历或上传 `.txt` 文件
+
+### 职位分类管理
+- **职位三级分类文件**：`data/builtin_positions.txt`
+  - 包含所有支持的职位类型（必须与 `generate_fake_jobs.py` 中的 `sec_ter` 字典保持一致）
+  - 用于简历解析时的职位类型匹配和验证
+  - 格式：每行一个职位名称，`#` 开头为注释，空行会被忽略
+  
+- **当前支持的职位分类**：
+  - 后端开发：Java、Python、Golang、C/C++、PHP、Node.js、全栈工程师
+  - 前端/移动开发：前端开发工程师、Android、iOS、鸿蒙开发工程师
+  - 测试：测试工程师、自动化测试、测试开发、性能测试
+  - 运维/技术支持：运维工程师、IT技术支持、网络工程师、系统工程师、DBA
+  - 人工智能：算法工程师、机器学习、深度学习、推荐算法、数据挖掘
+  - 数据：数据分析师、数据开发、数据仓库、数据治理
+
+**⚠️ 重要**：修改职位分类时，需要同步更新以下文件：
+1. `data/builtin_positions.txt` - 职位分类列表
+2. `data/generate_fake_jobs.py` - 数据生成脚本中的 `sec_ter` 字典
+3. 重新运行 `python data/generate_fake_jobs.py` 生成新的岗位数据
+
+### 简历输入
+- **命令行模式**：按提示粘贴简历，自动保存 `resume.json`
+- **网页模式**：在顶部对话框粘贴简历或上传 `.txt` 文件
 
 ---
 
@@ -480,8 +502,11 @@ job_agent/
 ├── resume_extract/          # 简历解析
 │   └── extractor.py        # LLM 简历提取器
 ├── data/                    # 数据文件
-│   ├── job_data.xlsx       # 岗位数据
-│   └── generate_fake_jobs.py  # 数据生成脚本
+│   ├── job_data.xlsx       # 岗位数据（XLSX格式）
+│   ├── job_data.csv        # 岗位数据（CSV格式）
+│   ├── job_data.jsonl      # 岗位数据（JSONL格式）
+│   ├── builtin_positions.txt  # 职位三级分类列表
+│   └── generate_fake_jobs.py  # 虚拟数据生成脚本
 ├── logs/                    # 日志与训练数据
 │   ├── recommend_events.jsonl  # 推荐事件
 │   ├── feedback_events.jsonl   # 反馈事件

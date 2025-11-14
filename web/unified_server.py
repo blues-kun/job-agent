@@ -129,16 +129,19 @@ class Handler(SimpleHTTPRequestHandler):
                             continue
                         s = re.sub(r'^\s*\d+\s*→\s*', '', s)
                         allowed.append(s)
-                builtin_ext = [
-                    '云原生工程师','平台工程师','容器平台工程师','Kubernetes工程师','DevOps工程师','SRE','站点可靠性工程师',
-                    '基础设施工程师','平台后端工程师','微服务工程师','服务治理工程师','API网关工程师','服务网格工程师',
-                    '中间件工程师','消息队列工程师','缓存系统工程师','分布式系统工程师','高并发后端工程师','电商后端工程师',
-                    '搜索后端工程师','推荐系统工程师','风控后端工程师','数据平台后端工程师','AI平台后端工程师','AIOps工程师',
-                    'Java后端工程师','Golang后端工程师','Java/Golang工程师','Python后端工程师','Rust后端工程师',
-                    'NLP工程师','语义检索工程师','信息抽取工程师','文本挖掘工程师','对话系统工程师','大模型应用工程师',
-                    'Prompt工程师','模型微调工程师','知识图谱工程师',
-                ]
-                allowed.extend(x for x in builtin_ext if x not in allowed)
+                # 从文件加载内置职位分类（三级分类）
+                builtin_positions_file = Path(__file__).resolve().parents[1] / 'data' / 'builtin_positions.txt'
+                if builtin_positions_file.exists():
+                    for line in builtin_positions_file.read_text('utf-8').splitlines():
+                        line = line.strip()
+                        # 跳过空行和注释
+                        if not line or line.startswith('#'):
+                            continue
+                        if line not in allowed:
+                            allowed.append(line)
+                    print(f'[INFO] 职位三级分类加载完成，共 {len(allowed)} 个')
+                else:
+                    print(f'[WARN] 职位分类文件不存在: {builtin_positions_file}')
                 
                 # 如果未启用LLM，返回友好提示
                 if not use_llm:
