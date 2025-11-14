@@ -38,8 +38,8 @@ elif JOBS_FILE_CSV.exists():
 else:
     JOBS_FILE = JOBS_FILE_EXCEL
 
-RESUME_FILE = BASE_DIR / "resume.txt"
-POSITION_DICT_FILE = BASE_DIR / "position_dictionary.txt"
+RESUME_FILE = BASE_DIR / "resume.json"
+POSITION_DICT_FILE = BASE_DIR / "data" / "builtin_positions.txt"
 
 # =========================
 # 匹配算法配置

@@ -306,6 +306,8 @@ TEMPERATURE=0
 ## 📝 完整使用流程（网页模式）
 
 ### 1. 启动服务
+**⚠️ 重要**：先在 `.env` 文件中配置好 API 密钥，若运行服务器后再配置，需重启服务器并刷新页面才能生效。
+
 ```bash
 cd web
 python unified_server.py
@@ -504,7 +506,6 @@ job_agent/
 ├── data/                    # 数据文件
 │   ├── job_data.xlsx       # 岗位数据（XLSX格式）
 │   ├── job_data.csv        # 岗位数据（CSV格式）
-│   ├── job_data.jsonl      # 岗位数据（JSONL格式）
 │   ├── builtin_positions.txt  # 职位三级分类列表
 │   └── generate_fake_jobs.py  # 虚拟数据生成脚本
 ├── logs/                    # 日志与训练数据

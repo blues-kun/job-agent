@@ -365,7 +365,12 @@ class Handler(SimpleHTTPRequestHandler):
                 action = (payload.get('action') or '').strip()
                 job = payload.get('job') or {}
                 resume = payload.get('resume') or {}
-                meta = {'action': action, 'job': job, 'resume': resume}
+                meta = {
+                    'action': action,
+                    'ts': datetime.now(timezone.utc).isoformat(),
+                    'job': job,
+                    'resume': resume
+                }
                 out = Path('logs'); out.mkdir(parents=True, exist_ok=True)
                 fp = out / 'feedback_events.jsonl'
                 with fp.open('a', encoding='utf-8') as w:
@@ -412,6 +417,9 @@ class Handler(SimpleHTTPRequestHandler):
                                 'company': item.get('job', {}).get('企业')
                             }, ensure_ascii=False, sort_keys=True)
                             item['id'] = hashlib.md5(content_str.encode()).hexdigest()[:16]
+                    # 按时间戳倒序排列：最新的在上面，最旧的在下面
+                    # 没有时间戳的记录默认为 2025-11-11，会排在最下面
+                    items.sort(key=lambda x: x.get('ts', '2025-11-11T00:00:00Z'), reverse=True)
                     self._json({'items': items})
                     return
                 if op == 'create':
