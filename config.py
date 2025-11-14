@@ -65,6 +65,7 @@ XGB_BLEND_ALPHA = float(os.environ.get("XGB_BLEND_ALPHA", "0.5"))
     
 # 默认推荐数量
 DEFAULT_RECOMMENDATION_COUNT = 10
+DEFAULT_MIN_SCORE = float(os.environ.get("DEFAULT_MIN_SCORE", "0.6"))
 
 # =========================
 # Agent 配置

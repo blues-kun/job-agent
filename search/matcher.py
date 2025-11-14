@@ -5,6 +5,7 @@
 from typing import List, Dict, Any
 from models import ResumeProfile
 from search.scorer import MatchScorer
+from similarity.engine import SimilarityEngine
 
 
 class JobMatcher:
@@ -19,6 +20,7 @@ class JobMatcher:
         """
         self.jobs_db = jobs_db
         self.scorer = MatchScorer()
+        self.sim_engine = SimilarityEngine()
     
     def find_matches(
         self,
@@ -88,14 +90,30 @@ class JobMatcher:
     
     def _match_position_type(self, job: Dict[str, Any], resume: ResumeProfile) -> bool:
         """检查职位类型是否匹配"""
-        job_position = job.get('三级分类', '')
-        if not job_position:
-            return False
-        
-        return any(
-            job_position.strip().lower() == pos.strip().lower()
-            for pos in resume.work_preferences.position_type_name
-        )
+        job_position = str(job.get('三级分类', '') or '')
+        if job_position:
+            if any(
+                job_position.strip().lower() == str(pos).strip().lower()
+                for pos in resume.work_preferences.position_type_name
+            ):
+                return True
+            if any(
+                job_position.strip().lower() in str(pos).strip().lower() or
+                str(pos).strip().lower() in job_position.strip().lower()
+                for pos in resume.work_preferences.position_type_name
+            ):
+                return True
+        secondary = str(job.get('二级分类', '') or '')
+        if secondary:
+            if any(
+                secondary.strip().lower() == str(pos).strip().lower()
+                for pos in resume.work_preferences.position_type_name
+            ):
+                return True
+        matched, _ = self.sim_engine.title_intent_match(resume, job)
+        if matched:
+            return True
+        return False
     
     def _match_location(self, job: Dict[str, Any], resume: ResumeProfile) -> bool:
         """检查地点是否匹配"""

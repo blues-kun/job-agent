@@ -7,7 +7,7 @@ from pathlib import Path
 import sys
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
-from config import JOBS_FILE, API_KEY, MODEL, BASE_URL, TEMPERATURE, XGB_MODEL_PATH
+from config import JOBS_FILE, API_KEY, MODEL, BASE_URL, TEMPERATURE, XGB_MODEL_PATH, DEFAULT_MIN_SCORE
 from data_preprocess import JobDataLoader
 from resume_extract import ResumeExtractor
 from langchain_openai import ChatOpenAI
@@ -185,7 +185,7 @@ class Handler(SimpleHTTPRequestHandler):
                 limit = int(payload.get('limit') or 10)
                 resume_dict = payload.get('resume') or {}
                 use_xgb = payload.get('use_xgb')
-                min_score = float(payload.get('min_score') or 0.5)
+                min_score = float(payload.get('min_score') or DEFAULT_MIN_SCORE)
                 resume = None
                 try:
                     resume = ResumeProfile.model_validate(resume_dict)
