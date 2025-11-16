@@ -1,0 +1,58 @@
+{
+  "model_type": "XGBoost_Advanced_MultiStage",
+  "training_strategy": "Multi-stage learning rate decay",
+  "total_iterations": 350,
+  "stages": [
+    {
+      "stage": 1,
+      "lr": 0.1,
+      "rounds": 100
+    },
+    {
+      "stage": 2,
+      "lr": 0.05,
+      "rounds": 150
+    },
+    {
+      "stage": 3,
+      "lr": 0.01,
+      "rounds": 100
+    }
+  ],
+  "metrics": {
+    "train_auc": 0.8310232543945314,
+    "val_auc": 0.549052734375,
+    "val_accuracy": 0.5390625,
+    "val_precision": 0.5389408099688473,
+    "val_recall": 0.540625,
+    "val_f1": 0.5397815912636506
+  },
+  "feature_names": [
+    "education_match",
+    "experience_ratio",
+    "intent_match_score",
+    "job_avg_salary",
+    "location_match",
+    "required_education",
+    "required_experience",
+    "resume_desc_sim",
+    "resume_req_sim",
+    "resume_title_sim",
+    "salary_months",
+    "salary_negotiable",
+    "salary_ratio",
+    "school_211",
+    "school_985",
+    "school_level",
+    "user_education",
+    "user_expect_salary",
+    "user_experience",
+    "willingness_relocate"
+  ],
+  "best_val_auc": 0.5739013671875,
+  "training_history": {
+    "total_iterations": 350,
+    "final_train_auc": 0.8310232543945313,
+    "final_val_auc": 0.549052734375
+  }
+}

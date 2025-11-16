@@ -1,0 +1,147 @@
+{
+  "model_type": "XGBoost_Optimized",
+  "model_path": "models\\xgb_model_optimized.json",
+  "best_params": {
+    "max_depth": 3,
+    "learning_rate": 0.1,
+    "n_estimators": 100,
+    "min_child_weight": 1,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "gamma": 0,
+    "reg_alpha": 0,
+    "reg_lambda": 1
+  },
+  "feature_names": [
+    "education_match",
+    "experience_ratio",
+    "intent_match_score",
+    "job_avg_salary",
+    "location_match",
+    "required_education",
+    "required_experience",
+    "resume_desc_sim",
+    "resume_req_sim",
+    "resume_title_sim",
+    "salary_months",
+    "salary_negotiable",
+    "salary_ratio",
+    "school_211",
+    "school_985",
+    "school_level",
+    "user_education",
+    "user_expect_salary",
+    "user_experience",
+    "willingness_relocate"
+  ],
+  "metrics": {
+    "train_auc": 0.7262954711914062,
+    "val_auc": 0.56740234375,
+    "val_accuracy": 0.5421875,
+    "val_precision": 0.5431309904153354,
+    "val_recall": 0.53125,
+    "val_f1": 0.5371248025276462,
+    "best_iteration": 20,
+    "feature_importance": {
+      "salary_ratio": 1.1165802478790283,
+      "user_experience": 1.0641132593154907,
+      "experience_ratio": 1.0420145988464355,
+      "willingness_relocate": 0.9390479922294617,
+      "job_avg_salary": 0.9304377436637878,
+      "user_expect_salary": 0.8863338232040405,
+      "required_education": 0.8768557906150818,
+      "salary_months": 0.8523196578025818,
+      "required_experience": 0.8407078385353088,
+      "education_match": 0.8021243214607239,
+      "school_level": 0.8009717464447021,
+      "intent_match_score": 0.6917802095413208,
+      "user_education": 0.5556018948554993,
+      "location_match": 0.5330722332000732,
+      "school_211": 0.35383880138397217
+    }
+  },
+  "train_samples": 2560,
+  "val_samples": 640,
+  "search_results": [
+    {
+      "name": "baseline",
+      "params": {
+        "max_depth": 3,
+        "learning_rate": 0.1,
+        "n_estimators": 100,
+        "min_child_weight": 1,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "gamma": 0,
+        "reg_alpha": 0,
+        "reg_lambda": 1,
+        "objective": "binary:logistic",
+        "eval_metric": "auc",
+        "random_state": 42,
+        "tree_method": "hist"
+      },
+      "auc": 0.571953125,
+      "best_iteration": 5
+    },
+    {
+      "name": "deeper_tree",
+      "params": {
+        "max_depth": 5,
+        "learning_rate": 0.05,
+        "n_estimators": 200,
+        "min_child_weight": 3,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "gamma": 0.1,
+        "reg_alpha": 0.1,
+        "reg_lambda": 1,
+        "objective": "binary:logistic",
+        "eval_metric": "auc",
+        "random_state": 42,
+        "tree_method": "hist"
+      },
+      "auc": 0.555146484375,
+      "best_iteration": 5
+    },
+    {
+      "name": "regularized",
+      "params": {
+        "max_depth": 4,
+        "learning_rate": 0.05,
+        "n_estimators": 300,
+        "min_child_weight": 5,
+        "subsample": 0.7,
+        "colsample_bytree": 0.7,
+        "gamma": 0.2,
+        "reg_alpha": 1,
+        "reg_lambda": 2,
+        "objective": "binary:logistic",
+        "eval_metric": "auc",
+        "random_state": 42,
+        "tree_method": "hist"
+      },
+      "auc": 0.5704882812500001,
+      "best_iteration": 4
+    },
+    {
+      "name": "high_capacity",
+      "params": {
+        "max_depth": 6,
+        "learning_rate": 0.03,
+        "n_estimators": 500,
+        "min_child_weight": 2,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "gamma": 0.05,
+        "reg_alpha": 0.5,
+        "reg_lambda": 1.5,
+        "objective": "binary:logistic",
+        "eval_metric": "auc",
+        "random_state": 42,
+        "tree_method": "hist"
+      },
+      "auc": 0.560732421875,
+      "best_iteration": 27
+    }
+  ]
+}

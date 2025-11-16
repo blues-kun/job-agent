@@ -1,0 +1,36 @@
+{
+  "model_type": "LSTM",
+  "model_path": "models/lstm_model.pth",
+  "feature_names": [
+    "education_match",
+    "experience_ratio",
+    "intent_match_score",
+    "job_avg_salary",
+    "location_match",
+    "required_education",
+    "required_experience",
+    "resume_desc_sim",
+    "resume_req_sim",
+    "resume_title_sim",
+    "salary_months",
+    "salary_negotiable",
+    "salary_ratio",
+    "school_211",
+    "school_985",
+    "school_level",
+    "user_education",
+    "user_expect_salary",
+    "user_experience",
+    "willingness_relocate"
+  ],
+  "metrics": {
+    "train_auc": 0.5150683593750001,
+    "val_auc": 0.5044140625,
+    "val_accuracy": 0.5,
+    "val_precision": 0.0,
+    "val_recall": 0.0,
+    "val_f1": 0.0
+  },
+  "train_samples": 2560,
+  "val_samples": 640
+}

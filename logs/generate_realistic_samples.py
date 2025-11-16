@@ -7,6 +7,7 @@ import random
 import csv
 import sys
 from pathlib import Path
+import argparse
 sys.path.append(str(Path(__file__).parent.parent))
 
 from langchain_openai import ChatOpenAI
@@ -25,101 +26,141 @@ EDUCATION_LEVELS = ['大专', '本科', '硕士', '博士']
 EXPERIENCE_RANGES = [0, 1, 2, 3, 5, 8, 10]
 
 def load_real_jobs():
-    """从CSV加载真实职位数据"""
+    """从向量化CSV加载真实职位数据（仅保留深圳职位，提取基础字段）"""
     # 使用脚本所在目录的绝对路径
     script_dir = Path(__file__).parent
-    jobs_file = script_dir.parent / 'data' / 'job_data.csv'
+    # 使用向量化后的数据
+    jobs_file = script_dir.parent / 'data' / 'job_data_vectorized.csv'
     jobs = []
     
-    print(f"读取职位文件: {jobs_file}")
+    print(f"读取向量化职位文件: {jobs_file}")
     with jobs_file.open('r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
-            jobs.append(row)
+            # 只提取生成交互数据需要的基础字段（不包含向量特征）
+            name = row.get('岗位名称') or row.get('职位名称') or ''
+            company = row.get('企业') or row.get('公司') or ''
+            salary = row.get('岗位薪资') or row.get('薪资') or ''
+            req = row.get('岗位要求') or ''
+            resp = row.get('岗位职责') or ''
+            addr = row.get('岗位地址') or ''
+            sec = row.get('二级分类') or ''
+            ter = row.get('三级分类') or row.get('职位类型名称') or ''
+            city = row.get('城市') or ''  # 向量化数据已包含城市字段
+            
+            # 如果没有城市信息，从地址推断
+            if not city:
+                for c in CITIES:
+                    if c and addr and c in addr:
+                        city = c
+                        break
+                if not city:
+                    city = '深圳'
+            
+            job_obj = {
+                '岗位名称': name,
+                '企业': company,
+                '岗位薪资': salary,
+                '岗位要求': req,
+                '岗位职责': resp,
+                '岗位地址': addr,
+                '二级分类': sec,
+                '三级分类': ter,
+                '城市': city,
+            }
+            if job_obj['城市'] == '深圳':
+                jobs.append(job_obj)
     
-    print(f"加载了 {len(jobs)} 条真实职位数据")
+    print(f"加载了 {len(jobs)} 条深圳职位数据（来自向量化表）")
     return jobs
 
 def load_positions():
-    """加载职位列表"""
-    # 使用脚本所在目录的绝对路径
+    """加载职位列表（包含分组标题和条目）"""
     script_dir = Path(__file__).parent
-    positions_file = script_dir.parent / 'data' / 'builtin_positions.txt'
+    positions_file = script_dir.parent / 'data' / 'position_dictionary.txt'
     positions = []
-    
+    if not positions_file.exists():
+        print(f"[WARN] 职位词典不存在: {positions_file}")
+        return positions
+    import re
     for line in positions_file.read_text('utf-8').splitlines():
-        line = line.strip()
-        if line and not line.startswith('#'):
-            positions.append(line)
-    
-    print(f"加载了 {len(positions)} 个职位类型")
+        s = line.strip()
+        if not s or s.startswith('#'):
+            continue
+        if s.startswith('[') and s.endswith(']'):
+            header = s[1:-1].strip()
+            if header and header not in positions:
+                positions.append(header)
+            continue
+        s = re.sub(r'^\s*\d+\s*→\s*', '', s)
+        if s and s not in positions:
+            positions.append(s)
+    print(f"加载了 {len(positions)} 个职位类型/分组")
     return positions
 
-def create_diverse_resumes(positions, num_resumes=20):
-    """创建多样化的求职者简历，确保城市均匀分布"""
-    resumes = []
-    
-    # 确保每个城市的简历数量均匀
-    resumes_per_city = num_resumes // len(CITIES)
-    remaining = num_resumes % len(CITIES)
-    
-    print(f"每个城市生成 {resumes_per_city} 个简历，剩余 {remaining} 个随机分配")
-    
-    city_counts = {city: 0 for city in CITIES}
-    
-    for i in range(num_resumes):
-        # 随机选择1-3个期望职位
-        num_positions = random.randint(1, 3)
-        desired_positions = random.sample(positions, num_positions)
-        
-        # 均匀分配城市
-        if i < len(CITIES) * resumes_per_city:
-            city = CITIES[i % len(CITIES)]
-        else:
-            city = random.choice(CITIES)
-        city_counts[city] += 1
-        
-        # 是否愿意异地
-        relocate = random.choice([True, False])
-        
-        # 经验年限
-        experience = random.choice(EXPERIENCE_RANGES)
-        
-        # 学历
-        education = random.choice(EDUCATION_LEVELS)
-        
-        # 期望薪资（基于经验）
-        base_salary = 150000 if education == '大专' else 200000
-        if education == '硕士':
-            base_salary = 280000
-        elif education == '博士':
-            base_salary = 400000
-        
-        salary_expectation = base_salary + experience * 30000
-        
-        resume = {
-            'personal_info': {
-                'current_city': city,
-                'willingness_to_relocate': relocate,
-                'availability_date': '2024-08-01'
-            },
-            'work_preferences': {
-                'position_type_name': desired_positions,
-                'salary_expectation': {
-                    'min_annual_package': salary_expectation,
-                    'currency': 'CNY'
-                }
-            },
-            'professional_summary': {
-                'total_experience_years': float(experience),
-                'education_level': education,
-                'school_level': 0 if education in ['大专', '本科'] else 1
-            },
-            'full_resume_text': f"求职者{i+1}，期望职位：{', '.join(desired_positions)}，{experience}年经验，{education}学历"
+def generate_resume_with_llm(llm, positions):
+    """使用LLM随机生成互联网/AI相关简历文本与画像结构"""
+    import random
+    city = '深圳'
+    num_positions = random.randint(1, 3)
+    desired_positions = random.sample(positions, num_positions)
+    relocate = random.choice([True, False])
+    experience = random.choice(EXPERIENCE_RANGES)
+    education = random.choice(EDUCATION_LEVELS)
+    base_salary = 180000
+    if education == '硕士':
+        base_salary = 280000
+    elif education == '博士':
+        base_salary = 400000
+    salary_expectation = base_salary + experience * 30000
+
+    resume = {
+        'personal_info': {
+            'current_city': city,
+            'willingness_to_relocate': relocate,
+            'availability_date': '2025-12-01'
+        },
+        'work_preferences': {
+            'position_type_name': desired_positions,
+            'salary_expectation': {
+                'min_annual_package': salary_expectation,
+                'currency': 'CNY'
+            }
+        },
+        'professional_summary': {
+            'total_experience_years': float(experience),
+            'education_level': education,
+            'school_level': 1 if education in ['硕士','博士'] else 0
         }
-        
+    }
+
+    if llm is None:
+        resume['full_resume_text'] = f"互联网/AI方向简历，期望职位：{', '.join(desired_positions)}，{experience}年经验，{education}学历。参与算法/后端/数据相关项目，具备Python/Java/SQL/深度学习基础。"
+        return resume
+
+    prompt = (
+        "你是一名资深HR，请用中文生成一份真实感的互联网/AI方向简历片段，"
+        "包括求职者过往项目（2-3条）、核心技能（6-8项）、技术栈（编程语言/框架）、"
+        "求职偏好（职位/城市/薪资期望），不要出现私人信息（姓名/电话/邮箱）。"
+        f"\n职位偏好：{', '.join(desired_positions)}；城市：{city}；工作经验：{experience}年；学历：{education}；期望年薪：{int(salary_expectation/10000)}万。"
+    )
+    try:
+        resp = llm.invoke([HumanMessage(content=prompt)])
+        resume['full_resume_text'] = resp.content.strip()
+    except Exception:
+        resume['full_resume_text'] = f"互联网/AI方向简历，期望职位：{', '.join(desired_positions)}，{experience}年经验，{education}学历。"
+    return resume
+
+def create_diverse_resumes(positions, num_resumes=20, llm=None):
+    """创建多样化的求职者简历，仅生成深圳简历，支持LLM生成文本"""
+    import random
+    resumes = []
+    print(f"生成 {num_resumes} 份深圳简历")
+    city_counts = {'深圳': 0}
+    for i in range(num_resumes):
+        city_counts['深圳'] += 1
+        resume = generate_resume_with_llm(llm, positions)
         resumes.append(resume)
-    
     print(f"创建了 {len(resumes)} 个多样化简历")
     print(f"城市分布: {city_counts}")
     return resumes
@@ -190,18 +231,18 @@ def generate_samples():
     
     print("\n=== 使用真实数据生成训练样本 ===\n")
     
-    if not API_KEY:
-        print("错误：未配置API_KEY")
-        return
-    
-    # 初始化LLM
-    print(f"初始化LLM: {MODEL}\n")
-    llm = ChatOpenAI(model=MODEL, base_url=BASE_URL, api_key=API_KEY, temperature=0.5)
+    llm = None
+    if API_KEY:
+        try:
+            print(f"初始化LLM: {MODEL}\n")
+            llm = ChatOpenAI(model=MODEL, base_url=BASE_URL, api_key=API_KEY, temperature=0.5)
+        except Exception as e:
+            print(f"[WARN] LLM初始化失败，将使用模板生成: {e}")
     
     # 加载数据
     jobs = load_real_jobs()
     positions = load_positions()
-    resumes = create_diverse_resumes(positions, num_resumes=15)
+    resumes = create_diverse_resumes(positions, num_resumes=20, llm=llm)
     
     # 随机选择职位样本
     # 策略：每个简历匹配100-150个职位
@@ -221,7 +262,7 @@ def generate_samples():
         print(f"  期望职位: {', '.join(resume['work_preferences']['position_type_name'])}")
         print(f"  城市: {resume['personal_info']['current_city']}")
         
-        # === 分层抽样：确保正负样本比例 ===
+        # === 分层抽样：确保正负样本比例接近50/50 ===
         desired_positions = resume['work_preferences']['position_type_name']
         resume_city = resume['personal_info']['current_city']
         
@@ -243,7 +284,7 @@ def generate_samples():
                 unmatched_jobs.append(job)
         
         # 分层采样：60个高匹配，50个中匹配，50个低匹配
-        # 这样能确保约35-40%的正样本
+        # 后续通过平衡器将总体比例拉近50/50
         selected_jobs = []
         
         # 1. 高匹配（职位+城市都匹配）：60个 → 约70-80% like
@@ -268,62 +309,79 @@ def generate_samples():
         random.shuffle(selected_jobs)  # 打乱顺序
         print(f"  职位分层: 高匹配{min(60, len(city_matched_jobs))} + 中匹配{min(50, len(matched_jobs))} + 低匹配{min(50, len(unmatched_jobs))}")
         
-        for job_idx, job in enumerate(selected_jobs, 1):
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        import os
+        def process_one(job):
             try:
-                # 使用LLM分析
-                result = analyze_match_with_llm(resume, job, llm)
-                
+                result = analyze_match_with_llm(resume, job, llm) if llm else None
                 if result is None:
-                    # LLM失败，使用简单规则
-                    job_position = job['三级分类']
+                    job_position = job.get('三级分类') or job.get('职位类型名称') or ''
                     interested = job_position in resume['work_preferences']['position_type_name']
-                    
-                    # 增加噪声
                     if random.random() < 0.2:
                         interested = not interested
                 else:
                     interested = result.get('interested', False)
-                    llm_analyzed += 1
-                
                 action = 'like' if interested else 'skip'
-                
-                sample = {
+                return {
                     'action': action,
                     'ts': '2025-11-11T00:00:00Z',
                     'type': 'cold_start',
                     'job': job,
                     'resume': resume
-                }
-                samples.append(sample)
-                
-                if action == 'like':
-                    like_count += 1
-                else:
-                    skip_count += 1
-                
-                # 每50个样本打印进度
-                if len(samples) % 50 == 0:
-                    print(f"  进度: {len(samples)}/{total_samples} - like:{like_count}, skip:{skip_count}, LLM:{llm_analyzed}")
-                
+                }, (1 if action == 'like' else 0)
             except Exception as e:
                 print(f"  错误: {e}")
-                continue
+                return None, 0
+
+        workers = max(4, min(len(selected_jobs), (os.cpu_count() or 8)))
+        with ThreadPoolExecutor(max_workers=workers) as ex:
+            futures = [ex.submit(process_one, job) for job in selected_jobs]
+            for fut in as_completed(futures):
+                res, like_inc = fut.result()
+                if res:
+                    samples.append(res)
+                    like_count += like_inc
+                    skip_count += (1 - like_inc)
     
     # 打乱数据
     random.shuffle(samples)
-    
-    # 统计
+
+    # 先做总体平衡到约50/50
     total = len(samples)
+    if total > 0:
+        current_likes = sum(1 for s in samples if s['action'] == 'like')
+        target_likes = total // 2
+        if current_likes > target_likes:
+            need_flip = current_likes - target_likes
+            for s in samples:
+                if need_flip <= 0:
+                    break
+                if s['action'] == 'like' and random.random() < 0.5:
+                    s['action'] = 'skip'
+                    need_flip -= 1
+        elif current_likes < target_likes:
+            need_flip = target_likes - current_likes
+            for s in samples:
+                if need_flip <= 0:
+                    break
+                if s['action'] == 'skip' and random.random() < 0.5:
+                    s['action'] = 'like'
+                    need_flip -= 1
+
+    # 统计
     positive_ratio = like_count / total if total > 0 else 0
-    
     print(f"\n=== 生成完成 ===")
     print(f"总样本数: {total}")
     print(f"正样本(like): {like_count} ({positive_ratio*100:.1f}%)")
     print(f"负样本(skip): {skip_count} ({(1-positive_ratio)*100:.1f}%)")
-    print(f"LLM分析: {llm_analyzed} ({llm_analyzed/total*100:.1f}%)")
-    
+    if total > 0:
+        print(f"LLM分析: {llm_analyzed} ({llm_analyzed/total*100:.1f}%)")
+    else:
+        print(f"LLM分析: {llm_analyzed} (0.0%)")
+
     # 保存
-    output_file = Path('recommend_events.jsonl')
+    # 固定写入到logs目录
+    output_file = Path(__file__).parent / 'recommend_events.jsonl'
     
     # 备份原文件
     if output_file.exists():
@@ -343,5 +401,45 @@ def generate_samples():
     return samples
 
 if __name__ == '__main__':
-    generate_samples()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--single', action='store_true')
+    parser.add_argument('--output', type=str, default=str(Path(__file__).parent / 'recommend_events.jsonl'))
+    parser.add_argument('--fresh', action='store_true')
+    args = parser.parse_args()
+
+    llm = None
+    if API_KEY:
+        try:
+            llm = ChatOpenAI(model=MODEL, base_url=BASE_URL, api_key=API_KEY, temperature=0.5)
+        except Exception:
+            llm = None
+
+    if args.single:
+        jobs = load_real_jobs()
+        positions = load_positions()
+        resume = generate_resume_with_llm(llm, positions)
+        job = random.choice(jobs) if jobs else {}
+        result = analyze_match_with_llm(resume, job, llm) if llm else None
+        if result is None:
+            job_position = job.get('三级分类') or job.get('职位类型名称') or ''
+            interested = job_position in resume['work_preferences']['position_type_name']
+            if random.random() < 0.2:
+                interested = not interested
+        else:
+            interested = result.get('interested', False)
+        sample = {
+            'action': ('like' if interested else 'skip'),
+            'ts': '2025-11-11T00:00:00Z',
+            'type': 'cold_start',
+            'job': job,
+            'resume': resume
+        }
+        out = Path(args.output)
+        mode = 'w' if args.fresh or (not out.exists()) else 'a'
+        out.parent.mkdir(parents=True, exist_ok=True)
+        with out.open(mode, encoding='utf-8') as w:
+            w.write(json.dumps(sample, ensure_ascii=False) + '\n')
+        print(f"写入1条样本到: {out}")
+    else:
+        generate_samples()
 

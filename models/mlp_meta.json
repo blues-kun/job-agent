@@ -1,0 +1,36 @@
+{
+  "model_type": "MLP",
+  "model_path": "models/mlp_model.pth",
+  "feature_names": [
+    "education_match",
+    "experience_ratio",
+    "intent_match_score",
+    "job_avg_salary",
+    "location_match",
+    "required_education",
+    "required_experience",
+    "resume_desc_sim",
+    "resume_req_sim",
+    "resume_title_sim",
+    "salary_months",
+    "salary_negotiable",
+    "salary_ratio",
+    "school_211",
+    "school_985",
+    "school_level",
+    "user_education",
+    "user_expect_salary",
+    "user_experience",
+    "willingness_relocate"
+  ],
+  "metrics": {
+    "train_auc": 0.6014694213867188,
+    "val_auc": 0.570166015625,
+    "val_accuracy": 0.5375,
+    "val_precision": 0.5314136125654451,
+    "val_recall": 0.634375,
+    "val_f1": 0.5783475783475783
+  },
+  "train_samples": 2560,
+  "val_samples": 640
+}

@@ -1,6 +1,6 @@
 {
-  "timestamp": "2025-11-14T01:12:15.131221",
-  "model_path": "models\\xgb_model.json",
+  "timestamp": "2025-11-16T19:50:34.982263",
+  "model_path": "D:\\project\\AI_JD\\test\\job-agent\\models\\xgb_model.json",
   "feature_names": [
     "cosine_cnt",
     "education_match",
@@ -14,22 +14,33 @@
   ],
   "metrics": {
     "data_stats": {
-      "total_samples": 10,
-      "positive_samples": 3,
-      "negative_samples": 7,
-      "positive_ratio": 0.3,
-      "negative_ratio": 0.7
+      "total_samples": 3209,
+      "positive_samples": 1601,
+      "negative_samples": 1608,
+      "positive_ratio": 0.49890931754440637,
+      "negative_ratio": 0.5010906824555936
     },
     "train": {
-      "accuracy": 0.7,
-      "precision": 0.0,
-      "recall": 0.0,
-      "f1": 0.0,
-      "tp": 0,
-      "fp": 0,
-      "fn": 3,
-      "tn": 7,
-      "auc": 0.8809523809523809
+      "accuracy": 0.8780677834047527,
+      "precision": 0.8757763975155279,
+      "recall": 0.8805620608899297,
+      "f1": 0.8781627092253795,
+      "tp": 1128,
+      "fp": 160,
+      "fn": 153,
+      "tn": 1126,
+      "auc": 0.949435948052831
+    },
+    "val": {
+      "accuracy": 0.5342679127725857,
+      "precision": 0.5321100917431193,
+      "recall": 0.54375,
+      "f1": 0.5378670788253477,
+      "tp": 174,
+      "fp": 153,
+      "fn": 146,
+      "tn": 169,
+      "auc": 0.5526203416149068
     }
   }
 }

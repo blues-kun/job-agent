@@ -59,6 +59,23 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json({'jobs': data})
             except Exception as e:
                 self._json({'error': str(e)}, 500)
+        elif p.path == '/xgb_showcase':
+            try:
+                # 导入生成展示页面的函数
+                from training.xgb_api import generate_fake_xgb_showcase
+                html_content = generate_fake_xgb_showcase()
+                
+                # 发送HTML响应
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/html; charset=utf-8')
+                self.send_header('Content-Length', str(len(html_content.encode('utf-8'))))
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(html_content.encode('utf-8'))
+            except Exception as e:
+                import traceback
+                traceback.print_exc()
+                self._json({'error': f'生成展示页面失败: {str(e)}'}, 500)
         else:
             super().do_GET()
 
@@ -83,7 +100,7 @@ class Handler(SimpleHTTPRequestHandler):
                         resume_text = m.get('content', '')
                 use_llm = bool(payload.get('use_llm'))
                 print(f"[DEBUG] use_llm={use_llm}, payload.use_llm={payload.get('use_llm')}, type={type(payload.get('use_llm'))}")
-                positions_file = Path(__file__).resolve().parents[1] / 'position_dictionary.txt'
+                positions_file = Path(__file__).resolve().parents[1] / 'data' / 'position_dictionary.txt'
                 allowed = []
                 if positions_file.exists():
                     import re
@@ -91,23 +108,17 @@ class Handler(SimpleHTTPRequestHandler):
                         s = line.strip()
                         if not s:
                             continue
+                        if s.startswith('#'):
+                            continue
                         if s.startswith('[') and s.endswith(']'):
+                            header = s[1:-1].strip()
+                            if header and header not in allowed:
+                                allowed.append(header)
                             continue
                         s = re.sub(r'^\s*\d+\s*→\s*', '', s)
-                        allowed.append(s)
-                # 从文件加载内置职位分类（三级分类）
-                builtin_positions_file = Path(__file__).resolve().parents[1] / 'data' / 'builtin_positions.txt'
-                if builtin_positions_file.exists():
-                    for line in builtin_positions_file.read_text('utf-8').splitlines():
-                        line = line.strip()
-                        # 跳过空行和注释
-                        if not line or line.startswith('#'):
-                            continue
-                        if line not in allowed:
-                            allowed.append(line)
-                    print(f'[INFO] 职位三级分类加载完成，共 {len(allowed)} 个')
-                else:
-                    print(f'[WARN] 职位分类文件不存在: {builtin_positions_file}')
+                        if s not in allowed:
+                            allowed.append(s)
+                    print(f'[INFO] 职位分类加载完成，共 {len(allowed)} 个')
                 
                 # 如果未启用LLM，返回友好提示
                 if not use_llm:

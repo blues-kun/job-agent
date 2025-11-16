@@ -1,0 +1,36 @@
+{
+  "model_type": "CNN",
+  "model_path": "models/cnn_model.pth",
+  "feature_names": [
+    "education_match",
+    "experience_ratio",
+    "intent_match_score",
+    "job_avg_salary",
+    "location_match",
+    "required_education",
+    "required_experience",
+    "resume_desc_sim",
+    "resume_req_sim",
+    "resume_title_sim",
+    "salary_months",
+    "salary_negotiable",
+    "salary_ratio",
+    "school_211",
+    "school_985",
+    "school_level",
+    "user_education",
+    "user_expect_salary",
+    "user_experience",
+    "willingness_relocate"
+  ],
+  "metrics": {
+    "train_auc": 0.5822216796874999,
+    "val_auc": 0.5536962890625,
+    "val_accuracy": 0.5390625,
+    "val_precision": 0.5386996904024768,
+    "val_recall": 0.54375,
+    "val_f1": 0.5412130637636081
+  },
+  "train_samples": 2560,
+  "val_samples": 640
+}

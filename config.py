@@ -39,7 +39,7 @@ else:
     JOBS_FILE = JOBS_FILE_EXCEL
 
 RESUME_FILE = BASE_DIR / "resume.json"
-POSITION_DICT_FILE = BASE_DIR / "data" / "builtin_positions.txt"
+POSITION_DICT_FILE = BASE_DIR / "data" / "position_dictionary.txt"
 
 # =========================
 # 匹配算法配置
