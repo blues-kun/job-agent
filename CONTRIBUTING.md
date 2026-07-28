@@ -28,14 +28,14 @@
 ## 开发环境配置
 ```bash
 # 克隆仓库
-git clone https://github.com/blues-kun/job_agent.git
-cd job_agent
+git clone https://github.com/blues-kun/job-agent.git
+cd job-agent
 
 # 安装依赖
 pip install -r requirements.txt
 
 # 配置环境变量
-cp env_template.txt .env
+cp .env.example .env
 # 编辑 .env 填写你的 API_KEY
 
 # 启动服务
@@ -48,4 +48,3 @@ python unified_server.py
 
 ---
 版权所有 © 深圳大学 徐琨博
-

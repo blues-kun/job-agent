@@ -1,4 +1,4 @@
-# 智能职位推荐项目（job_agent）
+# Job Agent：智能职位推荐系统
 
 ## 项目简介
 - 面向简历与岗位数据的智能推荐系统，融合本地匹配算法与大语言模型生成推荐理由与行动建议
@@ -52,18 +52,23 @@
 
 **步骤1：环境配置**
 ```bash
-# 安装依赖
-pip install -r requirements.txt
+git clone https://github.com/blues-kun/job-agent.git
+cd job-agent
 
-# 配置 LLM（如需使用智能对话）
-cp env_template.txt .env
-# 编辑 .env 填入你的 API_KEY
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+
+# 可选：启用 LLM 功能
+cp .env.example .env
+# 只在本地 .env 中填写 API_KEY
 ```
 
 **步骤2：准备岗位数据**
 ```bash
 # 如果使用真实岗位数据，确保 data/job_data.csv 已存在
-
+```
 
 **步骤3：数据向量化（可选，用于深度学习）**
 ```bash
@@ -173,7 +178,8 @@ python main.py
 
 ### 岗位数据
 - **默认岗位数据**：`data/job_data.xlsx` 或 `data/job_data.csv`
-- **数据来源**：深圳地区真实招聘数据（5000+ 岗位）
+- **当前示例数据**：14,118 条深圳地区岗位记录
+- **数据来源**：实际招聘平台公开岗位信息；使用或再分发前请自行核验来源平台条款
 - **数据格式要求**：CSV/XLSX/JSONL，包含岗位名称、企业、地址、薪资、要求等字段
 
 **真实数据使用示例**（以深圳岗位数据为例）：
@@ -245,7 +251,7 @@ python logs/generate_realistic_samples.py
 - 🔒 **隐私保护**：已脱敏处理，不包含求职者个人隐私信息
 - 📝 **数据内容**：企业名称、岗位要求、薪资范围等公开招聘信息
 - 🎯 **模型效果**：基于真实数据训练，AUC 达到 0.5739
-- 📈 **数据规模**：5000+ 真实岗位
+- 📈 **数据规模**：14,118 条岗位记录
 
 ---
 
@@ -335,7 +341,12 @@ python training/train_xgb_advanced.py
 ---
 
 ## ⚙️ 环境配置（LLM）
-在项目根目录创建 `.env` 文件：
+从示例创建本地 `.env` 文件：
+```bash
+cp .env.example .env
+```
+
+然后只在本地填写配置：
 ```env
 BASE_URL=https://api.deepseek.com/v1
 API_KEY=你的密钥
@@ -346,6 +357,7 @@ TEMPERATURE=0
 **说明**：
 - 若未配置密钥，网页的"启用智能对话"开关关闭后仍可使用本地匹配
 - 开启"启用智能对话"时必须有有效 API_KEY，否则会返回错误提示
+- `.env` 已被 Git 忽略；请勿提交真实密钥，密钥一旦进入 Git 历史应立即轮换
 
 ---
 
@@ -460,7 +472,7 @@ TEMPERATURE=0
 ### 数据处理
 - **岗位数据管理**：
   - 支持导入真实岗位数据（CSV/XLSX/JSONL格式）
-  - 基于深圳地区真实招聘数据（5000+ 岗位，105个职位类型）
+  - 基于深圳地区岗位数据（14,118 条记录，105 个职位类型）
 - **训练数据生成**：
   - `logs/generate_realistic_samples.py` - LLM智能生成高质量用户反馈样本（推荐）
 - **数据预处理**：
@@ -715,7 +727,7 @@ python unified_server.py
 
 ### 项目结构
 ```
-job_agent/
+job-agent/
 ├── web/                     # 前端界面
 │   ├── index.html          # 主页面
 │   ├── app.js              # 交互逻辑
@@ -746,7 +758,7 @@ job_agent/
 │   └── extractor.py        # LLM 简历提取器
 ├── data/                    # 数据文件
 │   ├── job_data.xlsx       # 岗位数据（XLSX格式）
-│   ├── job_data.csv        # 岗位数据（CSV格式，深圳真实招聘数据5000+）
+│   ├── job_data.csv        # 岗位数据（CSV 格式，14,118 条记录）
 │   ├── job_data.jsonl      # 岗位数据（JSONL格式，优先级最高）
 │   ├── position_dictionary.txt  # 职位分类字典（8大类105个职位）
 │   ├── job_data_vectorized.csv      # 向量化岗位数据（CSV）
@@ -800,20 +812,28 @@ job_agent/
 
 ---
 
-## 📄 版权声明
+## 🔐 安全说明
+
+- 不要在 Issue、日志、截图或提交中公开 API Key、访问令牌和真实简历。
+- 发现安全问题时，请按 [SECURITY.md](SECURITY.md) 私下报告。
+- `resume.json`、对话日志和本地 `.env` 均属于运行时私有数据，默认不会纳入 Git。
+
+---
+
+## 📄 版权与数据声明
 
 **Copyright © 2025 徐琨博（深圳大学）保留所有权利**  
 **All Rights Reserved**
 
 创作日期：2025年11月
 
-### 使用限制
-本项目代码及相关文档受中华人民共和国著作权法保护，未经作者书面许可，任何单位或个人不得以任何形式复制、修改、发布、分发或用于商业用途。
+### 代码许可
+当前仓库尚未授予开源许可证。在许可证明确前，公开可见不等于获得复制、修改、分发或商业使用授权。
 
 ### 数据说明
-- **真实数据**：使用实际招聘平台的岗位信息（如深圳地区招聘数据），数据已脱敏处理，不包含求职者个人信息。
-
-所有数据处理均符合数据安全与隐私保护相关法律法规要求。
+- 仓库中的职位样例来自实际招聘平台的公开岗位信息，不包含求职者个人身份信息。
+- 职位数据不随未来代码许可证自动授权；使用者应自行核验数据来源、平台条款和适用法规。
+- `logs/recommend_events.jsonl` 主要为合成冷启动样本，并包含少量反馈记录；用于公开演示前应再次执行隐私检查。
 
 ### 学术用途
 如需在学术研究中引用本项目，请注明出处：
