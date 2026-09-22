@@ -13,6 +13,8 @@
 | 算法对比 | [05-comparison.png](screenshots/05-comparison.png) | 同一简历、相同快照的三路实跑，不把覆盖率当作相关性 |
 | 研究与标注 | [06-research.png](screenshots/06-research.png) | 真实阶段进度与人工金标仍为零的状态；未领取原文标注任务 |
 | 移动端 | [07-mobile.png](screenshots/07-mobile.png) | 390×844 视口下的导航与需求概览 |
+| 关键追问与取舍 | [08-decision.png](screenshots/decision-support/08-decision.png) | 按候选选择追问、必要要求证据区间、广告薪资与门槛确认 |
+| 最小补证路线 | [09-actions.png](screenshots/decision-support/09-actions.png) | 必需/替代要求的条件式路线，以及无法由技能行动解决的条件 |
 
 桌面视口为 1440×1080；证据页为浏览器直接截取的 940×972 弹窗。采集时间、快照、各文件 SHA-256 与浏览器检查结果见 [manifest.json](screenshots/manifest.json)。截图中的耗时仅为当次请求，不能代表负载性能；历史招聘广告不等于当前供给。
 
@@ -42,3 +44,15 @@ python -m scripts.capture_screenshots --url http://127.0.0.1:8094 --output /绝�
 脚本使用本机 URL 和内置简历样例，遮罩公司名称；原始采集方式为 Playwright 页面交互与截图，采集环境保存在清单中。脚本会覆盖指定目录内同名截图，复采建议使用新目录。
 
 演示材料说明：内置简历和 `scripts/create_demo_data.py` 生成的 **16 条岗位**均为预设的合成样例，用于功能验证。上述界面中的岗位统计来自另行配置的历史快照，企业名称已遮罩。研究指标的复现需要匹配的原表、数据划分与模型版本，配置方式见 [运行手册](V2_RUNBOOK.md)。
+
+## 决策能力的新增验收
+
+08、09 使用仓库公开岗位处理版实际运行，按业务键加载 14,115 个岗位，桌面视口 1440×1100；企业已使用公开版编码。内置简历用于功能演示，流程包括确认画像、推荐、展开候选比较、查看补证路线、修改全日制回答后重新确认，以及 390 像素移动端检查。记录见 [browser-verification.json](screenshots/decision-support/browser-verification.json)。
+
+本次可选 Playwright 包下载较慢，改用机器已安装的 Chromium 调试接口完成真实浏览器验收。新增脚本不依赖 npm 包；运行前需自行启动本机 Chromium 并开放仅绑定 `127.0.0.1` 的调试端口 9229，再执行：
+
+```bash
+node --experimental-websocket scripts/capture_decision_support.mjs --url http://127.0.0.1:8094 --debug-url http://127.0.0.1:9229 --output-dir ../job-agent-decision-screenshots
+```
+
+Node 20 需要上述 WebSocket 开关；新版本若已默认支持 WebSocket，可省略开关。复采建议选择新目录，脚本会覆盖其中同名图片。截图由浏览器直接生成，脚本不修改页面业务数据；采集后只清理本次会话的临时反馈与行动记录。

@@ -40,6 +40,7 @@ class Preferences(BaseModel):
     city: str = Field(default="", max_length=30)
     intent: str = Field(default="", max_length=150)
     education: Literal["", "初中", "高中", "中专", "大专", "本科", "硕士", "博士"] = ""
+    education_full_time: bool | None = None
     experience_years: float | None = Field(default=None, ge=0, le=60)
     salary_min: float | None = Field(default=None, ge=0, le=1000000)
     salary_max: float | None = Field(default=None, ge=0, le=1000000)

@@ -4,7 +4,7 @@ from .domain import EDUCATION, education, experience, parse_profile
 from .retrieval_contract import stable_hash, experience_blocks
 
 FIELD_LABELS = {"city":"目标城市", "intent":"求职方向", "education":"最高学历", "experience_years":"工作总年资",
-                "salary_min":"最低月薪", "salary_max":"期望月薪上限", "district":"区域偏好"}
+                "salary_min":"最低月薪", "salary_max":"期望月薪上限", "district":"区域偏好", "education_full_time":"相关学历是否全日制"}
 
 
 def extracted_fields(text):
@@ -28,7 +28,7 @@ def profile_preview(text, preferences, origins=None):
         source = origins.get(key, "user_input" if value not in (None, "") else "unknown")
         # 上传客户端把旧样例标为sample_stale；即使调用者忘记清空，也不采纳。
         if source == "sample_stale":
-            value = None if key in {"experience_years", "salary_min", "salary_max"} else ""
+            value = None if key in {"experience_years", "salary_min", "salary_max", "education_full_time"} else ""
         if value in (None, "") and inferred not in (None, ""):
             value, source = inferred, "text_extracted"
         effective[key] = value
@@ -49,7 +49,7 @@ def profile_preview(text, preferences, origins=None):
 def fact_fingerprint(text, preferences):
     """比较完整经历块多重集及确认画像，防止拆散任职标题/日期归属。"""
     profile = parse_profile(text, preferences)
-    facts = {key:profile.get(key) for key in ["education","experience_years","city","intent","salary_min","salary_max","district"]}
+    facts = {key:profile.get(key) for key in ["education","education_full_time","experience_years","city","intent","salary_min","salary_max","district"]}
     facts["skills"] = {key:item["level"] for key,item in profile["skills"].items()}
     facts["blocks"] = sorted(experience_blocks(text))
     return facts
@@ -58,7 +58,7 @@ def fact_fingerprint(text, preferences):
 def compare_versions(before, after, preferences):
     previous, current = parse_profile(before, preferences), parse_profile(after, preferences)
     old_blocks, new_blocks = set(experience_blocks(before)), set(experience_blocks(after))
-    keys = ["education","experience_years","city","intent","salary_min","salary_max","district"]
+    keys = ["education","education_full_time","experience_years","city","intent","salary_min","salary_max","district"]
     return {"before_version":previous["version"],"after_version":current["version"],
             "added_blocks":sorted(new_blocks-old_blocks),"removed_blocks":sorted(old_blocks-new_blocks),
             "changed_fields":{key:{"before":previous.get(key),"after":current.get(key)} for key in keys if previous.get(key)!=current.get(key)},

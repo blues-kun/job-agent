@@ -1,0 +1,52 @@
+{
+  "执行时间_UTC": "2026-09-22T16:17:42.040232+00:00",
+  "验证范围": "四项决策组件的工程回归与本机浏览器验收；没有新增人工金标或真实求职结果实验",
+  "CPU回归": {
+    "tests": 313,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "GPU训练本轮执行": false,
+  "固定案例": {
+    "cases": 25,
+    "current_expected_met": 25,
+    "baseline_expected_met": 8,
+    "constructed_binding_negatives": 6,
+    "baseline_false_support": 6,
+    "current_false_support": 0
+  },
+  "独立穷举": {
+    "seed": 20260923,
+    "布尔树": 48,
+    "画像子集": 16,
+    "组合数": 768,
+    "适用范围": "4技能、深度不超过3、未发生内部搜索截断的固定生成场景"
+  },
+  "公开库API验收": "decision_platform_20260923.json",
+  "浏览器验收": "../screenshots/decision-support/browser-verification.json",
+  "已有8094服务已验证新组件": true,
+  "原始Excel摘要未变": true,
+  "公开Excel_SHA256": "14cc18bd0e8ed380471727f3f109f9bba9723d799b8a4ac6f5a6c1b9a6e99d30",
+  "源码_SHA256": {
+    "job_agent/evidence_alignment.py": "9484bd595cf9585fb55ac5d53b9a343aaaa9756b627b8762fa7f9b752b240d50",
+    "job_agent/action_planner.py": "2a953ff32df18ac091974eb1034256d38db7e0242d90141c2347b2a4bcef251d",
+    "job_agent/decision_support.py": "6105edaf4906f1d3acbcd1db8c5b1041497da27a9a63bfb6a3e090d3b0d5e28a",
+    "job_agent/workflow.py": "d48f6f0e637a303b82114a0d2ab3f233fecaf0b573faf3929ac7582c5061cfa0",
+    "job_agent/api.py": "8646e9d97b96d4ef4ddb644bcdf4a6da3f5961889a1d22436815c849282adb5c",
+    "job_agent/profiles.py": "144253e4244e8dac516c67dde656bf3d4f886a0f2f75cf3224b839313e6f3e0f",
+    "web/platform/app.js": "b734f03286c166d194f704b7763c5ceaadb7ce3836175899d2a0546b6a4a487d",
+    "web/platform/index.html": "51e13171261bfe205fabc1ac23002c5f53f2b791e1996b55387076429d27c9cb",
+    "web/platform/styles.css": "e2de85c73f12bb232ad594ca74882f394c49ccb211ba6d59a387c3569d8f5d01",
+    "research/evaluate_decision_innovations.py": "6be53bbb1702cb631a4ec8ec7d8af31ac31617e1ca02577eccb3c6c3646c2070",
+    "scripts/capture_decision_support.mjs": "f628104655927d5fbd8f9eca8e583acaac5dee2b0ad02256f23b34dab4fe5038",
+    "tests/test_action_planner_properties.py": "f91223269db7c368a2f51dc16189ceaab26f23552994bb862470e18db35e124b"
+  },
+  "限制": [
+    "词典及工具—任务模板覆盖有限",
+    "倒装专项年资仍有旧解析器误归属案例",
+    "逻辑区间不具有统计置信度含义",
+    "保持原35维排序合同，未声称新排序增益",
+    "模型辅助标注不等于人工金标"
+  ]
+}

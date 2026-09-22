@@ -1,0 +1,238 @@
+{
+  "executed_at_utc": "2026-09-22T16:16:25.878296+00:00",
+  "source_sha256": "14cc18bd0e8ed380471727f3f109f9bba9723d799b8a4ac6f5a6c1b9a6e99d30",
+  "samples": [
+    {
+      "sample": "应届生 · Python 数据方向",
+      "id": "graduate-python",
+      "action": "recommend",
+      "returned": 10,
+      "eligible": 1822,
+      "latency_ms": 652,
+      "sources": {
+        "bm25": 100,
+        "char_tfidf": 120,
+        "structured": 80
+      },
+      "retriever": "BM25 + 字符TF-IDF（尚未加载预训练向量）",
+      "avg_skill_coverage": 62.49
+    },
+    {
+      "sample": "开发者 · 2 年 Python 后端",
+      "id": "python-junior",
+      "action": "recommend",
+      "returned": 10,
+      "eligible": 2580,
+      "latency_ms": 389,
+      "sources": {
+        "bm25": 100,
+        "char_tfidf": 120,
+        "structured": 80
+      },
+      "retriever": "BM25 + 字符TF-IDF（尚未加载预训练向量）",
+      "avg_skill_coverage": 64.64
+    },
+    {
+      "sample": "转岗者 · 运营转数据分析",
+      "id": "transition-data",
+      "action": "recommend",
+      "returned": 10,
+      "eligible": 3551,
+      "latency_ms": 317,
+      "sources": {
+        "bm25": 100,
+        "char_tfidf": 120,
+        "structured": 80
+      },
+      "retriever": "BM25 + 字符TF-IDF（尚未加载预训练向量）",
+      "avg_skill_coverage": 93.68
+    },
+    {
+      "sample": "前端工程师 · Vue 项目经历",
+      "id": "frontend",
+      "action": "recommend",
+      "returned": 10,
+      "eligible": 3148,
+      "latency_ms": 311,
+      "sources": {
+        "bm25": 100,
+        "char_tfidf": 120,
+        "structured": 77
+      },
+      "retriever": "BM25 + 字符TF-IDF（尚未加载预训练向量）",
+      "avg_skill_coverage": 76.45
+    },
+    {
+      "sample": "算法工程师 · PyTorch 经验",
+      "id": "ml-senior",
+      "action": "recommend",
+      "returned": 10,
+      "eligible": 4896,
+      "latency_ms": 775,
+      "sources": {
+        "bm25": 100,
+        "char_tfidf": 120,
+        "structured": 80
+      },
+      "retriever": "BM25 + 字符TF-IDF（尚未加载预训练向量）",
+      "avg_skill_coverage": 37.96
+    },
+    {
+      "sample": "信息残缺 · 需要先追问",
+      "id": "incomplete",
+      "action": "clarify",
+      "returned": 0,
+      "eligible": 0,
+      "latency_ms": 1,
+      "sources": {},
+      "retriever": "BM25 + 字符TF-IDF（尚未加载预训练向量）",
+      "avg_skill_coverage": null
+    },
+    {
+      "sample": "对抗样例 · 只有技能关键词",
+      "id": "keyword-list",
+      "action": "clarify",
+      "returned": 0,
+      "eligible": 0,
+      "latency_ms": 3,
+      "sources": {},
+      "retriever": "BM25 + 字符TF-IDF（尚未加载预训练向量）",
+      "avg_skill_coverage": null
+    }
+  ],
+  "scope": "虚构演示样例的工程验收；不代表独立人工人岗效果",
+  "human_gold_created": false,
+  "health": {
+    "status": "ready",
+    "jobs": 14115,
+    "snapshot": "14cc18bd0e8ed380",
+    "build_seconds": 38.74
+  },
+  "engine": "BM25 + 字符TF-IDF（尚未加载预训练向量）",
+  "overview": {
+    "raw_total": 14118,
+    "total": 14115,
+    "duplicates": 3,
+    "category_count": 72,
+    "unknown_location": 3544,
+    "salary_count": 13609,
+    "salary_quantiles": [
+      15000,
+      23500,
+      40000
+    ],
+    "alternative_groups": 2084
+  },
+  "comparison": {
+    "rows": [
+      {
+        "method": "bm25",
+        "label": "BM25基线",
+        "count": 10,
+        "latency_ms": 339,
+        "mean_skill_coverage": 27.7,
+        "company_count": 10,
+        "hard_violations": 0,
+        "job_ids": [
+          "0e5389f46750f42324eb",
+          "9d838b9d123bbfb09a99",
+          "f5bf770040d30a948a5f",
+          "a8d1ecfb9f7f47bf83c2",
+          "c8c5d184c2013b09d404",
+          "fa556bddff7d9f125e40",
+          "7bc75d531de7f6b0df17",
+          "d2f2d0f6f379334258ef",
+          "bbfce588ab9daa2b9d67",
+          "beb0a41c874bcc3c29f6"
+        ],
+        "titles": [
+          "app后端工程师",
+          "后台开发工程师",
+          "后端高级软件工程师"
+        ]
+      },
+      {
+        "method": "retrieval",
+        "label": "多路召回",
+        "count": 10,
+        "latency_ms": 299,
+        "mean_skill_coverage": 30.6,
+        "company_count": 10,
+        "hard_violations": 0,
+        "job_ids": [
+          "c8c5d184c2013b09d404",
+          "59ac96feddd2bd09ff32",
+          "beb0a41c874bcc3c29f6",
+          "bbfce588ab9daa2b9d67",
+          "fa556bddff7d9f125e40",
+          "16e6980e9b4c702ea9ac",
+          "a200ba929c3b74c43f08",
+          "dba66ac074b4303e682d",
+          "a8d1ecfb9f7f47bf83c2",
+          "52e1219fc8fc043b7116"
+        ],
+        "titles": [
+          "Python后端开发工程师",
+          "量化开发(偏数据库)工程师",
+          "Python开发实习生(爬虫方向)"
+        ]
+      },
+      {
+        "method": "hybrid",
+        "label": "多路召回＋证据精排",
+        "count": 10,
+        "latency_ms": 540,
+        "mean_skill_coverage": 64.6,
+        "company_count": 10,
+        "hard_violations": 0,
+        "job_ids": [
+          "7a3bf55132eea5d10ae7",
+          "beb0a41c874bcc3c29f6",
+          "fa556bddff7d9f125e40",
+          "31124b865fde3dbc4414",
+          "e24072e106d4dec5ea7f",
+          "d2442320b08a31bd2c01",
+          "52e1219fc8fc043b7116",
+          "7e48897bfd69592afc2a",
+          "e8575b521301d55eba1c",
+          "c8c5d184c2013b09d404"
+        ],
+        "titles": [
+          "Python 和数据库开发工程师",
+          "Python开发实习生(爬虫方向)",
+          "Python Developer(远程办公)"
+        ]
+      }
+    ],
+    "snapshot": "14cc18bd0e8ed380",
+    "note": "同一简历和快照的实际运行结果。技能覆盖为规则代理指标；无人工金标，不能据此声称nDCG或AUC提升。"
+  },
+  "sequential_http_ms": [
+    369.1,
+    448.1,
+    453.6
+  ],
+  "concurrent5_http_ms": [
+    4403.1,
+    4285.3,
+    4350.8,
+    4290.2,
+    4439.2
+  ],
+  "checks": {
+    "sample_runs": 7,
+    "hard_violations_detected_by_current_rules": 0,
+    "verified_dual_quotes": 211,
+    "diagnose_rewrite_interview": true,
+    "feedback_idempotent": true,
+    "explicit_profile_confirmation": true,
+    "confirmation_gate_checks": 9,
+    "feature_version": "evidence-ranker-v2-35",
+    "feature_count": 35,
+    "rewrite_fields_and_blocks_preserved": true,
+    "research_features_require_consent": true,
+    "research_events_exclude_raw_resume": true,
+    "static_assets": true,
+    "source_hash_unchanged": true
+  }
+}

@@ -23,3 +23,16 @@
   .sidebar nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:12px}
   .nav-item{justify-content:center;white-space:nowrap;padding:8px 3px;font-size:.78rem}
 }
+/* 决策支持：问题优先级、区间比较与补证路线。 */
+.decision-panel { margin-bottom: 20px; border-left: 3px solid #345cca; }
+.decision-panel h3 { margin: 10px 0 16px; }
+.decision-questions { display: grid; gap: 14px; }
+.decision-questions > div { padding-bottom: 10px; border-bottom: 1px solid #e7ebf3; }
+.decision-comparison { margin-top: 16px; }
+.decision-comparison summary { cursor: pointer; font-weight: 600; }
+.comparison-scroll { max-width: 100%; overflow-x: auto; }
+.comparison-scroll table { width: 100%; min-width: 440px; border-collapse: collapse; font-size: 12px; }
+.comparison-scroll th, .comparison-scroll td { text-align: left; padding: 10px 8px; border-bottom: 1px solid #e7ebf3; }
+.decision-badge { padding: 8px 10px; background: #edf2ff; color: #314a82; border-radius: 7px; font-size: 12px; }
+.action-plans ol { padding-left: 22px; }
+.action-plans li { margin: 8px 0; }

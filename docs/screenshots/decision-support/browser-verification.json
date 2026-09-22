@@ -1,0 +1,32 @@
+{
+  "executed_at": "2026-09-22T16:16:24.826Z",
+  "scope": "内置合成简历与公开岗位库的浏览器工程验收",
+  "health": {
+    "status": "ready",
+    "jobs": 14115,
+    "snapshot": "14cc18bd0e8ed380",
+    "build_seconds": 38.74
+  },
+  "steps": [
+    "画像解析与确认",
+    "公开岗位库实际推荐",
+    "关键追问与证据区间展示",
+    "真实诊断接口与补证路线展示",
+    "追问回填后撤销旧凭据并重新确认",
+    "390像素移动端无横向溢出"
+  ],
+  "errors": [],
+  "captures": [
+    {
+      "file": "08-decision.png",
+      "caption": "关键追问与候选取舍比较",
+      "sha256": "04d38c08ae87760a5a3bc1bb57110d4c72b9810f1c817eb58c3fa18e49905262"
+    },
+    {
+      "file": "09-actions.png",
+      "caption": "岗位要求的条件式补证路线",
+      "sha256": "7fbc1ce17bf36cfef3d497978058be6964d3a88169c583b692f6357094537ab5"
+    }
+  ],
+  "human_outcome_evaluation": false
+}

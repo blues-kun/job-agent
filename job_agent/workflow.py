@@ -16,8 +16,34 @@ from .coach import Coach
 from .retrieval_contract import render_query, query_segments, semantic_text, experience_blocks, contract_info
 from .profiles import fact_fingerprint, compare_versions
 from .ranking import feature_vector, FEATURE_NAMES, FEATURE_VERSION
+from .evidence_alignment import align_requirements
+from .action_planner import plan_actions
+from .decision_support import evidence_bounds, plan_questions, comparison_frontier
 
 SKILL_ROOT = Path(__file__).resolve().parents[1] / "skills"
+
+
+def _align_display(matches, gaps, job, alignment):
+    """保留原特征合同，将细粒度证据结论单独用于面向用户的诊断。"""
+    proof_by_id = {item["group_id"]: item for item in alignment["groups"]}
+    gap_ids = {item["group_id"] for item in gaps}
+    groups = {item["group_id"]: item for item in job.groups}
+    for match in matches:
+        proof = proof_by_id.get(match["group_id"])
+        if alignment["summary"]["status"] == "not_evaluated":
+            proof = {"status": "unknown", "reasons": ["具体经历对齐超出解析预算，尚未评估"]}
+        if proof and proof["status"] != match["status"]:
+            match["global_status"] = match["status"]
+            match["status"] = proof["status"]
+            match["note"] = "；".join(proof["reasons"]) or "具体经历与要求的对应关系仍需确认"
+            if match["group_id"] not in gap_ids:
+                group = groups[match["group_id"]]
+                gaps.append({"skill": group["label"], "options": group["skills"], "tasks": group["tasks"],
+                             "kind": group["kind"], "group_id": group["group_id"], "preferred": group["preferred"],
+                             "evidence": group["evidence"], "status": proof["status"], "leaf_support": match["leaf_support"],
+                             "message": match["note"], "parse_status": group["parse_status"], "gap_type": "task_binding"})
+                gap_ids.add(match["group_id"])
+    return matches, gaps
 
 
 class Workflow:
@@ -136,7 +162,7 @@ class Workflow:
                             "features": {name:None if np.isnan(value) else float(value) for name,value in zip(FEATURE_NAMES,vector)},
                             "reasons": [f"{item['skill']}：{item['note']}" for item in matched[:3]], "_index": int(index)})
         ranking.sort(key=lambda row: (-row["score"], row["id"]))
-        selected, company_counts, families = [], Counter(), set()
+        selected, selected_jobs, company_counts, families, alignments = [], [], Counter(), set(), {}
         for row in ranking:
             job = self.corpus.jobs[row.pop("_index")]
             family = job.job_family_id or (digest(job.description.strip()) if job.description else job.id)
@@ -149,16 +175,26 @@ class Workflow:
                 continue
             row["evidence_verified"] = True
             row["evidence_check"] = "原文跨度已核对；能力真实性尚未外部核验"
+            alignment = align_requirements(profile, job)
+            alignments[job.id] = alignment
+            row["decision_certificate"] = evidence_bounds(profile, job, alignment)
+            row["alignment_summary"] = alignment["summary"]
+            row["matched"], row["gaps"] = _align_display(row["matched"], row["gaps"], job, alignment)
+            row["reasons"] = [f"{item['skill']}：{item['note']}" for item in row["matched"][:3]]
             selected.append(row)
+            selected_jobs.append(job)
             company_counts[job.company] += 1
             families.add(family)
             if len(selected) >= limit:
                 break
         trace.extend([{"step": "证据精排", "status": "done", "detail": "区分技能提及、使用经历与替代技能组"},
-                      {"step": "核验与去重", "status": "done", "detail": "双侧引用已定位，同公司最多2个岗位"}])
+                      {"step": "核验与去重", "status": "done", "detail": "双侧引用已定位，同公司最多2个岗位"},
+                      {"step": "决策支持", "status": "done", "detail": "对齐工具与任务，生成关键追问并比较候选取舍"}])
         return {**base, "action": "recommend" if selected else "no_match", "questions": [], "jobs": selected,
                 "total_eligible": int(allowed.sum()), "retrieved": len(candidates), "excluded": dict(excluded),
                 "source_counts": {name: len(indexes) for name, indexes in sources.items()},
+                "decision_support": plan_questions(profile, selected_jobs, alignments=alignments),
+                "comparison_frontier": comparison_frontier(profile, selected),
                 "latency_ms": round((time.perf_counter()-started)*1000),
                 "message": "匹配分用于比较本次候选，不代表录用概率。" if selected else "当前条件下未找到有检索依据的岗位。可检查最低薪资或补充项目证据；系统没有自动放宽条件。"}
 
@@ -167,10 +203,16 @@ class Workflow:
         job = self.corpus.by_id[job_id]
         profile = parse_profile(text, preferences)
         matches, gaps, coverage = supported_matches(profile, job)
+        alignment = align_requirements(profile, job)
+        certificate = evidence_bounds(profile, job, alignment)
+        matches, gaps = _align_display(matches, gaps, job, alignment)
         same_level = [other for other in self.corpus.jobs if other.category == job.category and other.experience_min == job.experience_min and other.salary["status"] == "月薪"]
         monthly = [(other.salary["monthly_low"] + other.salary["monthly_high"])/2 for other in same_level]
         return {"job": job.public(), "profile_version": profile["version"], "snapshot": self.corpus.snapshot[:16],
-                "matched": matches, "gaps": gaps, "coverage": round(coverage*100, 1), "constraints": constraints(profile, job),
+                "matched": matches, "gaps": gaps, "coverage": round(certificate["coverage_bounds"][0]*100, 1),
+                "mention_coverage": round(coverage*100, 1), "constraints": constraints(profile, job),
+                "alignment": alignment, "decision_certificate": certificate,
+                "action_plans": plan_actions(profile, job, alignment=alignment),
                 "market": {"n": len(monthly), "category": job.category, "experience_min": job.experience_min,
                            "quantiles": [round(float(value)) for value in np.quantile(monthly, [.25, .5, .75])] if len(monthly) >= 30 else None,
                            "note": "同职类、相同最低年资的广告月薪中点；样本不足30条时不报分位。"},

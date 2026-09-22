@@ -1,0 +1,1020 @@
+{
+  "schema": "decision-innovation-fixtures-v1",
+  "created_utc": "2026-09-22T16:14:35.650749+00:00",
+  "scope": "本报告只验证固定合成反例的工程行为；不是独立人岗效果评测，不证明真实用户收益或统计显著性。",
+  "all_inputs_synthetic": true,
+  "human_gold_count": 0,
+  "real_person_job_effect_measured": false,
+  "statistical_significance": "未估计，不适用于该固定工程矩阵",
+  "external_api_calls": 0,
+  "training_runs": 0,
+  "versions": {
+    "alignment": "requirement-block-alignment-v1",
+    "decision": "decision-support-v1",
+    "planner": "evidence-action-planner-v1",
+    "parser": "demand-semantics-v2.0.2-actor-scope-b2f7d7072418"
+  },
+  "source_files_sha256": {
+    "research/evaluate_decision_innovations.py": "6be53bbb1702cb631a4ec8ec7d8af31ac31617e1ca02577eccb3c6c3646c2070",
+    "job_agent/action_planner.py": "2a953ff32df18ac091974eb1034256d38db7e0242d90141c2347b2a4bcef251d",
+    "job_agent/decision_support.py": "6105edaf4906f1d3acbcd1db8c5b1041497da27a9a63bfb6a3e090d3b0d5e28a",
+    "job_agent/evidence_alignment.py": "9484bd595cf9585fb55ac5d53b9a343aaaa9756b627b8762fa7f9b752b240d50",
+    "job_agent/domain.py": "e721b1d7b08d3456881154f815ac109b86699a2b8d10071657ac74853d342854",
+    "job_agent/semantics.py": "24c178bf12dfd57083002b3f898629a9394d88b52e72fc6729c7f80347f40730"
+  },
+  "fixture_spec_sha256": "02ef6bbf0e6bb4ec4350812fa8ff6100bf786fc24e8b223347e992feda946a72",
+  "summary": {
+    "cases": 25,
+    "current_expected_met": 25,
+    "baseline_expected_met": 8,
+    "constructed_binding_negatives": 6,
+    "baseline_false_support": 6,
+    "current_false_support": 0
+  },
+  "dimensions": {
+    "动作证据对齐": {
+      "cases": 10,
+      "baseline_expected_met": 4,
+      "current_expected_met": 10
+    },
+    "主动追问": {
+      "cases": 4,
+      "baseline_expected_met": 1,
+      "current_expected_met": 4
+    },
+    "逻辑行动规划": {
+      "cases": 6,
+      "baseline_expected_met": 2,
+      "current_expected_met": 6
+    },
+    "区间与多目标比较": {
+      "cases": 5,
+      "baseline_expected_met": 1,
+      "current_expected_met": 5
+    }
+  },
+  "cases": [
+    {
+      "case_id": "alignment_separate_projects",
+      "dimension": "动作证据对齐",
+      "scenario": "跨项目工具与任务不能拼成同一操作",
+      "inputs": {
+        "resume": "使用Python开发订单接口。\n\n项目二：使用Excel完成数据清洗。",
+        "jd": "负责使用Python完成数据清洗。"
+      },
+      "expected": {
+        "state": "unknown"
+      },
+      "baseline": {
+        "method": "现有全局技能/任务三态匹配",
+        "actual": {
+          "state": "pass"
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "要求组与同动作工具—任务绑定",
+        "actual": {
+          "state": "unknown",
+          "bound_groups": 2,
+          "downgraded_groups": 2
+        },
+        "expected_met": true
+      },
+      "attribution": "跨项目工具与任务不能拼成同一操作"
+    },
+    {
+      "case_id": "alignment_separate_actions",
+      "dimension": "动作证据对齐",
+      "scenario": "同一段中的两种操作仍有不同工具",
+      "inputs": {
+        "resume": "使用Python开发接口，使用Excel完成数据清洗。",
+        "jd": "负责使用Python完成数据清洗。"
+      },
+      "expected": {
+        "state": "unknown"
+      },
+      "baseline": {
+        "method": "现有全局技能/任务三态匹配",
+        "actual": {
+          "state": "pass"
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "要求组与同动作工具—任务绑定",
+        "actual": {
+          "state": "unknown",
+          "bound_groups": 2,
+          "downgraded_groups": 2
+        },
+        "expected_met": true
+      },
+      "attribution": "同一段中的两种操作仍有不同工具"
+    },
+    {
+      "case_id": "alignment_skill_and_task",
+      "dimension": "动作证据对齐",
+      "scenario": "掌握工具和承担任务分别成立，不证明工具用于该任务",
+      "inputs": {
+        "resume": "熟悉Python。负责数据清洗。",
+        "jd": "负责使用Python完成数据清洗。"
+      },
+      "expected": {
+        "state": "unknown"
+      },
+      "baseline": {
+        "method": "现有全局技能/任务三态匹配",
+        "actual": {
+          "state": "pass"
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "要求组与同动作工具—任务绑定",
+        "actual": {
+          "state": "unknown",
+          "bound_groups": 2,
+          "downgraded_groups": 2
+        },
+        "expected_met": true
+      },
+      "attribution": "掌握工具和承担任务分别成立，不证明工具用于该任务"
+    },
+    {
+      "case_id": "alignment_different_tool",
+      "dimension": "动作证据对齐",
+      "scenario": "清洗使用的工具与岗位要求不一致，不能确认Python清洗经历",
+      "inputs": {
+        "resume": "使用Python编写接口。负责数据清洗，但处理时只使用Excel。",
+        "jd": "负责使用Python完成数据清洗。"
+      },
+      "expected": {
+        "state": "unknown"
+      },
+      "baseline": {
+        "method": "现有全局技能/任务三态匹配",
+        "actual": {
+          "state": "pass"
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "要求组与同动作工具—任务绑定",
+        "actual": {
+          "state": "unknown",
+          "bound_groups": 2,
+          "downgraded_groups": 2
+        },
+        "expected_met": true
+      },
+      "attribution": "清洗使用的工具与岗位要求不一致，不能确认Python清洗经历"
+    },
+    {
+      "case_id": "alignment_skill_section",
+      "dimension": "动作证据对齐",
+      "scenario": "技能清单不能替代具体任务中的操作证据",
+      "inputs": {
+        "resume": "技能清单：熟悉Python。\n\n项目经历：使用Excel完成数据清洗。",
+        "jd": "负责使用Python完成数据清洗。"
+      },
+      "expected": {
+        "state": "unknown"
+      },
+      "baseline": {
+        "method": "现有全局技能/任务三态匹配",
+        "actual": {
+          "state": "pass"
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "要求组与同动作工具—任务绑定",
+        "actual": {
+          "state": "unknown",
+          "bound_groups": 2,
+          "downgraded_groups": 2
+        },
+        "expected_met": true
+      },
+      "attribution": "技能清单不能替代具体任务中的操作证据"
+    },
+    {
+      "case_id": "alignment_different_work",
+      "dimension": "动作证据对齐",
+      "scenario": "另一个项目只说明任务，没有说明使用Python",
+      "inputs": {
+        "resume": "项目一：使用Python编写自动化测试。\n\n项目二：开展数据清洗。",
+        "jd": "负责使用Python完成数据清洗。"
+      },
+      "expected": {
+        "state": "unknown"
+      },
+      "baseline": {
+        "method": "现有全局技能/任务三态匹配",
+        "actual": {
+          "state": "pass"
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "要求组与同动作工具—任务绑定",
+        "actual": {
+          "state": "unknown",
+          "bound_groups": 2,
+          "downgraded_groups": 2
+        },
+        "expected_met": true
+      },
+      "attribution": "另一个项目只说明任务，没有说明使用Python"
+    },
+    {
+      "case_id": "alignment_positive_control",
+      "dimension": "动作证据对齐",
+      "scenario": "同一动作中明确记录工具和任务，文本支持成立",
+      "inputs": {
+        "resume": "项目一：使用Python完成数据清洗。",
+        "jd": "负责使用Python完成数据清洗。"
+      },
+      "expected": {
+        "state": "pass"
+      },
+      "baseline": {
+        "method": "现有全局技能/任务三态匹配",
+        "actual": {
+          "state": "pass"
+        },
+        "expected_met": true
+      },
+      "current": {
+        "method": "要求组与同动作工具—任务绑定",
+        "actual": {
+          "state": "pass",
+          "bound_groups": 2,
+          "downgraded_groups": 0
+        },
+        "expected_met": true
+      },
+      "attribution": "同一动作中明确记录工具和任务，文本支持成立"
+    },
+    {
+      "case_id": "alignment_negative_control",
+      "dimension": "动作证据对齐",
+      "scenario": "明确否定不能当成支持",
+      "inputs": {
+        "resume": "项目一：不会使用Python完成数据清洗。",
+        "jd": "负责使用Python完成数据清洗。"
+      },
+      "expected": {
+        "state": "fail"
+      },
+      "baseline": {
+        "method": "现有全局技能/任务三态匹配",
+        "actual": {
+          "state": "fail"
+        },
+        "expected_met": true
+      },
+      "current": {
+        "method": "要求组与同动作工具—任务绑定",
+        "actual": {
+          "state": "fail",
+          "bound_groups": 2,
+          "downgraded_groups": 0
+        },
+        "expected_met": true
+      },
+      "attribution": "明确否定不能当成支持"
+    },
+    {
+      "case_id": "alignment_team_control",
+      "dimension": "动作证据对齐",
+      "scenario": "团队行为不能直接归于本人",
+      "inputs": {
+        "resume": "项目一：团队使用Python完成数据清洗，我负责项目协调。",
+        "jd": "负责使用Python完成数据清洗。"
+      },
+      "expected": {
+        "state": "unknown"
+      },
+      "baseline": {
+        "method": "现有全局技能/任务三态匹配",
+        "actual": {
+          "state": "unknown"
+        },
+        "expected_met": true
+      },
+      "current": {
+        "method": "要求组与同动作工具—任务绑定",
+        "actual": {
+          "state": "unknown",
+          "bound_groups": 2,
+          "downgraded_groups": 0
+        },
+        "expected_met": true
+      },
+      "attribution": "团队行为不能直接归于本人"
+    },
+    {
+      "case_id": "alignment_future_control",
+      "dimension": "动作证据对齐",
+      "scenario": "计划不代表已完成经历",
+      "inputs": {
+        "resume": "项目一：计划使用Python完成数据清洗。",
+        "jd": "负责使用Python完成数据清洗。"
+      },
+      "expected": {
+        "state": "unknown"
+      },
+      "baseline": {
+        "method": "现有全局技能/任务三态匹配",
+        "actual": {
+          "state": "unknown"
+        },
+        "expected_met": true
+      },
+      "current": {
+        "method": "要求组与同动作工具—任务绑定",
+        "actual": {
+          "state": "unknown",
+          "bound_groups": 2,
+          "downgraded_groups": 0
+        },
+        "expected_met": true
+      },
+      "attribution": "计划不代表已完成经历"
+    },
+    {
+      "case_id": "question_tenure_only",
+      "dimension": "主动追问",
+      "scenario": "学历已知，候选岗位之间的年资判断仍未知，应先核对本人总年资",
+      "inputs": {
+        "resume": "本科。使用Python编写接口。",
+        "preferences": {
+          "experience_years": null
+        },
+        "jd": "本科；要求3年以上工作经验。熟悉Python。"
+      },
+      "expected": {
+        "useful_questions": 1,
+        "irrelevant_questions": 0,
+        "employer_routed": true,
+        "profile_unchanged": true
+      },
+      "baseline": {
+        "method": "对照启发式：固定先问学历（不是旧平台实际策略）",
+        "actual": {
+          "useful_questions": 0,
+          "irrelevant_questions": 1,
+          "employer_routed": true,
+          "profile_unchanged": true,
+          "question_fields": [
+            "education"
+          ]
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "候选条件与逻辑区间驱动的追问",
+        "actual": {
+          "useful_questions": 1,
+          "irrelevant_questions": 0,
+          "employer_routed": true,
+          "profile_unchanged": true,
+          "question_fields": [
+            "experience_years"
+          ]
+        },
+        "expected_met": true
+      },
+      "attribution": "学历已知，候选岗位之间的年资判断仍未知，应先核对本人总年资"
+    },
+    {
+      "case_id": "question_education_only",
+      "dimension": "主动追问",
+      "scenario": "本人学历未知而岗位门槛明确，学历追问在这个控制样例中有用",
+      "inputs": {
+        "resume": "使用Python编写接口。",
+        "preferences": {
+          "education": "",
+          "experience_years": 1
+        },
+        "jd": "本科；经验不限。熟悉Python。"
+      },
+      "expected": {
+        "useful_questions": 1,
+        "irrelevant_questions": 0,
+        "employer_routed": true,
+        "profile_unchanged": true
+      },
+      "baseline": {
+        "method": "对照启发式：固定先问学历（不是旧平台实际策略）",
+        "actual": {
+          "useful_questions": 1,
+          "irrelevant_questions": 0,
+          "employer_routed": true,
+          "profile_unchanged": true,
+          "question_fields": [
+            "education"
+          ]
+        },
+        "expected_met": true
+      },
+      "current": {
+        "method": "候选条件与逻辑区间驱动的追问",
+        "actual": {
+          "useful_questions": 1,
+          "irrelevant_questions": 0,
+          "employer_routed": true,
+          "profile_unchanged": true,
+          "question_fields": [
+            "education"
+          ]
+        },
+        "expected_met": true
+      },
+      "attribution": "本人学历未知而岗位门槛明确，学历追问在这个控制样例中有用"
+    },
+    {
+      "case_id": "question_employer_unknown",
+      "dimension": "主动追问",
+      "scenario": "缺失来自JD，不能通过反问求职者补出招聘方门槛",
+      "inputs": {
+        "resume": "本科。使用Python编写接口。",
+        "preferences": {},
+        "jd": "本科。熟悉Python。"
+      },
+      "expected": {
+        "useful_questions": 0,
+        "irrelevant_questions": 0,
+        "employer_routed": true,
+        "profile_unchanged": true
+      },
+      "baseline": {
+        "method": "对照启发式：固定先问学历（不是旧平台实际策略）",
+        "actual": {
+          "useful_questions": 0,
+          "irrelevant_questions": 1,
+          "employer_routed": false,
+          "profile_unchanged": true,
+          "question_fields": [
+            "education"
+          ]
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "候选条件与逻辑区间驱动的追问",
+        "actual": {
+          "useful_questions": 0,
+          "irrelevant_questions": 0,
+          "employer_routed": true,
+          "profile_unchanged": true,
+          "question_fields": []
+        },
+        "expected_met": true
+      },
+      "attribution": "缺失来自JD，不能通过反问求职者补出招聘方门槛"
+    },
+    {
+      "case_id": "question_or_satisfied",
+      "dimension": "主动追问",
+      "scenario": "Python已满足OR分支，不应强制追问Java或重复询问已知学历",
+      "inputs": {
+        "resume": "本科。使用Python编写接口。",
+        "preferences": {},
+        "jd": "本科；经验不限。熟悉Python或Java。"
+      },
+      "expected": {
+        "useful_questions": 0,
+        "irrelevant_questions": 0,
+        "employer_routed": true,
+        "profile_unchanged": true
+      },
+      "baseline": {
+        "method": "对照启发式：固定先问学历（不是旧平台实际策略）",
+        "actual": {
+          "useful_questions": 0,
+          "irrelevant_questions": 1,
+          "employer_routed": true,
+          "profile_unchanged": true,
+          "question_fields": [
+            "education"
+          ]
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "候选条件与逻辑区间驱动的追问",
+        "actual": {
+          "useful_questions": 0,
+          "irrelevant_questions": 0,
+          "employer_routed": true,
+          "profile_unchanged": true,
+          "question_fields": []
+        },
+        "expected_met": true
+      },
+      "attribution": "Python已满足OR分支，不应强制追问Java或重复询问已知学历"
+    },
+    {
+      "case_id": "plan_and",
+      "dimension": "逻辑行动规划",
+      "scenario": "AND需要两个技能的条件式行动，不能只补一个",
+      "inputs": {
+        "resume": "暂无相关项目描述。",
+        "jd": "熟悉Python和SQL。"
+      },
+      "expected": {
+        "minimum_actions": 2,
+        "logical_completeness": true,
+        "conditional_only": true,
+        "profile_unchanged": true
+      },
+      "baseline": {
+        "method": "对照启发式：平铺未出现的全部技能选项",
+        "actual": {
+          "minimum_actions": 2,
+          "logical_completeness": true,
+          "conditional_only": true,
+          "profile_unchanged": true,
+          "action_sets": [
+            [
+              "Python",
+              "SQL"
+            ]
+          ]
+        },
+        "expected_met": true
+      },
+      "current": {
+        "method": "保留AND/OR的最小条件式行动集",
+        "actual": {
+          "minimum_actions": 2,
+          "logical_completeness": true,
+          "conditional_only": true,
+          "profile_unchanged": true,
+          "action_sets": [
+            [
+              "Python",
+              "SQL"
+            ]
+          ],
+          "planner_status": "planned"
+        },
+        "expected_met": true
+      },
+      "attribution": "AND需要两个技能的条件式行动，不能只补一个"
+    },
+    {
+      "case_id": "plan_or",
+      "dimension": "逻辑行动规划",
+      "scenario": "OR只需一个完整分支，不应把两个选项都列为必要行动",
+      "inputs": {
+        "resume": "暂无相关项目描述。",
+        "jd": "熟悉Python或Java。"
+      },
+      "expected": {
+        "minimum_actions": 1,
+        "logical_completeness": true,
+        "conditional_only": true,
+        "profile_unchanged": true
+      },
+      "baseline": {
+        "method": "对照启发式：平铺未出现的全部技能选项",
+        "actual": {
+          "minimum_actions": 2,
+          "logical_completeness": true,
+          "conditional_only": true,
+          "profile_unchanged": true,
+          "action_sets": [
+            [
+              "Java",
+              "Python"
+            ]
+          ]
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "保留AND/OR的最小条件式行动集",
+        "actual": {
+          "minimum_actions": 1,
+          "logical_completeness": true,
+          "conditional_only": true,
+          "profile_unchanged": true,
+          "action_sets": [
+            [
+              "Java"
+            ],
+            [
+              "Python"
+            ]
+          ],
+          "planner_status": "planned"
+        },
+        "expected_met": true
+      },
+      "attribution": "OR只需一个完整分支，不应把两个选项都列为必要行动"
+    },
+    {
+      "case_id": "plan_nested",
+      "dimension": "逻辑行动规划",
+      "scenario": "两个OR组必须各选一项，平铺会多要求两项",
+      "inputs": {
+        "resume": "暂无相关项目描述。",
+        "jd": "熟悉(Python或Java)和(SQL或MySQL)。"
+      },
+      "expected": {
+        "minimum_actions": 2,
+        "logical_completeness": true,
+        "conditional_only": true,
+        "profile_unchanged": true
+      },
+      "baseline": {
+        "method": "对照启发式：平铺未出现的全部技能选项",
+        "actual": {
+          "minimum_actions": 4,
+          "logical_completeness": true,
+          "conditional_only": true,
+          "profile_unchanged": true,
+          "action_sets": [
+            [
+              "Java",
+              "MySQL",
+              "Python",
+              "SQL"
+            ]
+          ]
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "保留AND/OR的最小条件式行动集",
+        "actual": {
+          "minimum_actions": 2,
+          "logical_completeness": true,
+          "conditional_only": true,
+          "profile_unchanged": true,
+          "action_sets": [
+            [
+              "Java",
+              "MySQL"
+            ],
+            [
+              "Java",
+              "SQL"
+            ],
+            [
+              "MySQL",
+              "Python"
+            ]
+          ],
+          "planner_status": "bounded"
+        },
+        "expected_met": true
+      },
+      "attribution": "两个OR组必须各选一项，平铺会多要求两项"
+    },
+    {
+      "case_id": "plan_supported_or",
+      "dimension": "逻辑行动规划",
+      "scenario": "一个分支已有自述支持，不再将另一选项当必要缺口",
+      "inputs": {
+        "resume": "使用Python开发接口。",
+        "jd": "熟悉Python或Java。"
+      },
+      "expected": {
+        "minimum_actions": 0,
+        "logical_completeness": true,
+        "conditional_only": true,
+        "profile_unchanged": true
+      },
+      "baseline": {
+        "method": "对照启发式：平铺未出现的全部技能选项",
+        "actual": {
+          "minimum_actions": 1,
+          "logical_completeness": true,
+          "conditional_only": true,
+          "profile_unchanged": true,
+          "action_sets": [
+            [
+              "Java"
+            ]
+          ]
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "保留AND/OR的最小条件式行动集",
+        "actual": {
+          "minimum_actions": 0,
+          "logical_completeness": true,
+          "conditional_only": true,
+          "profile_unchanged": true,
+          "action_sets": [
+            []
+          ],
+          "planner_status": "planned"
+        },
+        "expected_met": true
+      },
+      "attribution": "一个分支已有自述支持，不再将另一选项当必要缺口"
+    },
+    {
+      "case_id": "plan_binding_gap",
+      "dimension": "逻辑行动规划",
+      "scenario": "已出现的技能与任务不应掩盖缺少动作关联的补证需求",
+      "inputs": {
+        "resume": "使用Python开发接口。\n\n使用Excel完成数据清洗。",
+        "jd": "使用Python完成数据清洗。"
+      },
+      "expected": {
+        "binding_actions": 1,
+        "conditional_only": true
+      },
+      "baseline": {
+        "method": "只按全局叶支持规划",
+        "actual": {
+          "binding_actions": 0,
+          "conditional_only": true
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "加入动作关联的条件式补证规划",
+        "actual": {
+          "binding_actions": 1,
+          "conditional_only": true
+        },
+        "expected_met": true
+      },
+      "attribution": "关联缺口只要求核对既有经历，不把行动清单写成已经会做；同一绑定在两个要求组中去重。"
+    },
+    {
+      "case_id": "plan_binding_control",
+      "dimension": "逻辑行动规划",
+      "scenario": "已出现的技能与任务不应掩盖缺少动作关联的补证需求",
+      "inputs": {
+        "resume": "使用Python完成数据清洗。",
+        "jd": "使用Python完成数据清洗。"
+      },
+      "expected": {
+        "binding_actions": 0,
+        "conditional_only": true
+      },
+      "baseline": {
+        "method": "只按全局叶支持规划",
+        "actual": {
+          "binding_actions": 0,
+          "conditional_only": true
+        },
+        "expected_met": true
+      },
+      "current": {
+        "method": "加入动作关联的条件式补证规划",
+        "actual": {
+          "binding_actions": 0,
+          "conditional_only": true
+        },
+        "expected_met": true
+      },
+      "attribution": "关联缺口只要求核对既有经历，不把行动清单写成已经会做；同一绑定在两个要求组中去重。"
+    },
+    {
+      "case_id": "interval_missing_skill",
+      "dimension": "区间与多目标比较",
+      "scenario": "SQL没有材料是未知，上界应保留，不能当作明确不会",
+      "inputs": {
+        "resume": "使用Python开发接口。",
+        "jd": "熟悉Python。掌握SQL。"
+      },
+      "expected": {
+        "coverage_bounds": [
+          0.5,
+          1.0
+        ]
+      },
+      "baseline": {
+        "method": "对照启发式：独立条件计分，缺失当0且不检查动作绑定",
+        "actual": {
+          "coverage_bounds": [
+            0.5,
+            0.5
+          ]
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "要求组逻辑区间＋动作绑定",
+        "actual": {
+          "coverage_bounds": [
+            0.5,
+            1.0
+          ],
+          "state": "needs_evidence",
+          "requirement_count": 2
+        },
+        "expected_met": true
+      },
+      "attribution": "SQL没有材料是未知，上界应保留，不能当作明确不会"
+    },
+    {
+      "case_id": "interval_negative_skill",
+      "dimension": "区间与多目标比较",
+      "scenario": "明确否定与缺证据不同，SQL分支不再保留可支持上界",
+      "inputs": {
+        "resume": "使用Python开发接口。不会SQL。",
+        "jd": "熟悉Python。掌握SQL。"
+      },
+      "expected": {
+        "coverage_bounds": [
+          0.5,
+          0.5
+        ]
+      },
+      "baseline": {
+        "method": "对照启发式：独立条件计分，缺失当0且不检查动作绑定",
+        "actual": {
+          "coverage_bounds": [
+            0.5,
+            0.5
+          ]
+        },
+        "expected_met": true
+      },
+      "current": {
+        "method": "要求组逻辑区间＋动作绑定",
+        "actual": {
+          "coverage_bounds": [
+            0.5,
+            0.5
+          ],
+          "state": "needs_evidence",
+          "requirement_count": 2
+        },
+        "expected_met": true
+      },
+      "attribution": "明确否定与缺证据不同，SQL分支不再保留可支持上界"
+    },
+    {
+      "case_id": "interval_no_requirements",
+      "dimension": "区间与多目标比较",
+      "scenario": "没有解析出要求应标未知，不能解释为全部满足或完全不匹配",
+      "inputs": {
+        "resume": "使用Python开发接口。",
+        "jd": "负责未收录的专业工作。"
+      },
+      "expected": {
+        "coverage_bounds": [
+          0.0,
+          1.0
+        ]
+      },
+      "baseline": {
+        "method": "对照启发式：独立条件计分，缺失当0且不检查动作绑定",
+        "actual": {
+          "coverage_bounds": [
+            0.0,
+            0.0
+          ]
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "要求组逻辑区间＋动作绑定",
+        "actual": {
+          "coverage_bounds": [
+            0.0,
+            1.0
+          ],
+          "state": "needs_evidence",
+          "requirement_count": 0
+        },
+        "expected_met": true
+      },
+      "attribution": "没有解析出要求应标未知，不能解释为全部满足或完全不匹配"
+    },
+    {
+      "case_id": "interval_bound_gap",
+      "dimension": "区间与多目标比较",
+      "scenario": "原全局分数满支持，但跨动作证据不能关闭逻辑不确定区间",
+      "inputs": {
+        "resume": "使用Python写接口。\n\n使用Excel完成数据清洗。",
+        "jd": "使用Python完成数据清洗。"
+      },
+      "expected": {
+        "coverage_bounds": [
+          0.0,
+          1.0
+        ]
+      },
+      "baseline": {
+        "method": "对照启发式：独立条件计分，缺失当0且不检查动作绑定",
+        "actual": {
+          "coverage_bounds": [
+            1.0,
+            1.0
+          ]
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "要求组逻辑区间＋动作绑定",
+        "actual": {
+          "coverage_bounds": [
+            0.0,
+            1.0
+          ],
+          "state": "needs_evidence",
+          "requirement_count": 2
+        },
+        "expected_met": true
+      },
+      "attribution": "原全局分数满支持，但跨动作证据不能关闭逻辑不确定区间"
+    },
+    {
+      "case_id": "frontier_tradeoffs",
+      "dimension": "区间与多目标比较",
+      "scenario": "保留证据—薪资取舍与未知岗位，剔除明确被支配岗位",
+      "inputs": {
+        "candidates": [
+          {
+            "id": "strong-evidence",
+            "evidence_interval": [
+              1.0,
+              1.0
+            ],
+            "salary": "10-10K"
+          },
+          {
+            "id": "higher-pay",
+            "evidence_interval": [
+              0.5,
+              0.5
+            ],
+            "salary": "30-30K"
+          },
+          {
+            "id": "unknown-record",
+            "evidence_interval": [
+              0.0,
+              1.0
+            ],
+            "salary": "面议"
+          },
+          {
+            "id": "dominated",
+            "evidence_interval": [
+              0.25,
+              0.25
+            ],
+            "salary": "5-5K"
+          }
+        ]
+      },
+      "expected": {
+        "frontier_ids": [
+          "higher-pay",
+          "strong-evidence",
+          "unknown-record"
+        ],
+        "unknown_salary_preserved": true,
+        "dominated_removed": true
+      },
+      "baseline": {
+        "method": "对照启发式：缺失当0后的点值Pareto",
+        "actual": {
+          "frontier_ids": [
+            "higher-pay",
+            "strong-evidence"
+          ],
+          "unknown_salary_preserved": false,
+          "dominated_removed": true
+        },
+        "expected_met": false
+      },
+      "current": {
+        "method": "逻辑区间上的稳健Pareto",
+        "actual": {
+          "frontier_ids": [
+            "higher-pay",
+            "strong-evidence",
+            "unknown-record"
+          ],
+          "unknown_salary_preserved": true,
+          "dominated_removed": true
+        },
+        "expected_met": true
+      },
+      "attribution": "未知记录不一定优秀；在证据不足时不能证明其被支配。前沿只表示当前候选间的取舍，不保证适岗。"
+    }
+  ],
+  "limitations": [
+    "每项预期由固定场景人工式定义，不来自真实用户标注；禁止将通过数解释为人岗准确率。",
+    "对照中只有全局技能/任务匹配对应已有代码；固定先问学历、平铺缺口、缺失当0都是明示的对照启发式。",
+    "样本选择旨在暴露特定工程错误，不具有随机性、总体代表性或统计显著性。",
+    "最小行动数只计算条件式行动条目，不估计学习成本、真实能力变化或录用机会。",
+    "逻辑上下界不是统计置信区间；稳健前沿不是全库最优或录用概率。"
+  ]
+}

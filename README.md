@@ -4,7 +4,7 @@
 
 面向应届生与转岗求职者，结合岗位需求图谱、文本检索与证据约束智能体，提供需求分析、简历匹配、差距诊断和求职材料完善流程。研究部分涵盖领域向量微调、要求组异构图与学习排序，并通过固定候选池和消融实验评估各组件的作用。
 
-[产品流程](#产品流程) · [公开数据](data/README.md) · [项目完善内容](#项目完善内容) · [迭代过程](#迭代过程) · [快速运行](#快速运行) · [关键代码](#关键代码) · [验证结果与研究进展](#验证结果与研究进展)
+[产品流程](#产品流程) · [四项决策改进](#四项决策改进) · [公开数据](data/README.md) · [项目完善内容](#项目完善内容) · [迭代过程](#迭代过程) · [快速运行](#快速运行) · [验证结果与研究进展](#验证结果与研究进展)
 
 ![岗位需求分析](docs/screenshots/01-demand.png)
 
@@ -25,6 +25,31 @@
 | [查看截图](docs/screenshots/04-evidence.png) | [查看截图](docs/screenshots/05-comparison.png) | [查看截图](docs/screenshots/06-research.png) | [查看截图](docs/screenshots/07-mobile.png) |
 
 更多界面与交互说明见 [平台展示](docs/SCREENSHOTS.md)。
+
+## 四项决策改进
+
+结合 Management Science、AEJ: Economic Policy、Nature Human Behaviour、Journal of Labor Economics 的招聘与技能研究，以及 WWW 2025 的交互推荐方法，在检索排序之后增加四项可解释决策能力。完整研究依据、论文出版状态和验证设计见 [招聘痛点与创新设计](docs/HIRING_PAIN_POINTS_AND_INNOVATIONS.md)。
+
+| 改进 | 具体行为 | 页面入口 |
+|---|---|---|
+| 要求与具体经历对齐 | 区分“Python 写接口＋Excel 清洗”和“Python 清洗”；本人、任务与工具需有对应关系，普通 AND 仍允许跨经历支持 | 岗位详情中的工具—任务对应经历 |
+| 按判断影响追问 | 依据本次候选选择学历、总年资、专项年资或具体经历问题；已满足 OR 分支不再追问另一技能 | 推荐结果顶部，点击问题返回相应字段 |
+| 保留逻辑的最小补证路线 | `(Python 且 SQL) 或 (Java 且 MySQL)` 保留两条完整路线；补已有证据、学习实践与工具—任务补证分别列出 | 岗位详情中的最小补证路线 |
+| 证据区间与候选取舍 | 以必要要求逻辑区间、广告薪资区间和区域偏好比较；未知保持未知，保留高薪与证据之间的取舍 | 推荐结果中的可展开比较表 |
+
+这些能力已经接入推荐与诊断接口，使用 CPU 即可运行。35 维模型特征和原排序基线保留可比口径，新增细粒度证据结论用于诊断与决策展示。逻辑区间表示可解析要求的支持范围；文本支持仍需核对真实经历，广告薪资也不等于个人可获得的工资。
+
+四项方法的固定反例对照可以独立复跑：
+
+```bash
+python -m research.evaluate_decision_innovations --output-dir ../job-agent-decision-run
+```
+
+输出目录须为新目录。已执行的 [25 例结果与归因](docs/evaluation/decision_innovations/REPORT.md) 已归档。这组对照验证具体错误机制和算法性质；真实人岗排序收益及用户体验需用独立审核数据和用户试验验证。
+
+![关键追问与候选取舍](docs/screenshots/decision-support/08-decision.png)
+
+[查看补证路线界面](docs/screenshots/decision-support/09-actions.png) · [浏览器执行记录](docs/screenshots/decision-support/browser-verification.json)
 
 ## 项目完善内容
 
@@ -66,6 +91,10 @@
 ### 6. 完成复现与发布验证
 
 通过 **183 项 CPU 回归测试**，核对 90 个人岗结果的 3,150 个线上/离线特征值一致性，完成画像确认至算法比较的浏览器流程和移动端检查。整理运行截图、中文文档及仓库外演示数据生成器，并在 GitHub CI 中验证安装与回归流程。当前交付为可运行的本地研究平台；人岗效果验证、多用户服务与公开部署按后续阶段推进。
+
+### 7. 从匹配分数走向证据与行动决策
+
+调研招聘中的信息摩擦、能力信号、技能组合和多目标选择，将具体经历对齐、关键追问、逻辑补证规划与候选取舍接入现有平台。用同技能不同任务、嵌套替代条件、专项年资未知和缺失薪资等反例验证，保持假设回答与确认画像分离。补充全日制字段的确认流程，以及向招聘方核对岗位信息的清单。
 
 ## 算法与工程重点
 
@@ -134,6 +163,10 @@ $env:JOB_AGENT_DATA = Join-Path (Get-Location) "data/job_data_public.xlsx"
 | 否定、主体、任务与要求逻辑 | [semantics.py](job_agent/semantics.py)、[domain.py](job_agent/domain.py) |
 | BM25、向量与项目块召回 | [corpus.py](job_agent/corpus.py)、[dense.py](job_agent/dense.py)、[retrieval_contract.py](job_agent/retrieval_contract.py) |
 | 35 维共享特征与证据排序 | [ranking.py](job_agent/ranking.py)、[workflow.py](job_agent/workflow.py) |
+| 经历块与工具—任务证据对齐 | [evidence_alignment.py](job_agent/evidence_alignment.py) |
+| 反事实追问、逻辑区间与候选比较 | [decision_support.py](job_agent/decision_support.py) |
+| 嵌套要求的最小补证规划 | [action_planner.py](job_agent/action_planner.py) |
+| 四项方法的固定反例对照 | [evaluate_decision_innovations.py](research/evaluate_decision_innovations.py) |
 | 确认补证与事实保全整理 | [journey.py](job_agent/journey.py)、[coach.py](job_agent/coach.py)、[技能包](skills/) |
 | 领域向量、人岗对比微调 | [train_embedding.py](research/train_embedding.py)、[train_person_job_embedding.py](research/train_person_job_embedding.py) |
 | 保留要求组的异构图 | [group_graph.py](research/group_graph.py)、[train_group_graph.py](research/train_group_graph.py) |
@@ -148,9 +181,10 @@ $env:JOB_AGENT_DATA = Join-Path (Get-Location) "data/job_data_public.xlsx"
 
 | 项目 | 已完成验证 | 能得出的结论 |
 |---|---|---|
-| 平台 API | 7 个样例场景；190 处双侧引用；9 项画像确认检查 | 工程路径可运行，引用跨度可回查 |
+| 平台 API | 公开数据版 7 个样例场景；211 处双侧引用；9 项画像确认检查 | [实际执行记录](docs/evaluation/decision_platform_20260923.json)，工程路径可运行，引用跨度可回查 |
 | 特征一致性 | 90 对样本、3,150 个线上/离线特征值最大差为 0 | 本次回放的训练与推理特征一致 |
-| 回归 | 本次数据发布 187 项 CPU 测试通过；核心实现阶段另有 37 项模型测试及 8 个子测试通过 | [实现与验收记录](docs/V2_IMPLEMENTATION.md)，模型测试不等于推荐效果评测 |
+| 回归 | 决策改进后 313 项 CPU 测试通过；核心实现阶段另有 37 项模型测试及 8 个子测试通过 | [新增实现与验收](docs/HIRING_PAIN_POINTS_AND_INNOVATIONS.md)，模型测试不等于推荐效果评测 |
+| 决策机制 | 25 个固定反例符合预期；768 个小布尔树×画像组合通过独立穷举核验 | 指定范围内的关系对齐、逻辑规划与比较性质成立；真实用户收益待验证 |
 | 标题检索微调 | Qwen3-Embedding-0.6B LoRA，600 步；开发 Recall@10 0.6016→0.7539 | [标题检索实验](docs/EMBEDDING_RESULTS.md)；人岗匹配效果需独立评估 |
 | 图模型对照 | 三模式×三种子；真实边与随机边检索表现相同 | [实验结果与改进依据](docs/GRAPH_RESULTS.md)；保留要求组的新图进入下一阶段验证 |
 | 可信评测 | 固定池完整性校验、规则/模型双通道、对抗测试 | 独立人工金标待建立；评测器判别力问题见[分析报告](docs/EVALUATOR_RESULTS.md) |
