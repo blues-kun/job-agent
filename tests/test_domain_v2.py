@@ -24,8 +24,8 @@ def profile(text,**prefs):
 
 @pytest.mark.parametrize('index',range(8))
 def test_reviewed_eight_counterexamples(index):
-    path=Path('/storage/xukunbo2/job-agent/docs/evaluation/problem_analysis_20260922.json')
-    case=json.loads(path.read_text())['需求解析反例'][index]
+    path=Path(__file__).resolve().parents[1]/'docs/evaluation/problem_analysis_20260922.json'
+    case=json.loads(path.read_text(encoding='utf-8'))['需求解析反例'][index]
     target=job(case['jd'],case['requirements'])
     person=profile(case['resume'],education='大专' if index==6 else '本科')
     matches,gaps,coverage=supported_matches(person,target)
