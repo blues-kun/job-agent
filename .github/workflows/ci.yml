@@ -31,6 +31,8 @@ jobs:
           cache: pip
       - name: 安装平台与测试依赖
         run: python -m pip install -r requirements-research.txt pytest
+      - name: 校验公开岗位数据
+        run: python -m scripts.verify_public_data --directory data
       - name: 运行虚构数据平台与评测回归
         run: >-
           python -m pytest -q tests

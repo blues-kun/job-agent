@@ -76,6 +76,8 @@ GuideVideo.mp4
 /data/*.csv
 /data/*.jsonl
 /data/*.parquet
+# 仅放行经导出与复核的公开版本，原表继续忽略。
+!/data/job_data_public.xlsx
 /logs/*.jsonl
 /logs/*.csv
 /resume.txt

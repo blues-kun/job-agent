@@ -4,7 +4,7 @@
 
 面向应届生与转岗求职者，结合岗位需求图谱、文本检索与证据约束智能体，提供需求分析、简历匹配、差距诊断和求职材料完善流程。研究部分涵盖领域向量微调、要求组异构图与学习排序，并通过固定候选池和消融实验评估各组件的作用。
 
-[产品流程](#产品流程) · [项目完善内容](#项目完善内容) · [迭代过程](#迭代过程) · [快速运行](#快速运行) · [关键代码](#关键代码) · [验证结果与研究进展](#验证结果与研究进展)
+[产品流程](#产品流程) · [公开数据](data/README.md) · [项目完善内容](#项目完善内容) · [迭代过程](#迭代过程) · [快速运行](#快速运行) · [关键代码](#关键代码) · [验证结果与研究进展](#验证结果与研究进展)
 
 ![岗位需求分析](docs/screenshots/01-demand.png)
 
@@ -93,7 +93,7 @@ flowchart LR
 
 ## 快速运行
 
-平台已在 **Python 3.11** 验证。最小演示可在 CPU 上运行，无需配置模型服务或接口密钥。
+平台已在 **Python 3.11** 验证。仓库现已提供 **14,118 条岗位的公开处理版**，可直接在 CPU 上运行，无需配置模型服务或接口密钥。数据下载、字段和版本说明见 [data/README.md](data/README.md)。
 
 ### Linux / macOS
 
@@ -104,9 +104,8 @@ python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-platform.txt
 
-# 生成演示岗位；输出必须在仓库外，已有文件不会覆盖。
-python -m scripts.create_demo_data --output "$HOME/.cache/job-agent-demo/jobs.xlsx"
-export JOB_AGENT_DATA="$HOME/.cache/job-agent-demo/jobs.xlsx"
+# 使用仓库附带的公开岗位数据。
+export JOB_AGENT_DATA="$PWD/data/job_data_public.xlsx"
 python -m job_agent --port 8094
 ```
 
@@ -117,12 +116,13 @@ git clone https://github.com/blues-kun/job-agent.git
 cd job-agent
 py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-platform.txt
-$env:JOB_AGENT_DATA = Join-Path $env:LOCALAPPDATA "job-agent-demo\jobs.xlsx"
-.\.venv\Scripts\python.exe -m scripts.create_demo_data --output $env:JOB_AGENT_DATA
+$env:JOB_AGENT_DATA = Join-Path (Get-Location) "data/job_data_public.xlsx"
 .\.venv\Scripts\python.exe -m job_agent --port 8094
 ```
 
 访问 **http://127.0.0.1:8094**。远程 IDE 需要转发该端口。选择内置简历样例→解析→确认画像→查看推荐。切换自己的授权岗位表时，将 `JOB_AGENT_DATA` 指向仓库外的 XLSX，重启服务加载。
+
+公开文件保留14,118条内容记录；当前Excel加载器按“岗位名＋企业＋薪资”去重后显示14,115条。另有16条合成岗位生成器用于轻量测试：`python -m scripts.create_demo_data --output /仓库外/演示岗位.xlsx`。
 
 向量编码器、本地 Qwen 辅助行动、研究快照、标注恢复与 GPU 训练配置见 [运行手册](docs/V2_RUNBOOK.md)。服务绑定本机，用于单机研究与演示。
 
@@ -150,7 +150,7 @@ $env:JOB_AGENT_DATA = Join-Path $env:LOCALAPPDATA "job-agent-demo\jobs.xlsx"
 |---|---|---|
 | 平台 API | 7 个样例场景；190 处双侧引用；9 项画像确认检查 | 工程路径可运行，引用跨度可回查 |
 | 特征一致性 | 90 对样本、3,150 个线上/离线特征值最大差为 0 | 本次回放的训练与推理特征一致 |
-| 回归 | 本次发布 183 项 CPU 测试通过；核心实现阶段另有 37 项模型测试及 8 个子测试通过 | [实现与验收记录](docs/V2_IMPLEMENTATION.md)，模型测试不等于推荐效果评测 |
+| 回归 | 本次数据发布 187 项 CPU 测试通过；核心实现阶段另有 37 项模型测试及 8 个子测试通过 | [实现与验收记录](docs/V2_IMPLEMENTATION.md)，模型测试不等于推荐效果评测 |
 | 标题检索微调 | Qwen3-Embedding-0.6B LoRA，600 步；开发 Recall@10 0.6016→0.7539 | [标题检索实验](docs/EMBEDDING_RESULTS.md)；人岗匹配效果需独立评估 |
 | 图模型对照 | 三模式×三种子；真实边与随机边检索表现相同 | [实验结果与改进依据](docs/GRAPH_RESULTS.md)；保留要求组的新图进入下一阶段验证 |
 | 可信评测 | 固定池完整性校验、规则/模型双通道、对抗测试 | 独立人工金标待建立；评测器判别力问题见[分析报告](docs/EVALUATOR_RESULTS.md) |
@@ -161,11 +161,12 @@ $env:JOB_AGENT_DATA = Join-Path $env:LOCALAPPDATA "job-agent-demo\jobs.xlsx"
 
 ## 数据与复现
 
-- 内置简历及快速启动生成的 16 条岗位是为功能验证编写的合成样例，不包含真实求职者身份，也不作为人工金标。研究库统计基于另行配置的历史岗位数据，两者规模与用途不同。
-- 原始 Excel、派生岗位行、真实简历、反馈日志、接口配置和模型权重不随本次代码发布；旧版本曾跟踪的数据已从当前版本索引移除，本地文件保留，Git 历史未改写。
+- [公开岗位数据](data/README.md)提供14,118条经过信息清理的历史记录，含Excel、压缩CSV与校验清单；实际规模约1.4万条，不按多种文件格式重复计数。
+- 内置简历和可选的16条演示岗位是用于功能验证的合成样例，不包含真实求职者身份，也不作为人工金标。
+- 原始Excel、企业映射、用户简历、反馈日志、接口配置和模型权重继续保留在本地。本次公开的是单独导出并复核的数据版本，旧Git历史未改写。
 - 岗位来自历史快照，没有可靠的招聘有效状态和采集时间字段；系统用于需求研究与匹配辅助，不能承诺岗位当前在招。
 - 完整简历默认不落库；用户主动保存的单条补证材料有确认步骤和有效期。数据使用须取得相应授权。
-- [数据剖析](docs/DATA_PROFILE.md)记录了研究原表的来源、字段与统计口径；复现实验须使用匹配的数据快照和划分版本。
+- [数据剖析](docs/DATA_PROFILE.md)记录了研究原表的来源、字段与统计口径；公开版清理会改变原文跨度和内容摘要，复现实验须重新校验数据快照、索引、标签与划分版本。
 
 CPU 回归命令：
 

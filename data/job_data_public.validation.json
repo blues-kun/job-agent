@@ -1,0 +1,44 @@
+{
+  "schema": "public-jobs-validation-v1",
+  "checked_at": "2026-09-22T12:13:25.521518+00:00",
+  "public_xlsx_sha256": "14cc18bd0e8ed380471727f3f109f9bba9723d799b8a4ac6f5a6c1b9a6e99d30",
+  "source_unchanged": true,
+  "format_checks": {
+    "rows": 14118,
+    "columns": 9,
+    "xlsx_csv_equal": true,
+    "hashes_verified": true,
+    "unique_row_ids": true
+  },
+  "independent_review": {
+    "report_sha256": "53db08bc83ef53bab73e8b381df4966e22133d473ee970d8e750f211897d01c3",
+    "remaining_phone_email_account_contact_name_id_patterns": 0,
+    "technical_domain_matches_retained": 98,
+    "technical_domain_rows": 85,
+    "technical_allowlist": [
+      "ASP.NET",
+      "Socket.IO",
+      "VB.NET"
+    ],
+    "salary_pattern_false_positive_rows": 1,
+    "note": "独立宽松检测器的候选经复核；技术名称与薪资误报保留。该结果不等于已完成全部人名或隐写联系方式识别。"
+  },
+  "runtime_check": {
+    "dataset": "public-jobs-v1",
+    "source_sha256": "14cc18bd0e8ed380471727f3f109f9bba9723d799b8a4ac6f5a6c1b9a6e99d30",
+    "source_rows": 14118,
+    "loaded_jobs": 14115,
+    "business_key_duplicates": 3,
+    "sample_id": "python-junior",
+    "action": "recommend",
+    "returned_jobs": 10,
+    "evidence_verified": true,
+    "build_seconds": 38.21,
+    "total_seconds": 38.86,
+    "engine": "BM25 + 字符TF-IDF（尚未加载预训练向量）"
+  },
+  "cpu_regression": {
+    "passed": 187,
+    "new_export_tests": 4
+  }
+}
