@@ -1,0 +1,375 @@
+{
+  "plan": {
+    "source_sha256": "b2382eef8f94a1d610872309e6aeadf751c03a675801b2676cd287b29801cb58",
+    "modes": [
+      "graphsage",
+      "pool_mlp",
+      "random_edges"
+    ],
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "epochs": 5,
+    "batch_size": 256,
+    "eval_queries": 3000,
+    "device": "cuda:2",
+    "max_steps_per_epoch": 0,
+    "test_selection": false,
+    "task": "岗位文本图自监督；不是人岗评测"
+  },
+  "completed": [
+    {
+      "mode": "graphsage",
+      "seed": 42,
+      "best_epoch": 5,
+      "epochs_run": 5,
+      "seconds": 11.409,
+      "peak_cuda_allocated_bytes": 604331520,
+      "train": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 9898,
+        "queries": 3000,
+        "loss": 1.556702971458435,
+        "self_text_recall_at_1": 0.9940000176429749,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9968888759613037,
+        "mean_eligible_candidates": 9897.8359375
+      },
+      "dev": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2108,
+        "queries": 2108,
+        "loss": 0.6410642266273499,
+        "self_text_recall_at_1": 0.9966793060302734,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9983396530151367,
+        "mean_eligible_candidates": 2107.978271484375
+      },
+      "test": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2112,
+        "queries": 2112,
+        "loss": 0.6578041911125183,
+        "self_text_recall_at_1": 0.9995265603065491,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9997633099555969,
+        "mean_eligible_candidates": 2111.982177734375
+      },
+      "source_sha256": "b2382eef8f94a1d610872309e6aeadf751c03a675801b2676cd287b29801cb58"
+    },
+    {
+      "mode": "graphsage",
+      "seed": 43,
+      "best_epoch": 5,
+      "epochs_run": 5,
+      "seconds": 11.379,
+      "peak_cuda_allocated_bytes": 604677120,
+      "train": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 9898,
+        "queries": 3000,
+        "loss": 1.549231767654419,
+        "self_text_recall_at_1": 0.9923332929611206,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.996055543422699,
+        "mean_eligible_candidates": 9897.8134765625
+      },
+      "dev": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2108,
+        "queries": 2108,
+        "loss": 0.6366579532623291,
+        "self_text_recall_at_1": 0.9966793060302734,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9983396530151367,
+        "mean_eligible_candidates": 2107.978271484375
+      },
+      "test": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2112,
+        "queries": 2112,
+        "loss": 0.652876615524292,
+        "self_text_recall_at_1": 0.9990530610084534,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9995265603065491,
+        "mean_eligible_candidates": 2111.982177734375
+      },
+      "source_sha256": "b2382eef8f94a1d610872309e6aeadf751c03a675801b2676cd287b29801cb58"
+    },
+    {
+      "mode": "graphsage",
+      "seed": 44,
+      "best_epoch": 5,
+      "epochs_run": 5,
+      "seconds": 11.389,
+      "peak_cuda_allocated_bytes": 604331520,
+      "train": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 9898,
+        "queries": 3000,
+        "loss": 1.5264559984207153,
+        "self_text_recall_at_1": 0.9940000176429749,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.996833324432373,
+        "mean_eligible_candidates": 9897.884765625
+      },
+      "dev": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2108,
+        "queries": 2108,
+        "loss": 0.6326176524162292,
+        "self_text_recall_at_1": 0.9971536993980408,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.998576819896698,
+        "mean_eligible_candidates": 2107.978271484375
+      },
+      "test": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2112,
+        "queries": 2112,
+        "loss": 0.650277316570282,
+        "self_text_recall_at_1": 0.9990530610084534,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9995265603065491,
+        "mean_eligible_candidates": 2111.982177734375
+      },
+      "source_sha256": "b2382eef8f94a1d610872309e6aeadf751c03a675801b2676cd287b29801cb58"
+    },
+    {
+      "mode": "pool_mlp",
+      "seed": 42,
+      "best_epoch": 5,
+      "epochs_run": 5,
+      "seconds": 8.239,
+      "peak_cuda_allocated_bytes": 579711488,
+      "train": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 9898,
+        "queries": 3000,
+        "loss": 1.5421570539474487,
+        "self_text_recall_at_1": 0.9936666488647461,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9966111779212952,
+        "mean_eligible_candidates": 9897.8359375
+      },
+      "dev": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2108,
+        "queries": 2108,
+        "loss": 0.6352201104164124,
+        "self_text_recall_at_1": 0.9976280927658081,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.998814046382904,
+        "mean_eligible_candidates": 2107.978271484375
+      },
+      "test": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2112,
+        "queries": 2112,
+        "loss": 0.6516380310058594,
+        "self_text_recall_at_1": 0.9995265603065491,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9997633099555969,
+        "mean_eligible_candidates": 2111.982177734375
+      },
+      "source_sha256": "b2382eef8f94a1d610872309e6aeadf751c03a675801b2676cd287b29801cb58"
+    },
+    {
+      "mode": "pool_mlp",
+      "seed": 43,
+      "best_epoch": 5,
+      "epochs_run": 5,
+      "seconds": 7.985,
+      "peak_cuda_allocated_bytes": 579711488,
+      "train": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 9898,
+        "queries": 3000,
+        "loss": 1.555921196937561,
+        "self_text_recall_at_1": 0.9933333396911621,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9966111779212952,
+        "mean_eligible_candidates": 9897.8134765625
+      },
+      "dev": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2108,
+        "queries": 2108,
+        "loss": 0.6401360034942627,
+        "self_text_recall_at_1": 0.9976280927658081,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.998814046382904,
+        "mean_eligible_candidates": 2107.978271484375
+      },
+      "test": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2112,
+        "queries": 2112,
+        "loss": 0.6573748588562012,
+        "self_text_recall_at_1": 0.9995265603065491,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9997633099555969,
+        "mean_eligible_candidates": 2111.982177734375
+      },
+      "source_sha256": "b2382eef8f94a1d610872309e6aeadf751c03a675801b2676cd287b29801cb58"
+    },
+    {
+      "mode": "pool_mlp",
+      "seed": 44,
+      "best_epoch": 5,
+      "epochs_run": 5,
+      "seconds": 7.754,
+      "peak_cuda_allocated_bytes": 579711488,
+      "train": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 9898,
+        "queries": 3000,
+        "loss": 1.5160090923309326,
+        "self_text_recall_at_1": 0.9943333268165588,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9970278143882751,
+        "mean_eligible_candidates": 9897.884765625
+      },
+      "dev": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2108,
+        "queries": 2108,
+        "loss": 0.6272816061973572,
+        "self_text_recall_at_1": 0.9971536993980408,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.998576819896698,
+        "mean_eligible_candidates": 2107.978271484375
+      },
+      "test": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2112,
+        "queries": 2112,
+        "loss": 0.6432027816772461,
+        "self_text_recall_at_1": 0.9995265603065491,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9997633099555969,
+        "mean_eligible_candidates": 2111.982177734375
+      },
+      "source_sha256": "b2382eef8f94a1d610872309e6aeadf751c03a675801b2676cd287b29801cb58"
+    },
+    {
+      "mode": "random_edges",
+      "seed": 42,
+      "best_epoch": 5,
+      "epochs_run": 5,
+      "seconds": 10.469,
+      "peak_cuda_allocated_bytes": 604331520,
+      "train": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 9898,
+        "queries": 3000,
+        "loss": 1.5601389408111572,
+        "self_text_recall_at_1": 0.9940000176429749,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9968888759613037,
+        "mean_eligible_candidates": 9897.8359375
+      },
+      "dev": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2108,
+        "queries": 2108,
+        "loss": 0.643267810344696,
+        "self_text_recall_at_1": 0.9966793060302734,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9983396530151367,
+        "mean_eligible_candidates": 2107.978271484375
+      },
+      "test": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2112,
+        "queries": 2112,
+        "loss": 0.6598134636878967,
+        "self_text_recall_at_1": 0.9995265603065491,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9997633099555969,
+        "mean_eligible_candidates": 2111.982177734375
+      },
+      "source_sha256": "b2382eef8f94a1d610872309e6aeadf751c03a675801b2676cd287b29801cb58"
+    },
+    {
+      "mode": "random_edges",
+      "seed": 43,
+      "best_epoch": 5,
+      "epochs_run": 5,
+      "seconds": 12.497,
+      "peak_cuda_allocated_bytes": 604331520,
+      "train": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 9898,
+        "queries": 3000,
+        "loss": 1.5483758449554443,
+        "self_text_recall_at_1": 0.9919999837875366,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.995888888835907,
+        "mean_eligible_candidates": 9897.8134765625
+      },
+      "dev": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2108,
+        "queries": 2108,
+        "loss": 0.6359445452690125,
+        "self_text_recall_at_1": 0.9971536993980408,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.998576819896698,
+        "mean_eligible_candidates": 2107.978271484375
+      },
+      "test": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2112,
+        "queries": 2112,
+        "loss": 0.6521881222724915,
+        "self_text_recall_at_1": 0.9990530610084534,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9995265603065491,
+        "mean_eligible_candidates": 2111.982177734375
+      },
+      "source_sha256": "b2382eef8f94a1d610872309e6aeadf751c03a675801b2676cd287b29801cb58"
+    },
+    {
+      "mode": "random_edges",
+      "seed": 44,
+      "best_epoch": 5,
+      "epochs_run": 5,
+      "seconds": 9.533,
+      "peak_cuda_allocated_bytes": 604331520,
+      "train": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 9898,
+        "queries": 3000,
+        "loss": 1.5279560089111328,
+        "self_text_recall_at_1": 0.9933333396911621,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9965000152587891,
+        "mean_eligible_candidates": 9897.884765625
+      },
+      "dev": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2108,
+        "queries": 2108,
+        "loss": 0.6334071159362793,
+        "self_text_recall_at_1": 0.9971536993980408,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.998576819896698,
+        "mean_eligible_candidates": 2107.978271484375
+      },
+      "test": {
+        "status": "岗位自监督；非人岗相关性",
+        "candidate_count": 2112,
+        "queries": 2112,
+        "loss": 0.6511560082435608,
+        "self_text_recall_at_1": 0.9990530610084534,
+        "self_text_recall_at_10": 1.0,
+        "self_text_mrr_at_10": 0.9995265603065491,
+        "mean_eligible_candidates": 2111.982177734375
+      },
+      "source_sha256": "b2382eef8f94a1d610872309e6aeadf751c03a675801b2676cd287b29801cb58"
+    }
+  ]
+}

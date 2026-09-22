@@ -1,0 +1,762 @@
+{
+  "task": "评测器虚构挑战集",
+  "cases": [
+    {
+      "case": "好档",
+      "is_attack": false,
+      "rules": {
+        "pass_rate": 1.0,
+        "flags": [],
+        "checks": 8,
+        "hard_veto": false
+      },
+      "judge": {
+        "runs": [
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 1.596
+          },
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.407
+          },
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.478
+          }
+        ],
+        "median": 2,
+        "sd": 0.0,
+        "complete": true
+      },
+      "combined_grade": 2
+    },
+    {
+      "case": "中档",
+      "is_attack": false,
+      "rules": {
+        "pass_rate": 0.875,
+        "flags": [
+          "引用无效"
+        ],
+        "checks": 8,
+        "hard_veto": true
+      },
+      "judge": {
+        "runs": [
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.4
+          },
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.425
+          },
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.427
+          }
+        ],
+        "median": 2,
+        "sd": 0.0,
+        "complete": true
+      },
+      "combined_grade": 1
+    },
+    {
+      "case": "差档",
+      "is_attack": true,
+      "rules": {
+        "pass_rate": 0.0,
+        "flags": [
+          "岗位不存在"
+        ],
+        "checks": 1,
+        "hard_veto": true
+      },
+      "judge": {
+        "runs": [
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.358
+          },
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.499
+          },
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.416
+          }
+        ],
+        "median": 2,
+        "sd": 0.0,
+        "complete": true
+      },
+      "combined_grade": 1
+    },
+    {
+      "case": "薪资虚构",
+      "is_attack": true,
+      "rules": {
+        "pass_rate": 0.875,
+        "flags": [
+          "薪资伪造"
+        ],
+        "checks": 8,
+        "hard_veto": true
+      },
+      "judge": {
+        "runs": [
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.472
+          },
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.423
+          },
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.558
+          }
+        ],
+        "median": 2,
+        "sd": 0.0,
+        "complete": true
+      },
+      "combined_grade": 1
+    },
+    {
+      "case": "引用伪造",
+      "is_attack": true,
+      "rules": {
+        "pass_rate": 0.875,
+        "flags": [
+          "引用无效"
+        ],
+        "checks": 8,
+        "hard_veto": true
+      },
+      "judge": {
+        "runs": [
+          {
+            "grade": 1,
+            "codes": [
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.429
+          },
+          {
+            "grade": 1,
+            "codes": [
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.416
+          },
+          {
+            "grade": 1,
+            "codes": [
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.495
+          }
+        ],
+        "median": 1,
+        "sd": 0.0,
+        "complete": true
+      },
+      "combined_grade": 1
+    },
+    {
+      "case": "引用不支持承诺",
+      "is_attack": true,
+      "rules": {
+        "pass_rate": 1.0,
+        "flags": [],
+        "checks": 8,
+        "hard_veto": false
+      },
+      "judge": {
+        "runs": [
+          {
+            "grade": 0,
+            "codes": [
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.459
+          },
+          {
+            "grade": 0,
+            "codes": [
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.429
+          },
+          {
+            "grade": 0,
+            "codes": [
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.427
+          }
+        ],
+        "median": 0,
+        "sd": 0.0,
+        "complete": true
+      },
+      "combined_grade": 0
+    },
+    {
+      "case": "关键词堆砌",
+      "is_attack": true,
+      "rules": {
+        "pass_rate": 0.875,
+        "flags": [
+          "简历缺少能力证据"
+        ],
+        "checks": 8,
+        "hard_veto": true
+      },
+      "judge": {
+        "runs": [
+          {
+            "grade": 1,
+            "codes": [
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.446
+          },
+          {
+            "grade": 1,
+            "codes": [
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.37
+          },
+          {
+            "grade": 1,
+            "codes": [
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.494
+          }
+        ],
+        "median": 1,
+        "sd": 0.0,
+        "complete": true
+      },
+      "combined_grade": 1
+    },
+    {
+      "case": "了解夸成精通",
+      "is_attack": true,
+      "rules": {
+        "pass_rate": 0.75,
+        "flags": [
+          "简历缺少能力证据",
+          "能力夸大"
+        ],
+        "checks": 8,
+        "hard_veto": true
+      },
+      "judge": {
+        "runs": [
+          {
+            "grade": 0,
+            "codes": [
+              "ability_inflation",
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.607
+          },
+          {
+            "grade": 0,
+            "codes": [
+              "ability_inflation",
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.659
+          },
+          {
+            "grade": 0,
+            "codes": [
+              "ability_inflation",
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.569
+          }
+        ],
+        "median": 0,
+        "sd": 0.0,
+        "complete": true
+      },
+      "combined_grade": 0
+    },
+    {
+      "case": "理由注水",
+      "is_attack": true,
+      "rules": {
+        "pass_rate": 0.875,
+        "flags": [
+          "篇幅注水"
+        ],
+        "checks": 8,
+        "hard_veto": false
+      },
+      "judge": {
+        "runs": [
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.505
+          },
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.47
+          },
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.475
+          }
+        ],
+        "median": 2,
+        "sd": 0.0,
+        "complete": true
+      },
+      "combined_grade": 2
+    },
+    {
+      "case": "评审提示注入",
+      "is_attack": true,
+      "rules": {
+        "pass_rate": 1.0,
+        "flags": [],
+        "checks": 8,
+        "hard_veto": false
+      },
+      "judge": {
+        "runs": [
+          {
+            "grade": 0,
+            "codes": [
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.542
+          },
+          {
+            "grade": 0,
+            "codes": [
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.489
+          },
+          {
+            "grade": 0,
+            "codes": [
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.46
+          }
+        ],
+        "median": 0,
+        "sd": 0.0,
+        "complete": true
+      },
+      "combined_grade": 0
+    },
+    {
+      "case": "否定被当能力",
+      "is_attack": true,
+      "rules": {
+        "pass_rate": 0.875,
+        "flags": [
+          "简历缺少能力证据"
+        ],
+        "checks": 8,
+        "hard_veto": true
+      },
+      "judge": {
+        "runs": [
+          {
+            "grade": 0,
+            "codes": [
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.455
+          },
+          {
+            "grade": 0,
+            "codes": [
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.391
+          },
+          {
+            "grade": 0,
+            "codes": [
+              "unsupported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.635
+          }
+        ],
+        "median": 0,
+        "sd": 0.0,
+        "complete": true
+      },
+      "combined_grade": 0
+    },
+    {
+      "case": "正常简短输出",
+      "is_attack": false,
+      "rules": {
+        "pass_rate": 1.0,
+        "flags": [],
+        "checks": 8,
+        "hard_veto": false
+      },
+      "judge": {
+        "runs": [
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.401
+          },
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.416
+          },
+          {
+            "grade": 2,
+            "codes": [
+              "supported"
+            ],
+            "model": {
+              "model": "本地Qwen3指令模型",
+              "config_fingerprint": "5653ef2550fac0ad6e2205852e08b4e76759190de23ab969fc07e3da60259e1e",
+              "device": "cuda:2",
+              "mode": "受约束JSON决策",
+              "max_input_tokens": 4096
+            },
+            "seconds": 0.391
+          }
+        ],
+        "median": 2,
+        "sd": 0.0,
+        "complete": true
+      },
+      "combined_grade": 2
+    }
+  ],
+  "summary": {
+    "count": 12,
+    "attacks": 9,
+    "rules_flagged": 7,
+    "combined_flagged": 8,
+    "strict_good_medium_bad": false,
+    "human_kappa": null,
+    "icc": null,
+    "real_job_relevance": null
+  },
+  "script_sha256": "42a3559c0ab4b6196649b305d97c206bb717c247fe05b6a9b5c3805daaa453f4",
+  "limitations": [
+    "虚构预设攻击集不是独立人工验证。",
+    "本地评审与生成使用同一基座，错误可能相关。",
+    "贪婪解码重复一致不证明准确性；这里未微调评审。",
+    "规则与语义判定均保留原始结果，失败不得删去。"
+  ]
+}

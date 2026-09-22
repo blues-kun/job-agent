@@ -1,0 +1,2 @@
+# 可选：真实浏览器截图。安装后执行 python -m playwright install chromium --only-shell。
+playwright==1.62.0

@@ -1,0 +1,63 @@
+{
+  "no_relevance_labels": true,
+  "no_relevance_metrics": true,
+  "frozen_qwen": {
+    "dev": {
+      "queries": 12,
+      "candidate_universe_count": 2091,
+      "indexable_candidate_count": 2090,
+      "empty_document_job_ids": [
+        "8e074d87e2f1430a846c"
+      ],
+      "corpus_encoding_seconds": 15.528659582138062,
+      "total_split_seconds": 16.17031642794609,
+      "top10_outside_existing_pool_pairs": 78,
+      "top10_pairs": 120,
+      "all_top10_pairs_without_human_labels": 120,
+      "mean_query_latency_ms": 50.58594886213541
+    },
+    "test": {
+      "queries": 36,
+      "candidate_universe_count": 2093,
+      "indexable_candidate_count": 2093,
+      "empty_document_job_ids": [],
+      "corpus_encoding_seconds": 15.106352102011442,
+      "total_split_seconds": 16.325169783085585,
+      "top10_outside_existing_pool_pairs": 254,
+      "top10_pairs": 360,
+      "all_top10_pairs_without_human_labels": 360,
+      "mean_query_latency_ms": 32.356703446971046
+    }
+  },
+  "adapted_qwen": {
+    "dev": {
+      "queries": 12,
+      "candidate_universe_count": 2091,
+      "indexable_candidate_count": 2090,
+      "empty_document_job_ids": [
+        "8e074d87e2f1430a846c"
+      ],
+      "corpus_encoding_seconds": 17.233814127743244,
+      "total_split_seconds": 17.851059056818485,
+      "top10_outside_existing_pool_pairs": 91,
+      "top10_pairs": 120,
+      "all_top10_pairs_without_human_labels": 120,
+      "mean_query_latency_ms": 47.91988401363293
+    },
+    "test": {
+      "queries": 36,
+      "candidate_universe_count": 2093,
+      "indexable_candidate_count": 2093,
+      "empty_document_job_ids": [],
+      "corpus_encoding_seconds": 17.49925944954157,
+      "total_split_seconds": 19.073607839643955,
+      "top10_outside_existing_pool_pairs": 241,
+      "top10_pairs": 360,
+      "all_top10_pairs_without_human_labels": 360,
+      "mean_query_latency_ms": 42.68044347150458
+    }
+  },
+  "pool_note": "池外数量是待补充审阅范围，不表示不相关；目前所有池内条目也未标注。",
+  "unique_supplemental_query_job_pairs": 541,
+  "supplemental_note": "仅输出待审阅候选，不修改既有人工池；展示给标注者时必须隐藏模型来源、分数和排名。"
+}

@@ -1,0 +1,248 @@
+{
+  "版本": "v0.3",
+  "生成时间UTC": "2026-09-22T09:54:00.169100+00:00",
+  "范围": "真实岗位库上的工程验收与部分模型教师结果；没有独立人工效果或新共同池模型增益结论。",
+  "原表SHA256": "c88558a0d732dc3ab01ad748e6e0117e0426566f29ed9b5ae19eeab020683f53",
+  "原表未变": true,
+  "数据解析统计": {
+    "jobs": 14118,
+    "skill_mentions": 56778,
+    "task_mentions": 4354,
+    "groups": 40715,
+    "jobs_with_skills_or_tasks": 12004
+  },
+  "测试": {
+    "平台与评测": {
+      "tests": 181,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "passed": 180
+    },
+    "模型GPU环境": {
+      "passed": 37,
+      "subtests_passed": 8,
+      "cpu_skip_covered_in_gpu": true
+    },
+    "JavaScript语法": "通过",
+    "Git差异空白检查": "通过",
+    "浏览器视觉验收": "未执行"
+  },
+  "真实平台验收": {
+    "执行时间UTC": "2026-09-22T09:39:00.748124+00:00",
+    "检查": {
+      "sample_runs": 7,
+      "hard_violations_detected_by_current_rules": 0,
+      "verified_dual_quotes": 190,
+      "diagnose_rewrite_interview": true,
+      "feedback_idempotent": true,
+      "explicit_profile_confirmation": true,
+      "confirmation_gate_checks": 9,
+      "feature_version": "evidence-ranker-v2-35",
+      "feature_count": 35,
+      "rewrite_fields_and_blocks_preserved": true,
+      "research_features_require_consent": true,
+      "research_events_exclude_raw_resume": true,
+      "static_assets": true,
+      "source_hash_unchanged": true
+    },
+    "串行毫秒": [
+      426.4,
+      461.4,
+      472.8
+    ],
+    "五并发毫秒": [
+      4420.2,
+      4418.9,
+      4453.7,
+      4602.4,
+      4492.1
+    ]
+  },
+  "特征一致性": {
+    "status": "passed",
+    "pairs": 90,
+    "checked_features": 3150,
+    "max_absolute_difference": 0.0,
+    "atol": 1e-06,
+    "rtol": 1e-06,
+    "feature_version": "evidence-ranker-v2-35",
+    "retrieval_contract_hash": "e5eca42c7488208bd8fcda9b7b8e17cc098315e004dbc74b23a8c8c1fe832e72",
+    "encoder_contract_hash": "340aa67e8c1ea23f153beadbd7a7f50ac5b7b160c6c8c04540e36e973ad3a7dc"
+  },
+  "本地LLM接口验收": {
+    "scope": "虚构样例通过当前HTTP平台的本地LLM补证行动验证",
+    "mode": "本地LLM选择行动，程序绑定证据",
+    "returned_actions": 1,
+    "seconds": 0.536,
+    "human_gold_created": false,
+    "external_api_called": false
+  },
+  "接口标注": {
+    "模型": "gpt-5.6-terra",
+    "请求推理档": "max",
+    "底层revision": "服务商未公开",
+    "人工金标": 0,
+    "队列": [
+      {
+        "任务": "relevance",
+        "状态": "running",
+        "预定任务": 493,
+        "保留结果": 98,
+        "当前严格可用": 75,
+        "任务文件SHA256": "398a488eee40a4ad6421ee5b802235b9903a82c924d71e341424c55657c269f8"
+      },
+      {
+        "任务": "requirement_extraction",
+        "状态": "running",
+        "预定任务": 120,
+        "保留结果": 38,
+        "当前严格可用": 37,
+        "任务文件SHA256": "c367287a3370bbeedd3c19f1b4e74760553bd6398eeffe0f66ba8cd63e774939"
+      }
+    ],
+    "字段纠正进度": {
+      "total_tasks": 493,
+      "completed_tasks": 98,
+      "pending_tasks": 395,
+      "labels_with_corrected_field": 18,
+      "field_corrections": 24,
+      "stored_rule_passed_before": 75,
+      "stored_failed_checks_before": {
+        "quoted_support": 23
+      },
+      "rule_passed_before": 75,
+      "rule_passed_after": 92,
+      "strict_qrel_usable": 92,
+      "failed_checks_before": {
+        "quoted_support": 23
+      },
+      "failed_checks_after": {
+        "quoted_support": 6
+      },
+      "unresolved_reasons": {
+        "quote_not_found_exactly": 6
+      },
+      "human_confirmed": false,
+      "grade_changes": 0,
+      "quote_text_changes": 0,
+      "progress_only": true,
+      "cause": "只定位字段名与原文所在字段不一致的情况；不纠正语义判断或不逐字的引用。"
+    },
+    "限流检查": {
+      "purpose": "接口可用性诊断，不用于训练",
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "max",
+      "request_count": 1,
+      "http_status": 429,
+      "retry_after_seconds": null,
+      "error_categories": [
+        "rate_limit"
+      ],
+      "seconds": 33.015
+    }
+  },
+  "需求抽取进度": {
+    "status": "progress_only",
+    "tasks_expected": 120,
+    "teacher_rows_present": 38,
+    "tasks_evaluated": 37,
+    "tasks_pending": 82,
+    "strict_rejected": 1,
+    "rejection_reasons": {
+      "invalid_arity": 1
+    },
+    "metrics": {
+      "entities": {
+        "tp": 19,
+        "fp": 25,
+        "fn": 119,
+        "teacher_entities": 138,
+        "teacher_dictionary_entities": 19,
+        "parser_entities": 44,
+        "dictionary_tp": 19,
+        "dictionary_fp": 25,
+        "dictionary_fn": 0,
+        "teacher_out_of_dictionary_entities": 119,
+        "precision": 0.4318181818181818,
+        "recall": 0.13768115942028986,
+        "f1": 0.2087912087912088,
+        "teacher_dictionary_coverage": 0.13768115942028986,
+        "dictionary_only_precision": 0.4318181818181818,
+        "dictionary_only_recall": 1.0,
+        "dictionary_only_f1": 0.6031746031746031
+      },
+      "groups": {
+        "teacher_groups": 40,
+        "parser_groups": 24,
+        "teacher_unknown_logic": 0,
+        "parser_unknown_logic": 5,
+        "teacher_unknown_modality_leaves": 1,
+        "teacher_leaves": 138,
+        "parser_unknown_modality_mentions": 12,
+        "parser_mentions": 48,
+        "unmatched_teacher_groups": 39,
+        "same_leaf_set_groups": 1,
+        "logic_comparable": 1,
+        "logic_equal": 1,
+        "modality_same_leaf_comparable": 1,
+        "modality_same_leaf_equal": 1,
+        "logic_agreement_on_comparable_same_leaf_groups": 1.0,
+        "modality_agreement_on_same_leaf_groups": 1.0,
+        "teacher_unknown_logic_rate": 0.0,
+        "parser_unknown_logic_rate": 0.20833333333333334,
+        "teacher_unknown_modality_rate": 0.007246376811594203,
+        "parser_unknown_modality_rate": 0.25
+      }
+    },
+    "notes": [
+      "这是同一冻结片段上的教师相对比较；双通道模型不是独立人工，不能解释为真实抽取准确率。",
+      "仅严格通过的已完成任务进入当前指标；缺失、未通过和全量分母同时报告，进度结果存在完成顺序偏差。",
+      "实体按规范名称集合计micro F1；只将词典完整匹配的别名归一，开放词表不强行拆分。逐字引用校验不证明引用支持实体语义。",
+      "开放实体F1保留全部教师标签；封闭词典F1仅以落入93词典的教师实体为参照，不能替代开放覆盖率。教师skills含专业、业务任务等广义要求，不可直接称技术技能准确率。",
+      "逻辑仅比较唯一配对的相同叶集合组，使用最多12个实体的真值表，保留嵌套语义；未知或过大组不强制算错，也不进入正确分母。",
+      "模态在同叶集合组比较实体-模态多重集；未知率单报。需求树排除明确否定要求，但实体统计仍包含否定提及。",
+      "本次只比较教师skills通道与冻结技能解析分支，不把任务词表节点并入技能召回；词典未覆盖不等于岗位无要求。",
+      "输出不包含岗位原文、公司名、联系方式、原始引用或模型解释。"
+    ]
+  },
+  "模型研究": {
+    "完整真实共同池已冻结": false,
+    "本轮教师监督训练已启动": false,
+    "模拟流水线方法数": 17,
+    "人工Kappa": null,
+    "独立人岗效果": null,
+    "GNN相对增益": null,
+    "自动上线": false
+  },
+  "来源文件SHA256": {
+    "平台验收": "d1cb9aa3ce951766de3be76c54c392e101d7f70cad38b72b94e69b2e756ef18f",
+    "特征一致性": "0787b73b69b17f5d48b7184c97b5e565536c271f42b035e8ba84e1c4a0591fe3",
+    "CPU测试记录": "5f012fa01d6981fddf7f1136b73160cf079b249af472f70a9ca0f3fd13fe6c8a",
+    "需求抽取进度": "1f9b709bad84e2c5adf5149dd08a77bea1a821dfa80ef202c580f0823f36204c",
+    "字段纠正进度": "d1e2f7991eab197233dd2ad61e45fea9aa34f7a9d6f9e26a7190f614e3a57bca",
+    "教师研究材料": "75eab7eaa1662c09e9ad1ade0817ab219629adca02d840822bac1f2f1dc9fde6",
+    "固定回放": "30742544ad4dce413904a4d43a89fe856ec6693c7adcdba27bf54e029c7569dd"
+  },
+  "实现文件SHA256": {
+    "job_agent/api.py": "c78beb85b5ccb40b5cb7f4efec5e5dd1cedbd95aa8bbb45bf2b2d6f7bbb57cb1",
+    "job_agent/journey.py": "c9b7cefa49d270f330b0f88bf2140e791e5603eb6ebcf4cc0b5bdc1b3999bac7",
+    "job_agent/semantics.py": "24c178bf12dfd57083002b3f898629a9394d88b52e72fc6729c7f80347f40730",
+    "job_agent/domain.py": "e721b1d7b08d3456881154f815ac109b86699a2b8d10071657ac74853d342854",
+    "job_agent/retrieval_contract.py": "8a4ec869f97f27f1fc10ec006a266b9ac214ea693f2da5cc45b90ef70cfcf005",
+    "job_agent/ranking.py": "be2a6dd7237d2e60eaeab08d6ed27df945c45b33b6b043a7dc7a79bbd841de2f",
+    "job_agent/dense.py": "9f81439ca786e5f03f318b2431b322af2d0b6c8501ae5b020ca7706d7592dda0",
+    "job_agent/encoder.py": "0b0fa82d1bf084f59932f106f2be21ca3d4b9d7d36d47db0c41ab1c785f3d38c",
+    "research/api_annotation.py": "c8b6dd86f66867ef77e88e37e009dba3f13a71ef759c7de8308b38f49124d611",
+    "research/annotation_supervisor.py": "501d4e04c6705d33461230e2902ef695f42c51d134550b9650c9fc6ce0b98ca8",
+    "research/annotation_snapshot.py": "200f43558330f56e26200d184f75b042b1a5483df109b9a87af6edb2945807f7",
+    "research/reconcile_annotations.py": "6a8c79bfadfa613b07755c9e7ac118bb520a2f6afa518095c764c6fb7adfd377",
+    "research/teacher_dashboard.py": "2439026100816e33887b21532bdb8bc4a75338c23588b5efb15300e9ebd83519",
+    "research/evaluate_requirements.py": "3f0032d83e31cf2f82af2eaf1f8b44c97c51276087cfc4dcc7e08b1bda46b99c",
+    "research/run_teacher_experiments.py": "e4051959b18a9b8bd2c15776ddc79b07da195dba4ff1a72a384d2ae675b91442",
+    "research/teacher_experiment_contracts.py": "a4e072383dea7feda381c892dc8d9d01ae5504e2e98c65c1e92e6fff3a3ccf7b",
+    "scripts/verify_feature_parity.py": "521415eecb4c56662d974cd64d2a85a23992453b9ebe49aa473f8185d8ada90e",
+    "web/platform/app.js": "632314983fe3c1db3890fb9734b1f8c2fffe3abb8437decaa52e4c21f193c19f"
+  },
+  "Git操作": "未暂存、提交、推送或修改远端"
+}

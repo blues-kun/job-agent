@@ -19,4 +19,23 @@ jobs:
       - name: Compile Python sources
         run: python -m compileall -q .
       - name: Run repository hygiene tests
-        run: python -m unittest discover -s tests -v
+        run: python -m unittest discover -s tests -p test_repository_hygiene.py -v
+
+  platform-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: 安装平台与测试依赖
+        run: python -m pip install -r requirements-research.txt pytest
+      - name: 运行虚构数据平台与评测回归
+        run: >-
+          python -m pytest -q tests
+          --ignore=tests/test_research_generation.py
+          --ignore=tests/test_research_graph.py
+          --ignore=tests/test_research_embedding.py
+          --ignore=tests/test_models_v2.py
+          --ignore=tests/test_prepare_group_vectors.py

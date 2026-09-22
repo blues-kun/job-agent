@@ -1,0 +1,1285 @@
+{
+  "说明": "2026-09-22只读审查的聚合统计与完全虚构反例。反例用于定位错误，不代表线上错误率或真人标注。未修改业务代码、原始数据或Git。",
+  "数据来源": "仓库既有job_data.xlsx对应的版本化jobs.jsonl；并非无法访问的外部merged_data.xlsx。",
+  "覆盖统计": {
+    "snapshot": "c88558a0d732dc3ab01ad748e6e0117e0426566f29ed9b5ae19eeab020683f53",
+    "jobs_sha256": "1ddbc6bc1448ec12128b4cab7ad86f7a49fed104c739de585633b436df1e7ff3",
+    "dictionary_size": 93,
+    "total": {
+      "n": 14118,
+      "dictionary_mentions": 11428,
+      "coverage_pct": 80.95,
+      "nonnegated_mentions": 11428,
+      "no_dictionary_mentions": 2690,
+      "nonempty_description_without_dictionary": 2682,
+      "no_requirement_groups": 2690
+    },
+    "category_parent": {
+      "人工智能": {
+        "n": 2610,
+        "dictionary_mentions": 2347,
+        "coverage_pct": 89.92,
+        "nonnegated_mentions": 2347,
+        "no_dictionary_mentions": 263,
+        "nonempty_description_without_dictionary": 262,
+        "no_requirement_groups": 263
+      },
+      "其他技术职位": {
+        "n": 122,
+        "dictionary_mentions": 70,
+        "coverage_pct": 57.38,
+        "nonnegated_mentions": 70,
+        "no_dictionary_mentions": 52,
+        "nonempty_description_without_dictionary": 52,
+        "no_requirement_groups": 52
+      },
+      "前端/移动开发": {
+        "n": 1528,
+        "dictionary_mentions": 1403,
+        "coverage_pct": 91.82,
+        "nonnegated_mentions": 1403,
+        "no_dictionary_mentions": 125,
+        "nonempty_description_without_dictionary": 122,
+        "no_requirement_groups": 125
+      },
+      "后端开发": {
+        "n": 3542,
+        "dictionary_mentions": 3308,
+        "coverage_pct": 93.39,
+        "nonnegated_mentions": 3308,
+        "no_dictionary_mentions": 234,
+        "nonempty_description_without_dictionary": 233,
+        "no_requirement_groups": 234
+      },
+      "技术项目管理": {
+        "n": 1096,
+        "dictionary_mentions": 648,
+        "coverage_pct": 59.12,
+        "nonnegated_mentions": 648,
+        "no_dictionary_mentions": 448,
+        "nonempty_description_without_dictionary": 448,
+        "no_requirement_groups": 448
+      },
+      "数据": {
+        "n": 1421,
+        "dictionary_mentions": 1290,
+        "coverage_pct": 90.78,
+        "nonnegated_mentions": 1290,
+        "no_dictionary_mentions": 131,
+        "nonempty_description_without_dictionary": 131,
+        "no_requirement_groups": 131
+      },
+      "测试": {
+        "n": 1769,
+        "dictionary_mentions": 1201,
+        "coverage_pct": 67.89,
+        "nonnegated_mentions": 1201,
+        "no_dictionary_mentions": 568,
+        "nonempty_description_without_dictionary": 566,
+        "no_requirement_groups": 568
+      },
+      "销售技术支持": {
+        "n": 671,
+        "dictionary_mentions": 207,
+        "coverage_pct": 30.85,
+        "nonnegated_mentions": 207,
+        "no_dictionary_mentions": 464,
+        "nonempty_description_without_dictionary": 464,
+        "no_requirement_groups": 464
+      },
+      "高端技术职位": {
+        "n": 1359,
+        "dictionary_mentions": 954,
+        "coverage_pct": 70.2,
+        "nonnegated_mentions": 954,
+        "no_dictionary_mentions": 405,
+        "nonempty_description_without_dictionary": 404,
+        "no_requirement_groups": 405
+      }
+    },
+    "category": {
+      "Python": {
+        "n": 281,
+        "dictionary_mentions": 270,
+        "coverage_pct": 96.09,
+        "nonnegated_mentions": 270,
+        "no_dictionary_mentions": 11,
+        "nonempty_description_without_dictionary": 11,
+        "no_requirement_groups": 11
+      },
+      "Java": {
+        "n": 289,
+        "dictionary_mentions": 282,
+        "coverage_pct": 97.58,
+        "nonnegated_mentions": 282,
+        "no_dictionary_mentions": 7,
+        "nonempty_description_without_dictionary": 7,
+        "no_requirement_groups": 7
+      },
+      "算法工程师": {
+        "n": 260,
+        "dictionary_mentions": 248,
+        "coverage_pct": 95.38,
+        "nonnegated_mentions": 248,
+        "no_dictionary_mentions": 12,
+        "nonempty_description_without_dictionary": 12,
+        "no_requirement_groups": 12
+      },
+      "前端开发工程师": {
+        "n": 227,
+        "dictionary_mentions": 215,
+        "coverage_pct": 94.71,
+        "nonnegated_mentions": 215,
+        "no_dictionary_mentions": 12,
+        "nonempty_description_without_dictionary": 12,
+        "no_requirement_groups": 12
+      },
+      "客户成功": {
+        "n": 153,
+        "dictionary_mentions": 59,
+        "coverage_pct": 38.56,
+        "nonnegated_mentions": 59,
+        "no_dictionary_mentions": 94,
+        "nonempty_description_without_dictionary": 94,
+        "no_requirement_groups": 94
+      },
+      "项目专员/助理": {
+        "n": 208,
+        "dictionary_mentions": 130,
+        "coverage_pct": 62.5,
+        "nonnegated_mentions": 130,
+        "no_dictionary_mentions": 78,
+        "nonempty_description_without_dictionary": 78,
+        "no_requirement_groups": 78
+      },
+      "项目经理/主管": {
+        "n": 206,
+        "dictionary_mentions": 163,
+        "coverage_pct": 79.13,
+        "nonnegated_mentions": 163,
+        "no_dictionary_mentions": 43,
+        "nonempty_description_without_dictionary": 43,
+        "no_requirement_groups": 43
+      },
+      "技术合伙人": {
+        "n": 234,
+        "dictionary_mentions": 122,
+        "coverage_pct": 52.14,
+        "nonnegated_mentions": 122,
+        "no_dictionary_mentions": 112,
+        "nonempty_description_without_dictionary": 112,
+        "no_requirement_groups": 112
+      },
+      "数据标注/AI训练师": {
+        "n": 185,
+        "dictionary_mentions": 115,
+        "coverage_pct": 62.16,
+        "nonnegated_mentions": 115,
+        "no_dictionary_mentions": 70,
+        "nonempty_description_without_dictionary": 70,
+        "no_requirement_groups": 70
+      },
+      "GIS工程师": {
+        "n": 107,
+        "dictionary_mentions": 89,
+        "coverage_pct": 83.18,
+        "nonnegated_mentions": 89,
+        "no_dictionary_mentions": 18,
+        "nonempty_description_without_dictionary": 18,
+        "no_requirement_groups": 18
+      }
+    },
+    "note": "职位类型来自技术类目样本；词典未命中不等于没有需求。原统计以任职条件和岗位职责为准，不含标题。"
+  },
+  "经验与时效性": {
+    "岗位数": 14118,
+    "jobs_sha256": "1ddbc6bc1448ec12128b4cab7ad86f7a49fed104c739de585633b436df1e7ff3",
+    "源字段": [
+      "二级分类",
+      "企业",
+      "岗位名称",
+      "岗位地址",
+      "岗位职责",
+      "岗位薪资",
+      "岗位要求",
+      "职位类型名称"
+    ],
+    "数据集生成UTC_非采集日期": "2026-09-22T03:43:10+00:00",
+    "岗位字段含采集日期": false,
+    "岗位字段含有效招聘状态": false,
+    "分组": {
+      "0": {
+        "岗位数": 1987,
+        "全库比例_pct": 14.07,
+        "可解析月薪数": 1934,
+        "广告月薪区间中点中位数_元": 22250.0,
+        "广告月薪下限中位数_元": 15000.0,
+        "广告月薪上限中位数_元": 26000.0
+      },
+      ">0且≤3": {
+        "岗位数": 7112,
+        "全库比例_pct": 50.38,
+        "可解析月薪数": 7065,
+        "广告月薪区间中点中位数_元": 19000.0,
+        "广告月薪下限中位数_元": 15000.0,
+        "广告月薪上限中位数_元": 23000.0
+      },
+      ">3": {
+        "岗位数": 4633,
+        "全库比例_pct": 32.82,
+        "可解析月薪数": 4613,
+        "广告月薪区间中点中位数_元": 37500.0,
+        "广告月薪下限中位数_元": 30000.0,
+        "广告月薪上限中位数_元": 50000.0
+      },
+      "未知": {
+        "岗位数": 386,
+        "全库比例_pct": 2.73,
+        "可解析月薪数": 0,
+        "广告月薪区间中点中位数_元": null,
+        "广告月薪下限中位数_元": null,
+        "广告月薪上限中位数_元": null
+      }
+    },
+    "已知门槛0至3年": {
+      "岗位数": 9099,
+      "全库比例_pct": 64.45,
+      "可解析月薪数": 8999,
+      "广告月薪区间中点中位数_元": 20000.0,
+      "广告月薪下限中位数_元": 15000.0,
+      "广告月薪上限中位数_元": 24000.0
+    },
+    "条件字段出现应届字样": 233,
+    "条件字段出现经验不限等字样": 1602,
+    "经验门槛原始规则值频数": {
+      "5.0": 3845,
+      "1.0": 2451,
+      "3.0": 4661,
+      "0.0": 1987,
+      "10.0": 788,
+      "None": 386
+    },
+    "口径": "现有experience(requirements,is_job=True)规则；按岗位内容版本14118条统计，非人工金标；0包括不限/应届等，不表示应届专属；3年下限可能来自3-5年广告；月薪中位数为广告区间中点，排除面议/日薪/年薪等，不等于实际到手或当前市场薪资；无结构化采集日期、发布日期或有效状态，运行生成UTC不是采集时间。"
+  },
+  "需求解析反例": [
+    {
+      "case": "1_岗位否定",
+      "jd": "不要求Python经验，熟悉SQL。",
+      "requirements": "经验不限本科",
+      "resume": "使用SQL完成数据库查询。",
+      "job_skills": {
+        "Python": {
+          "level": "提及",
+          "preferred": false,
+          "quote": "Python"
+        },
+        "SQL": {
+          "level": "熟悉",
+          "preferred": false,
+          "quote": "SQL"
+        }
+      },
+      "resume_skills": {
+        "SQL": {
+          "level": "实践",
+          "preferred": false,
+          "quote": "SQL"
+        }
+      },
+      "groups": [
+        {
+          "kind": "single",
+          "skills": [
+            "Python"
+          ],
+          "preferred": false
+        },
+        {
+          "kind": "single",
+          "skills": [
+            "SQL"
+          ],
+          "preferred": false
+        }
+      ],
+      "matched": [
+        {
+          "skill": "SQL",
+          "level": "实践",
+          "strength": 1.0,
+          "note": "有使用或项目证据"
+        }
+      ],
+      "gaps": [
+        "Python"
+      ],
+      "coverage": 0.5,
+      "experience_min": 0.0,
+      "education_min": 3,
+      "checks": [
+        {
+          "name": "目标城市",
+          "status": "pass"
+        },
+        {
+          "name": "学历要求",
+          "status": "pass"
+        },
+        {
+          "name": "经验要求",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "case": "2_招聘工作误作开发实践",
+      "jd": "熟悉Python。",
+      "requirements": "经验不限本科",
+      "resume": "为Python开发团队完成招聘工作。",
+      "job_skills": {
+        "Python": {
+          "level": "熟悉",
+          "preferred": false,
+          "quote": "Python"
+        }
+      },
+      "resume_skills": {
+        "Python": {
+          "level": "实践",
+          "preferred": false,
+          "quote": "Python"
+        }
+      },
+      "groups": [
+        {
+          "kind": "single",
+          "skills": [
+            "Python"
+          ],
+          "preferred": false
+        }
+      ],
+      "matched": [
+        {
+          "skill": "Python",
+          "level": "实践",
+          "strength": 1.0,
+          "note": "有使用或项目证据"
+        }
+      ],
+      "gaps": [],
+      "coverage": 1.0,
+      "experience_min": 0.0,
+      "education_min": 3,
+      "checks": [
+        {
+          "name": "目标城市",
+          "status": "pass"
+        },
+        {
+          "name": "学历要求",
+          "status": "pass"
+        },
+        {
+          "name": "经验要求",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "case": "3_OR包含两个AND组合",
+      "jd": "掌握Python和SQL，或者掌握Java和MySQL。",
+      "requirements": "经验不限本科",
+      "resume": "使用Python和SQL完成数据处理项目。",
+      "job_skills": {
+        "Java": {
+          "level": "熟悉",
+          "preferred": false,
+          "quote": "Java"
+        },
+        "Python": {
+          "level": "熟悉",
+          "preferred": false,
+          "quote": "Python"
+        },
+        "SQL": {
+          "level": "熟悉",
+          "preferred": false,
+          "quote": "SQL"
+        },
+        "MySQL": {
+          "level": "熟悉",
+          "preferred": false,
+          "quote": "MySQL"
+        }
+      },
+      "resume_skills": {
+        "Python": {
+          "level": "实践",
+          "preferred": false,
+          "quote": "Python"
+        },
+        "SQL": {
+          "level": "实践",
+          "preferred": false,
+          "quote": "SQL"
+        }
+      },
+      "groups": [
+        {
+          "kind": "single",
+          "skills": [
+            "Java"
+          ],
+          "preferred": false
+        },
+        {
+          "kind": "single",
+          "skills": [
+            "Python"
+          ],
+          "preferred": false
+        },
+        {
+          "kind": "single",
+          "skills": [
+            "SQL"
+          ],
+          "preferred": false
+        },
+        {
+          "kind": "single",
+          "skills": [
+            "MySQL"
+          ],
+          "preferred": false
+        }
+      ],
+      "matched": [
+        {
+          "skill": "Python",
+          "level": "实践",
+          "strength": 1.0,
+          "note": "有使用或项目证据"
+        },
+        {
+          "skill": "SQL",
+          "level": "实践",
+          "strength": 1.0,
+          "note": "有使用或项目证据"
+        }
+      ],
+      "gaps": [
+        "Java",
+        "MySQL"
+      ],
+      "coverage": 0.5,
+      "experience_min": 0.0,
+      "education_min": 3,
+      "checks": [
+        {
+          "name": "目标城市",
+          "status": "pass"
+        },
+        {
+          "name": "学历要求",
+          "status": "pass"
+        },
+        {
+          "name": "经验要求",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "case": "4_前置优先项",
+      "jd": "加分项：熟悉Python；必需：熟悉SQL。",
+      "requirements": "经验不限本科",
+      "resume": "使用SQL完成数据库查询。",
+      "job_skills": {
+        "Python": {
+          "level": "熟悉",
+          "preferred": false,
+          "quote": "Python"
+        },
+        "SQL": {
+          "level": "熟悉",
+          "preferred": false,
+          "quote": "SQL"
+        }
+      },
+      "resume_skills": {
+        "SQL": {
+          "level": "实践",
+          "preferred": false,
+          "quote": "SQL"
+        }
+      },
+      "groups": [
+        {
+          "kind": "single",
+          "skills": [
+            "Python"
+          ],
+          "preferred": false
+        },
+        {
+          "kind": "single",
+          "skills": [
+            "SQL"
+          ],
+          "preferred": false
+        }
+      ],
+      "matched": [
+        {
+          "skill": "SQL",
+          "level": "实践",
+          "strength": 1.0,
+          "note": "有使用或项目证据"
+        }
+      ],
+      "gaps": [
+        "Python"
+      ],
+      "coverage": 0.5,
+      "experience_min": 0.0,
+      "education_min": 3,
+      "checks": [
+        {
+          "name": "目标城市",
+          "status": "pass"
+        },
+        {
+          "name": "学历要求",
+          "status": "pass"
+        },
+        {
+          "name": "经验要求",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "case": "5_复合技能重叠",
+      "jd": "熟悉Spring Boot或Django。",
+      "requirements": "经验不限本科",
+      "resume": "使用Django完成网站项目。",
+      "job_skills": {
+        "Spring": {
+          "level": "熟悉",
+          "preferred": false,
+          "quote": "Spring"
+        },
+        "Spring Boot": {
+          "level": "熟悉",
+          "preferred": false,
+          "quote": "Spring Boot"
+        },
+        "Django": {
+          "level": "熟悉",
+          "preferred": false,
+          "quote": "Django"
+        }
+      },
+      "resume_skills": {
+        "Django": {
+          "level": "实践",
+          "preferred": false,
+          "quote": "Django"
+        }
+      },
+      "groups": [
+        {
+          "kind": "any",
+          "skills": [
+            "Spring Boot",
+            "Django"
+          ],
+          "preferred": false
+        },
+        {
+          "kind": "single",
+          "skills": [
+            "Spring"
+          ],
+          "preferred": false
+        }
+      ],
+      "matched": [
+        {
+          "skill": "Django",
+          "level": "实践",
+          "strength": 1.0,
+          "note": "有使用或项目证据"
+        }
+      ],
+      "gaps": [
+        "Spring"
+      ],
+      "coverage": 0.5,
+      "experience_min": 0.0,
+      "education_min": 3,
+      "checks": [
+        {
+          "name": "目标城市",
+          "status": "pass"
+        },
+        {
+          "name": "学历要求",
+          "status": "pass"
+        },
+        {
+          "name": "经验要求",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "case": "6_应届否定",
+      "jd": "熟悉Python。",
+      "requirements": "应届生勿投，要求3年以上工作经验，本科及以上。",
+      "resume": "使用Python完成脚本项目。",
+      "job_skills": {
+        "Python": {
+          "level": "熟悉",
+          "preferred": false,
+          "quote": "Python"
+        }
+      },
+      "resume_skills": {
+        "Python": {
+          "level": "实践",
+          "preferred": false,
+          "quote": "Python"
+        }
+      },
+      "groups": [
+        {
+          "kind": "single",
+          "skills": [
+            "Python"
+          ],
+          "preferred": false
+        }
+      ],
+      "matched": [
+        {
+          "skill": "Python",
+          "level": "实践",
+          "strength": 1.0,
+          "note": "有使用或项目证据"
+        }
+      ],
+      "gaps": [],
+      "coverage": 1.0,
+      "experience_min": 0.0,
+      "education_min": 3,
+      "checks": [
+        {
+          "name": "目标城市",
+          "status": "pass"
+        },
+        {
+          "name": "学历要求",
+          "status": "pass"
+        },
+        {
+          "name": "经验要求",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "case": "7_学历否定",
+      "jd": "熟悉Python。",
+      "requirements": "经验不限，大专学历不符合要求，须本科及以上。",
+      "resume": "使用Python完成脚本项目。",
+      "job_skills": {
+        "Python": {
+          "level": "熟悉",
+          "preferred": false,
+          "quote": "Python"
+        }
+      },
+      "resume_skills": {
+        "Python": {
+          "level": "实践",
+          "preferred": false,
+          "quote": "Python"
+        }
+      },
+      "groups": [
+        {
+          "kind": "single",
+          "skills": [
+            "Python"
+          ],
+          "preferred": false
+        }
+      ],
+      "matched": [
+        {
+          "skill": "Python",
+          "level": "实践",
+          "strength": 1.0,
+          "note": "有使用或项目证据"
+        }
+      ],
+      "gaps": [],
+      "coverage": 1.0,
+      "experience_min": 0.0,
+      "education_min": 2,
+      "checks": [
+        {
+          "name": "目标城市",
+          "status": "pass"
+        },
+        {
+          "name": "学历要求",
+          "status": "pass"
+        },
+        {
+          "name": "经验要求",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "case": "8_跨字段覆盖OR组",
+      "jd": "熟悉Python或Java。",
+      "requirements": "本科，经验不限，Python经验优先。",
+      "resume": "使用Java完成后端项目。",
+      "job_skills": {
+        "Java": {
+          "level": "熟悉",
+          "preferred": false,
+          "quote": "Java"
+        },
+        "Python": {
+          "level": "提及",
+          "preferred": true,
+          "quote": "Python"
+        }
+      },
+      "resume_skills": {
+        "Java": {
+          "level": "实践",
+          "preferred": false,
+          "quote": "Java"
+        }
+      },
+      "groups": [
+        {
+          "kind": "single",
+          "skills": [
+            "Python"
+          ],
+          "preferred": true
+        }
+      ],
+      "matched": [],
+      "gaps": [
+        "Python"
+      ],
+      "coverage": 0.0,
+      "experience_min": 0.0,
+      "education_min": 3,
+      "checks": [
+        {
+          "name": "目标城市",
+          "status": "pass"
+        },
+        {
+          "name": "学历要求",
+          "status": "pass"
+        },
+        {
+          "name": "经验要求",
+          "status": "pass"
+        }
+      ]
+    }
+  ],
+  "推荐与整理反例": {
+    "说明": "本文件仅包含虚构岗位和简历；执行了现有函数，没有调用模型服务，没有写入业务反馈。",
+    "查询语义压缩": {
+      "运行": [
+        {
+          "名称": "订单接口经历",
+          "虚构正文": "使用Python与SQL完成订单后台接口开发，负责权限验证和事务处理。\n使用Python与SQL编写自动化测试。",
+          "实际查询": "Python开发 Python SQL 自动化测试",
+          "识别技能": {
+            "Python": "实践",
+            "SQL": "实践",
+            "自动化测试": "实践"
+          },
+          "排序与分数": [
+            [
+              "Python后台开发",
+              97.5
+            ],
+            [
+              "Python数据分析",
+              96.94
+            ]
+          ]
+        },
+        {
+          "名称": "营销报表经历",
+          "虚构正文": "使用Python与SQL完成营销报表开发，负责指标口径核对和报表维护。\n使用Python与SQL编写自动化测试。",
+          "实际查询": "Python开发 Python SQL 自动化测试",
+          "识别技能": {
+            "Python": "实践",
+            "SQL": "实践",
+            "自动化测试": "实践"
+          },
+          "排序与分数": [
+            [
+              "Python后台开发",
+              97.5
+            ],
+            [
+              "Python数据分析",
+              96.94
+            ]
+          ]
+        },
+        {
+          "名称": "订单经历换序",
+          "虚构正文": "使用Python与SQL编写自动化测试。\n使用Python与SQL完成订单后台接口开发，负责权限验证和事务处理。",
+          "实际查询": "Python开发 Python SQL 自动化测试",
+          "识别技能": {
+            "Python": "实践",
+            "SQL": "实践",
+            "自动化测试": "实践"
+          },
+          "排序与分数": [
+            [
+              "Python后台开发",
+              97.5
+            ],
+            [
+              "Python数据分析",
+              96.94
+            ]
+          ]
+        }
+      ],
+      "三个查询相同": true,
+      "三个排序与分数相同": true
+    },
+    "重排年资漂移": {
+      "原文": "5年工作经验，负责需求沟通。\n使用Python完成接口开发，有2年开发经验。",
+      "重排后": "使用Python完成接口开发，有2年开发经验。\n5年工作经验，负责需求沟通。",
+      "程序返回事实保全": true,
+      "重排前年资": 5.0,
+      "重排后年资": 2.0,
+      "解释": "工作总年资与专项年资被同一首次正则匹配混用；不是修改了原句数字。"
+    },
+    "源码摘要": {
+      "job_agent/domain.py": "f9e9fd392053ba5b432b9ca029fb8fb2575e5b43a403023f72a79ad811c97f8b",
+      "job_agent/workflow.py": "fd2247c9094cf0ad243d917811433de5f56625ebdc35c46644934fd990672bff",
+      "job_agent/corpus.py": "682618a57ff529ff2f7b1f6339d52d5895f1c690f38b7687ee04dfbfa4165e64"
+    }
+  },
+  "研究评测反例": {
+    "schema": "job-agent-research-counterexamples-v1",
+    "生成时间UTC": "2026-09-22T05:54:06.375441+00:00",
+    "范围": "只读代码分析；两个完全虚构的CPU纯函数反例；未训练、未加载模型权重、未修改业务代码、未读取原始简历或原始招聘行。",
+    "真实标注材料": false,
+    "反例": [
+      {
+        "case_id": "共同评测分母-虚构反例",
+        "fixture_only": true,
+        "说明": "两个模型接收同一份完整标签和同一基础池，但评分函数按各自topK扩展子集，造成IDCG及Recall分母随模型变化。当前没有真实人岗金标成绩，本例不表示已有实测人岗成绩被污染。",
+        "审核标识说明": "qrels中的human_adjudicated和审核员字段只为执行纯函数反例而设置，全部为明确虚构fixture，不表示真人审核；不应写入正式qrels或训练数据。",
+        "输入": {
+          "k": 10,
+          "基础池": {
+            "fictional-query": [
+              "fictional-pool"
+            ]
+          },
+          "完整虚构标签": [
+            {
+              "query_id": "fictional-query",
+              "job_id": "fictional-pool",
+              "grade": 0,
+              "label_source": "human_adjudicated",
+              "adjudication_id": "fixture-only-no-real-review",
+              "reviewer_ids": [
+                "fictional-fixture-reviewer"
+              ]
+            },
+            {
+              "query_id": "fictional-query",
+              "job_id": "fictional-a",
+              "grade": 3,
+              "label_source": "human_adjudicated",
+              "adjudication_id": "fixture-only-no-real-review",
+              "reviewer_ids": [
+                "fictional-fixture-reviewer"
+              ]
+            },
+            {
+              "query_id": "fictional-query",
+              "job_id": "fictional-b",
+              "grade": 2,
+              "label_source": "human_adjudicated",
+              "adjudication_id": "fixture-only-no-real-review",
+              "reviewer_ids": [
+                "fictional-fixture-reviewer"
+              ]
+            }
+          ],
+          "模型排名": {
+            "模型A": [
+              {
+                "query_id": "fictional-query",
+                "ranking": [
+                  {
+                    "job_id": "fictional-a"
+                  }
+                ]
+              }
+            ],
+            "模型B": [
+              {
+                "query_id": "fictional-query",
+                "ranking": [
+                  {
+                    "job_id": "fictional-b"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "实际输出": {
+          "模型A": {
+            "rows": [
+              {
+                "query_id": "fictional-query",
+                "status": "已评分",
+                "missing": 0,
+                "metrics": {
+                  "ndcg": 1.0,
+                  "pool_recall": 1.0,
+                  "mrr": 1.0,
+                  "judged_at_k": 1.0,
+                  "returned": 1,
+                  "k": 10
+                }
+              }
+            ],
+            "summary": {
+              "queries": 1,
+              "fully_judged_queries": 1,
+              "ndcg_at_k": 1.0,
+              "pool_recall_at_k": 1.0,
+              "mrr_at_k": 1.0
+            },
+            "all_queries_judged": true,
+            "note": "Recall仅针对已审候选池；零相关查询为N/A，不按0或1伪造。聚合分数仅在全部查询完成后报告。"
+          },
+          "模型B": {
+            "rows": [
+              {
+                "query_id": "fictional-query",
+                "status": "已评分",
+                "missing": 0,
+                "metrics": {
+                  "ndcg": 1.0,
+                  "pool_recall": 1.0,
+                  "mrr": 1.0,
+                  "judged_at_k": 1.0,
+                  "returned": 1,
+                  "k": 10
+                }
+              }
+            ],
+            "summary": {
+              "queries": 1,
+              "fully_judged_queries": 1,
+              "ndcg_at_k": 1.0,
+              "pool_recall_at_k": 1.0,
+              "mrr_at_k": 1.0
+            },
+            "all_queries_judged": true,
+            "note": "Recall仅针对已审候选池；零相关查询为N/A，不按0或1伪造。聚合分数仅在全部查询完成后报告。"
+          }
+        },
+        "预期结果": {
+          "共同评测池": [
+            "fictional-pool",
+            "fictional-a",
+            "fictional-b"
+          ],
+          "采用同一完整标签分母的指标": {
+            "模型A": {
+              "ndcg": 0.7871546029909718,
+              "pool_recall": 0.5,
+              "mrr": 1.0,
+              "judged_at_k": 1.0,
+              "returned": 1,
+              "k": 10
+            },
+            "模型B": {
+              "ndcg": 0.3373519727104165,
+              "pool_recall": 0.5,
+              "mrr": 1.0,
+              "judged_at_k": 1.0,
+              "returned": 1,
+              "k": 10
+            }
+          },
+          "解释": "A的等级3结果应优于B的等级2结果，nDCG分别约0.787154603与0.337351973；两者各返回两项相关岗位中的一项，pool-relative Recall均为0.5。固定K=10，不按返回数缩小K。",
+          "工程验收建议": "先冻结所有系统topK并集及抽样池，所有模型共享池哈希与查询清单；若出现未入池topK则补标并更新共同版本，或直接拒绝比较。"
+        },
+        "定位": [
+          {
+            "文件": "research/score_rankings.py",
+            "行号": 26,
+            "原因": "expected由公共池并上当前模型topK构造"
+          },
+          {
+            "文件": "research/score_rankings.py",
+            "行号": 31,
+            "原因": "只将当前expected对应标签传给指标函数"
+          },
+          {
+            "文件": "research/metrics.py",
+            "行号": 11,
+            "原因": "IDCG与相关总数正常基于传入标签计算，但上游传入的分母不一致"
+          }
+        ],
+        "源文件": {
+          "research/score_rankings.py": {
+            "path": "/storage/xukunbo2/job-agent/research/score_rankings.py",
+            "sha256": "87a87ca8f22866f7c125c08819ce6921fc798ef63280125d3b075b4c5a13267a"
+          },
+          "research/metrics.py": {
+            "path": "/storage/xukunbo2/job-agent/research/metrics.py",
+            "sha256": "df948f05f139042bc1d7d439b2b430420bf3b9bdc668c22e92329b0ae152666b"
+          }
+        }
+      },
+      {
+        "case_id": "OR组投影相同-虚构反例",
+        "fixture_only": true,
+        "说明": "岗位包含多个需同时满足的要求组，每组任选一项；更换选项归属会改变满足性，当前软消息边投影未保留组节点/组ID，因此两个不同需求表达得到完全相同的图边。",
+        "输入": {
+          "技能词表顺序": [
+            "Python",
+            "Java",
+            "SQL",
+            "Redis"
+          ],
+          "画像明确支持的技能": [
+            "Python",
+            "SQL"
+          ],
+          "岗位A的完整逻辑": "(Python 或 Java) 且 (SQL 或 Redis)",
+          "岗位B的完整逻辑": "(Python 或 SQL) 且 (Java 或 Redis)",
+          "传给build_edges的虚构岗位对象": {
+            "岗位A": {
+              "skills": {
+                "Python": {
+                  "level": "提及"
+                },
+                "Java": {
+                  "level": "提及"
+                },
+                "SQL": {
+                  "level": "提及"
+                },
+                "Redis": {
+                  "level": "提及"
+                }
+              },
+              "groups": [
+                {
+                  "kind": "or",
+                  "skills": [
+                    "Python",
+                    "Java"
+                  ]
+                },
+                {
+                  "kind": "or",
+                  "skills": [
+                    "SQL",
+                    "Redis"
+                  ]
+                }
+              ]
+            },
+            "岗位B": {
+              "skills": {
+                "Python": {
+                  "level": "提及"
+                },
+                "Java": {
+                  "level": "提及"
+                },
+                "SQL": {
+                  "level": "提及"
+                },
+                "Redis": {
+                  "level": "提及"
+                }
+              },
+              "groups": [
+                {
+                  "kind": "or",
+                  "skills": [
+                    "Python",
+                    "SQL"
+                  ]
+                },
+                {
+                  "kind": "or",
+                  "skills": [
+                    "Java",
+                    "Redis"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "实际输出": {
+          "投影边完全相同": true,
+          "各岗位输出": {
+            "岗位A": {
+              "边": [
+                {
+                  "job_index": 0,
+                  "skill": "Python",
+                  "relation": "alternative",
+                  "weight": 0.5
+                },
+                {
+                  "job_index": 0,
+                  "skill": "Java",
+                  "relation": "alternative",
+                  "weight": 0.5
+                },
+                {
+                  "job_index": 0,
+                  "skill": "SQL",
+                  "relation": "alternative",
+                  "weight": 0.5
+                },
+                {
+                  "job_index": 0,
+                  "skill": "Redis",
+                  "relation": "alternative",
+                  "weight": 0.5
+                }
+              ],
+              "统计": {
+                "edges": 4,
+                "relations": {
+                  "alternative": 4
+                },
+                "groups": {
+                  "or": 2
+                },
+                "omitted": {}
+              }
+            },
+            "岗位B": {
+              "边": [
+                {
+                  "job_index": 0,
+                  "skill": "Python",
+                  "relation": "alternative",
+                  "weight": 0.5
+                },
+                {
+                  "job_index": 0,
+                  "skill": "Java",
+                  "relation": "alternative",
+                  "weight": 0.5
+                },
+                {
+                  "job_index": 0,
+                  "skill": "SQL",
+                  "relation": "alternative",
+                  "weight": 0.5
+                },
+                {
+                  "job_index": 0,
+                  "skill": "Redis",
+                  "relation": "alternative",
+                  "weight": 0.5
+                }
+              ],
+              "统计": {
+                "edges": 4,
+                "relations": {
+                  "alternative": 4
+                },
+                "groups": {
+                  "or": 2
+                },
+                "omitted": {}
+              }
+            }
+          }
+        },
+        "预期结果": {
+          "逐组满足": {
+            "岗位A": [
+              true,
+              true
+            ],
+            "岗位B": [
+              true,
+              false
+            ]
+          },
+          "岗位全部要求组满足": {
+            "岗位A": true,
+            "岗位B": false
+          },
+          "解释": "画像Python+SQL满足岗位A两组；对岗位B只满足第一组，第二组Java/Redis均无支持。因此需求表示必须保留选项属于哪个组。",
+          "工程验收建议": "对比技能集合、显式要求组执行器、保留组节点的图方法；逻辑判定不能以普通邻居均值替代。"
+        },
+        "边界说明": "这证明当前图输入投影丢失了组归属信息；不声称两个岗位的完整文本向量或最终GNN输出必然相同。文本分支仍可能根据不同原文区分；此例也不是实际JD抽取质量评测。",
+        "定位": [
+          {
+            "文件": "research/train_graph.py",
+            "行号": 69,
+            "原因": "遍历组但输出不保存组节点/组ID"
+          },
+          {
+            "文件": "research/train_graph.py",
+            "行号": 78,
+            "原因": "OR组选项仅以1/选项数赋权"
+          },
+          {
+            "文件": "research/train_graph.py",
+            "行号": 93,
+            "原因": "最终边仅包含岗位、技能、关系、权重"
+          }
+        ],
+        "源文件": {
+          "research/train_graph.py": {
+            "path": "/storage/xukunbo2/job-agent/research/train_graph.py",
+            "sha256": "08afc6c5cea97cb7db55f75900cbcebd6b45a901f05e9d14cbb01c937c8a954a"
+          }
+        }
+      }
+    ]
+  },
+  "扩展源码摘要": {
+    "web/platform/app.js": "1080cd4ab3c6d1904dcde70b4be18b2b8c2a54f3894a4407f607167733499b19",
+    "job_agent/api.py": "d6a1aea51228ffe5262dfd1f26d4dedf601961b29041cbd35ef4f13dc2fb0227",
+    "job_agent/ranking.py": "8221a5de1ff736b1e048704a2fd33d7c8e45fb3725b1a014659020a5122b3952",
+    "research/prepare_ranker.py": "bd1223d7f503319d011993261fd74934eaf3214bb8c0f89af108235ec7e64112",
+    "research/build_benchmark.py": "978f8c6398a499165f0e05b97b28c4383c25972c839dd8c44bb3abb0cd9f7092"
+  }
+}

@@ -69,3 +69,29 @@ Desktop.ini
 git_push.bat
 git_upload.cmd
 GuideVideo.mp4
+
+# 岗位原表、派生记录与用户材料仅保存在本地
+/data/*.xlsx
+/data/*.xls
+/data/*.csv
+/data/*.jsonl
+/data/*.parquet
+/logs/*.jsonl
+/logs/*.csv
+/resume.txt
+
+# 模型权重、索引及运行产物不进入开源代码仓库
+/models/**/*.model
+/models/*.pth
+/models/xgb_model*.json
+*.safetensors
+*.ckpt
+*.sqlite
+*.sqlite3
+*.db
+*.npy
+*.npz
+/artifacts/
+/runs/
+/playwright-report/
+/test-results/

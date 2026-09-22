@@ -1,0 +1,26 @@
+{
+  "schema": "job-agent-resume-synthesis-pilot-v1",
+  "summary": {
+    "attempted": 20,
+    "generation_returned_dict": 20,
+    "schema_valid": 20,
+    "automatic_gate_pass": 14,
+    "flags": {
+      "skills_outside_jd_dictionary_scope": 3,
+      "declared_skill_not_found_in_text": 4
+    },
+    "unique_train_families": 20,
+    "human_reviewed": 0,
+    "eligible_for_supervised_training": 0,
+    "all_status": "synthetic_unreviewed",
+    "total_request_seconds": 37.217
+  },
+  "source_unchanged": true,
+  "limitations": [
+    "自动检查不能代替人工标注。",
+    "技能越界检查受93项词典覆盖限制。",
+    "项目经历全部虚构，不是来自真实简历的事实。",
+    "模型JSON错误和超时均保留，不重试或挑成功样本。"
+  ],
+  "samples_sha256": "dc260b6cd3a48c27df1a704105b03984281b004963943e83e101d23e1991deac"
+}

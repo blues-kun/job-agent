@@ -1,0 +1,93 @@
+{
+  "task": "岗位标题类别到正文的弱监督领域适配，不是人岗匹配金标",
+  "optimizer_steps": 600,
+  "configured_epoch_upper_bound": 1,
+  "consumed_train_rows": 4800,
+  "unique_rows_in_one_partial_epoch": 4800,
+  "available_train_rows": 9892,
+  "consumed_epoch_fraction": 0.4852405984634048,
+  "stop_reason": "到达预先固定600优化步预算；未跑完一轮",
+  "training_seconds": 333.4928475394845,
+  "trainable_parameters": 4587520,
+  "peak_memory_allocated_bytes": 1949328384,
+  "peak_memory_reserved_bytes": 2141192192,
+  "loss": {
+    "first": 0.3652307987213135,
+    "last": 0.1373610496520996,
+    "mean": 0.23394716958204906,
+    "first_50_mean": 0.2931983065605164,
+    "last_50_mean": 0.272057763338089,
+    "all_finite": true
+  },
+  "negative_integrity": {
+    "positive_pairs": 4806,
+    "legal_negative_pairs": 33592,
+    "all_queries_informative": true,
+    "gradient_accumulation_steps": 1,
+    "actual_infonce_query_batch": 8
+  },
+  "dev_queries": 128,
+  "dev_candidates": 2107,
+  "query_ids_sha256": "e7b46a138efdff064bd7f3c40e0d7332a49d379a64e72cb1df264c2517bf6a90",
+  "test_evaluated": false,
+  "metrics": {
+    "recall_at_10": {
+      "baseline": 0.6015625,
+      "adapted": 0.75390625,
+      "absolute_delta": 0.15234375,
+      "paired_query_bootstrap_95ci": [
+        0.078125,
+        0.22265625
+      ],
+      "improved_queries": 23,
+      "unchanged_queries": 102,
+      "worsened_queries": 3
+    },
+    "mrr_at_10": {
+      "baseline": 0.3377232142857143,
+      "adapted": 0.4264136904761905,
+      "absolute_delta": 0.08869047619047621,
+      "paired_query_bootstrap_95ci": [
+        0.02754836309523809,
+        0.14693700396825396
+      ],
+      "improved_queries": 53,
+      "unchanged_queries": 52,
+      "worsened_queries": 23
+    },
+    "ndcg_at_10": {
+      "baseline": 0.3995072911887551,
+      "adapted": 0.5050400918492616,
+      "absolute_delta": 0.10553280066050647,
+      "paired_query_bootstrap_95ci": [
+        0.047909563143750916,
+        0.16307038192149567
+      ],
+      "improved_queries": 53,
+      "unchanged_queries": 52,
+      "worsened_queries": 23
+    }
+  },
+  "bootstrap_note": "固定查询池上2000次成对查询重采样、seed42；不覆盖训练随机性、代理标签噪声或真实简历泛化，不能替代多seed与人工金标。",
+  "adapter_sha256": "e96dcba1c3e2928a5a46ac5a80b98119ed1301f1a1be7480ef9a88e7289662c6",
+  "token_coverage": {
+    "max_length": 512,
+    "scope": "仅本次实际4800训练行及完整可用dev候选；不统计test",
+    "actual_train_documents": {
+      "count": 4800,
+      "over_512": 433,
+      "truncated_fraction": 0.09020833333333333,
+      "median_tokens": 258,
+      "p95_tokens": 599,
+      "max_tokens": 2598
+    },
+    "dev_documents": {
+      "count": 2107,
+      "over_512": 181,
+      "truncated_fraction": 0.08590412909349786,
+      "median_tokens": 258,
+      "p95_tokens": 610,
+      "max_tokens": 1816
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "captured_at": "2026-09-22T10:13:32.819585+00:00",
+  "method": "Playwright 真实页面交互与浏览器截图，未注入虚构指标或替换接口结果",
+  "sample": "python-junior（完全虚构）",
+  "health": {
+    "status": "ready",
+    "jobs": 14118,
+    "snapshot": "c88558a0d732dc3a",
+    "build_seconds": 35.57
+  },
+  "page_errors": [],
+  "mobile_overflow": false,
+  "screenshots": [
+    {
+      "file": "01-demand.png",
+      "caption": "真实历史岗位快照的需求概览；不代表当前招聘状态",
+      "sha256": "2518a6c32fa5f01f492c02bc5dcc104f8b63c0690f8756706537afa0ce930727",
+      "viewport": {
+        "width": 1440,
+        "height": 1080
+      },
+      "company_masked": false,
+      "scope": "完整视口"
+    },
+    {
+      "file": "02-profile.png",
+      "caption": "完全虚构的两年 Python 简历，推荐前逐字段确认来源",
+      "sha256": "a259264e3bf665c86b4d5756208b935b945d5d3a7872b852b0efacbea0c5e4d8",
+      "viewport": {
+        "width": 1440,
+        "height": 1080
+      },
+      "company_masked": false,
+      "scope": "完整视口"
+    },
+    {
+      "file": "03-matching.png",
+      "caption": "虚构简历在真实岗位库上的推荐；企业名称已遮罩",
+      "sha256": "8dab97e2bed89ffbb63ab9ee33eae498ab833b352db855b4098b7880e6a19c90",
+      "viewport": {
+        "width": 1440,
+        "height": 1080
+      },
+      "company_masked": true,
+      "scope": "完整视口"
+    },
+    {
+      "file": "04-evidence.png",
+      "caption": "岗位与简历双侧原文证据；企业名称已遮罩",
+      "sha256": "9c649171a8a27d67c19bbeb8b179fe370c6b7d9056384d3a2d056ca6d2228aa8",
+      "viewport": {
+        "width": 1440,
+        "height": 1080
+      },
+      "company_masked": true,
+      "scope": "岗位详情弹窗"
+    },
+    {
+      "file": "05-comparison.png",
+      "caption": "相同虚构画像运行三组算法；覆盖率不等于相关性金标",
+      "sha256": "9483bbbd27666a196baac25bb7fcdeb4f83e4550ce2b3d3dd2b10b28d60d22fa",
+      "viewport": {
+        "width": 1440,
+        "height": 1080
+      },
+      "company_masked": false,
+      "scope": "完整视口"
+    },
+    {
+      "file": "06-research.png",
+      "caption": "实际研究与标注进度；模型标注不冒充人工金标，未领取原文任务",
+      "sha256": "50e9fa7f094af5a65a9ebc03d146a1be7eb31e9ccfa7b352ab91af149cd4fee1",
+      "viewport": {
+        "width": 1440,
+        "height": 1080
+      },
+      "company_masked": false,
+      "scope": "完整视口"
+    },
+    {
+      "file": "07-mobile.png",
+      "caption": "390 像素宽度的移动端岗位需求概览",
+      "sha256": "d5c3d42a9068f9579eead31510fb4d4e4d0f16da80e70d6541e13c238962f186",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "company_masked": false,
+      "scope": "完整视口"
+    }
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "executed_at_utc": "2026-09-20T05:23:59.629323+00:00",
+  "source_sha256": "c88558a0d732dc3ab01ad748e6e0117e0426566f29ed9b5ae19eeab020683f53",
+  "samples": [
+    {
+      "sample": "应届生 · Python 数据方向",
+      "id": "graduate-python",
+      "action": "recommend",
+      "returned": 10,
+      "eligible": 1822,
+      "latency_ms": 277,
+      "sources": {
+        "bm25": 100,
+        "dense": 120,
+        "structured": 80
+      },
+      "retriever": "BM25 + 预训练向量",
+      "avg_skill_coverage": 54.89
+    },
+    {
+      "sample": "开发者 · 2 年 Python 后端",
+      "id": "python-junior",
+      "action": "recommend",
+      "returned": 10,
+      "eligible": 2615,
+      "latency_ms": 160,
+      "sources": {
+        "bm25": 100,
+        "dense": 120,
+        "structured": 80
+      },
+      "retriever": "BM25 + 预训练向量",
+      "avg_skill_coverage": 47.26
+    },
+    {
+      "sample": "转岗者 · 运营转数据分析",
+      "id": "transition-data",
+      "action": "recommend",
+      "returned": 10,
+      "eligible": 3622,
+      "latency_ms": 145,
+      "sources": {
+        "bm25": 100,
+        "dense": 120,
+        "structured": 80
+      },
+      "retriever": "BM25 + 预训练向量",
+      "avg_skill_coverage": 98.33
+    },
+    {
+      "sample": "前端工程师 · Vue 项目经历",
+      "id": "frontend",
+      "action": "recommend",
+      "returned": 10,
+      "eligible": 3198,
+      "latency_ms": 150,
+      "sources": {
+        "bm25": 100,
+        "dense": 120,
+        "structured": 80
+      },
+      "retriever": "BM25 + 预训练向量",
+      "avg_skill_coverage": 91.0
+    },
+    {
+      "sample": "算法工程师 · PyTorch 经验",
+      "id": "ml-senior",
+      "action": "recommend",
+      "returned": 10,
+      "eligible": 4914,
+      "latency_ms": 273,
+      "sources": {
+        "bm25": 100,
+        "dense": 120,
+        "structured": 80
+      },
+      "retriever": "BM25 + 预训练向量",
+      "avg_skill_coverage": 52.89
+    },
+    {
+      "sample": "信息残缺 · 需要先追问",
+      "id": "incomplete",
+      "action": "clarify",
+      "returned": 0,
+      "eligible": 0,
+      "latency_ms": 0,
+      "sources": {},
+      "retriever": "BM25 + 预训练向量",
+      "avg_skill_coverage": null
+    },
+    {
+      "sample": "对抗样例 · 只有技能关键词",
+      "id": "keyword-list",
+      "action": "clarify",
+      "returned": 0,
+      "eligible": 0,
+      "latency_ms": 0,
+      "sources": {},
+      "retriever": "BM25 + 预训练向量",
+      "avg_skill_coverage": null
+    }
+  ],
+  "health": {
+    "status": "ready",
+    "jobs": 14115,
+    "snapshot": "c88558a0d732dc3a",
+    "build_seconds": 33.58
+  },
+  "engine": "BM25 + 预训练向量",
+  "overview": {
+    "raw_total": 14118,
+    "total": 14115,
+    "duplicates": 3,
+    "category_count": 72,
+    "unknown_location": 3544,
+    "salary_count": 13609,
+    "salary_quantiles": [
+      15000,
+      23500,
+      40000
+    ],
+    "alternative_groups": 1438
+  },
+  "comparison": {
+    "rows": [
+      {
+        "method": "bm25",
+        "label": "BM25基线",
+        "count": 10,
+        "latency_ms": 158,
+        "mean_skill_coverage": 41.6,
+        "company_count": 9,
+        "hard_violations": 0,
+        "job_ids": [
+          "6cac37b1d1229dffdd59",
+          "340a51e45ed3c5021ffa",
+          "0bbc9c783e0a131d09a8",
+          "64412e539915369b6b01",
+          "52161f3add8db418ddc2",
+          "3df8a983104aa31486a4",
+          "8ee7efb73f4c14fdfd82",
+          "c13a5ca7ce1335196d35",
+          "2dc981abebe4cafc71fe",
+          "ee66a75769c8530197a4"
+        ],
+        "titles": [
+          "Python Developer（远程办公）",
+          "全栈工程师（remote）",
+          "数据风控开发（远程）"
+        ]
+      },
+      {
+        "method": "retrieval",
+        "label": "多路召回",
+        "count": 10,
+        "latency_ms": 124,
+        "mean_skill_coverage": 45.0,
+        "company_count": 10,
+        "hard_violations": 0,
+        "job_ids": [
+          "c30324140e91de02c8a3",
+          "64412e539915369b6b01",
+          "08f3e7f40b4d5971fe25",
+          "80723fd93a314d7cf0ac",
+          "8ee7efb73f4c14fdfd82",
+          "3de34c928a3e31e1d085",
+          "3df8a983104aa31486a4",
+          "051d36be93ed296b72d0",
+          "55fda9a70702b55318ca",
+          "9455611ea25edd26bc9d"
+        ],
+        "titles": [
+          "Python后端开发工程师",
+          "Python",
+          "Web3测试开发-远程办公"
+        ]
+      },
+      {
+        "method": "hybrid",
+        "label": "多路召回＋证据精排",
+        "count": 10,
+        "latency_ms": 158,
+        "mean_skill_coverage": 47.3,
+        "company_count": 10,
+        "hard_violations": 0,
+        "job_ids": [
+          "c30324140e91de02c8a3",
+          "64412e539915369b6b01",
+          "6cac37b1d1229dffdd59",
+          "df9a47c8231c94f608b7",
+          "52161f3add8db418ddc2",
+          "55fda9a70702b55318ca",
+          "bb88b8eedec02a118ec3",
+          "c13a5ca7ce1335196d35",
+          "1e086d400568d0633f51",
+          "1bcf7e6615d6ab72e4b1"
+        ],
+        "titles": [
+          "Python后端开发工程师",
+          "Python",
+          "Python Developer（远程办公）"
+        ]
+      }
+    ],
+    "snapshot": "c88558a0d732dc3a",
+    "note": "同一简历和快照的实际运行结果。技能覆盖为规则代理指标；无人工金标，不能据此声称nDCG或AUC提升。"
+  },
+  "sequential_http_ms": [
+    192.5,
+    175.1,
+    266.9
+  ],
+  "concurrent5_http_ms": [
+    1134.4,
+    1237.1,
+    1541.4,
+    1559.3,
+    1496.6
+  ],
+  "checks": {
+    "sample_runs": 7,
+    "hard_violations_detected_by_current_rules": 0,
+    "verified_dual_quotes": 239,
+    "diagnose_rewrite_interview": true,
+    "feedback_idempotent": true,
+    "static_assets": true,
+    "source_hash_unchanged": true
+  },
+  "implementation_sha256": {
+    "job_agent/__init__.py": "c072c54a6b1e7d86ecebd90b5a957852cdca5f23c22c774b0b97899c615136b6",
+    "job_agent/__main__.py": "e08d468120b0547f89c88bf361e7b69061928cbccd2c72aaea92ea04645d6bec",
+    "job_agent/api.py": "f9cbb71a4c2265af0e8e5e876de2cd649a6e509ee44d3bcc9a8978c53db25f5a",
+    "job_agent/corpus.py": "20505ffeeef658c181e7a8b622b0e52d0a8d17edeedd6f69301b8461baa93039",
+    "job_agent/dense.py": "9cf8d61e2c1b5961a7fdea11b41a101d2c9396d6da327ceb147c2779d6930a45",
+    "job_agent/domain.py": "2872299ab4fd193ba1f8cc020594a2ad4f6bf96374129c61efa03adef620a6ba",
+    "job_agent/samples.py": "c9501dd4ca2acb44029b47d911ad6dd08f13c6242ceaab68f1a6b6cbccb0e743",
+    "job_agent/workflow.py": "6d97e677a3dd6917f0d6e692be8bdca741657c51937cea6bdaba4a0a757eabfb",
+    "requirements-platform.txt": "2cf99e19436f017cd3298a981b1e1186ffb073a7b5c3e85b8c4b0088bc4c8cb7",
+    "scripts/serve_embeddings.py": "383533707586458be46fdf0d19b66b841d217bbd23467baae905d90bacaf957f",
+    "scripts/verify_platform.py": "6cf1678513635278cbcff527e00670b9c071800f23a704445ad77afb6bf7d279",
+    "web/platform/app.js": "aac236034632ce955820cdd44a788f6b8550f6116503b4f739a353216c1ba059",
+    "web/platform/index.html": "89406df38a51eb75e9169cff2264fc3829c6531970615319b77a79ccdec92096",
+    "web/platform/styles.css": "91bcc984520d8f3d3bf50c2c41c25be73defa838caffcfecd6f785b076e35690"
+  }
+}

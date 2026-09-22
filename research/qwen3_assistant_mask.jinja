@@ -1,0 +1,12 @@
+{%- for message in messages -%}
+{{- '<|im_start|>' + message['role'] + '\n' -}}
+{%- if message['role'] == 'assistant' -%}
+{% generation %}{{ message['content'] }}{% endgeneration %}
+{%- else -%}
+{{- message['content'] -}}
+{%- endif -%}
+{{- '<|im_end|>\n' -}}
+{%- endfor -%}
+{%- if add_generation_prompt -%}
+{{- '<|im_start|>assistant\n' -}}
+{%- endif -%}

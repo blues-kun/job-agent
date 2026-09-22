@@ -1,0 +1,47 @@
+{
+  "executed_date": "2026-09-22",
+  "targeted_tests_passed": 55,
+  "test_files": [
+    "tests/test_platform.py",
+    "tests/test_repository_hygiene.py",
+    "tests/test_research_data.py",
+    "tests/test_research_benchmark.py",
+    "tests/test_research_synthesis.py",
+    "tests/test_research_runtime.py",
+    "tests/test_research_catalog.py",
+    "tests/test_research_graph.py",
+    "tests/test_research_embedding.py",
+    "tests/test_research_generation.py"
+  ],
+  "not_full_legacy_suite": true,
+  "python_syntax_checked": true,
+  "javascript_node_check": true,
+  "html_asset_references": true,
+  "git_diff_check": true,
+  "browser_visual_or_click_testing": false,
+  "source_sha256": "c88558a0d732dc3ab01ad748e6e0117e0426566f29ed9b5ae19eeab020683f53",
+  "source_unchanged": true,
+  "real_human_gold_labels": 0,
+  "production_promoted_ranker": false,
+  "generation_sft_executed": false,
+  "demo": {
+    "path": "/home/xukunbo/.cache/job-agent/demo/job-agent-120s-v2.mp4",
+    "duration_seconds": 120,
+    "size": "1280x720",
+    "fps": 24,
+    "audio": false,
+    "browser_recording": false
+  },
+  "checks_include": [
+    "上传实际字节上限与不落盘",
+    "三态条件与OR分组",
+    "画像与岗位家族隔离",
+    "数据与向量版本校验",
+    "盲审材料变更使旧标注失效",
+    "未审核标签和标签类型拒绝",
+    "GNN保留节点不影响训练梯度",
+    "SFT只训练assistant正文",
+    "缺失标签不充作负例"
+  ],
+  "git_add_commit_push": false
+}

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="分析深圳岗位需求，以简历证据匹配真实岗位，核对差距并整理求职材料。">
+  <title>职向 · 岗位与简历工作台</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <aside class="sidebar">
+    <a class="brand" href="#demand" aria-label="职向首页"><span class="brand-mark">向</span><span>职向<small>岗位与简历工作台</small></span></a>
+    <div class="nav-caption">求职研究</div>
+    <nav aria-label="主导航">
+      <button class="nav-item active" data-view="demand"><span class="nav-number">01</span>岗位需求<span class="nav-arrow">↗</span></button>
+      <button class="nav-item" data-view="match"><span class="nav-number">02</span>简历匹配<span class="nav-arrow">↗</span></button>
+      <button class="nav-item" data-view="lab"><span class="nav-number">03</span>算法对比<span class="nav-arrow">↗</span></button>
+    <button class="nav-item" data-view="research"><span class="nav-number">04</span>研究与标注<span class="nav-arrow">↗</span></button>
+    </nav>
+    <div class="sidebar-note"><span class="note-symbol">◫</span><strong>从岗位事实出发</strong><p>看需求，找证据，识别差距，再完善表达。</p></div>
+    <div class="sidebar-bottom"><span>本地工作区</span><small>简历不入库 · 反馈保留24小时</small><button id="clear-feedback" class="text-button">清除本会话反馈</button></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><span id="breadcrumb">工作台 <span class="muted">/</span> 岗位需求</span><div class="topbar-right"><span class="snapshot-badge">历史岗位快照</span><span class="avatar" aria-label="本地访客">访</span></div></header>
+    <main id="main">
+      <div id="global-error" class="alert error hidden" role="alert"></div>
+      <section id="view-demand" class="view">
+        <div class="page-heading"><div><p class="eyebrow">岗位需求分析</p><h1>看清需求，再确定方向。</h1><p class="subtitle">选择一个职位方向，了解技能、年资和薪资结构。</p></div><button class="primary" id="start-match">带着简历去匹配 <span>↗</span></button></div>
+        <div class="filter-strip"><label for="category">职位方向</label><select id="category"><option value="">全部方向</option></select><span id="filter-count" class="muted">正在读取岗位…</span><span class="filter-source" id="data-source"></span></div>
+        <div class="metrics" id="metrics" aria-live="polite"></div>
+        <div class="demand-grid">
+          <section class="card skills-card"><div class="card-heading"><div><span class="eyebrow">需求画像</span><h2>岗位中出现的技能</h2></div><span class="small muted">JD 正文提及率</span></div><div id="skill-bars" class="skill-bars"><p class="loading">正在分析岗位文本…</p></div><p class="footnote">提及不代表必须掌握。具体要求以岗位原文为准。</p></section>
+          <div class="right-stack"><section class="card salary-card"><span class="eyebrow">薪资参考</span><h2>广告月薪区间中点</h2><div id="salary-chart"></div><p class="footnote" id="salary-note"></p></section><section class="card"><div class="card-heading"><h2>经验结构</h2><span class="small muted">最低工作年资</span></div><div id="experience-bars"></div></section></div>
+          <section class="card logic-card"><div><span class="eyebrow">读懂要求的逻辑</span><h2>“掌握一种”，不用变成两项缺口。</h2><p>将原文中的替代技能放在同一组，匹配时核对已有证据。</p></div><div id="alternative-groups"></div></section>
+          <section class="card location-card"><div class="card-heading"><h2>区域分布</h2><span class="small muted">由地址字段识别</span></div><div id="districts" class="districts"></div><p class="footnote">地址缺失保持未知，不推断通勤时间。</p></section>
+        </div>
+        <p class="source-note" id="source-note"></p>
+      </section>
+
+      <section id="view-match" class="view hidden">
+        <div class="page-heading"><div><p class="eyebrow">简历匹配</p><h1>每一项匹配，都有据可查。</h1><p class="subtitle">选择匿名样例或输入自己的经历，再核对真实岗位。</p></div><span class="quiet-tag">样例均为虚构</span></div>
+        <div class="match-layout">
+          <section class="card resume-panel">
+            <form id="resume-form">
+              <div class="field"><label for="sample">从一份简历开始</label><select id="sample"><option value="">载入样例…</option></select></div>
+              <div class="editor-heading"><label for="resume-text">简历与项目经历</label><button type="button" class="text-button upload-label" id="choose-file">导入简历文件</button><input id="resume-file" type="file" accept=".txt,.pdf,.docx,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="hidden"></div>
+              <textarea id="resume-text" rows="11" maxlength="20000" placeholder="请描述真实的项目背景、个人职责、使用的技能与结果。"></textarea>
+              <p class="editor-note"><span id="char-count">0 字</span><span>仅在本次请求中处理</span></p>
+              <div class="form-grid">
+                <div class="field"><label for="city">目标城市</label><input id="city" maxlength="30" placeholder="如：深圳"></div>
+                <div class="field"><label for="intent">目标职位</label><input id="intent" maxlength="150" placeholder="如：Python 后端"></div>
+                <div class="field"><label for="education">最高学历</label><select id="education"><option value="">未说明</option><option>初中</option><option>高中</option><option>中专</option><option>大专</option><option>本科</option><option>硕士</option><option>博士</option></select></div>
+                <div class="field"><label for="years">工作经验（年）</label><input id="years" type="number" min="0" max="60" step="0.5" placeholder="未说明"></div>
+                <div class="field"><label for="salary">最低月薪（元）</label><input id="salary" type="number" min="0" max="1000000" step="1000" placeholder="不限"></div>
+                <div class="field"><label for="salary-max">期望月薪上限（元）</label><input id="salary-max" type="number" min="0" max="1000000" step="1000" placeholder="未说明"></div>
+                <div class="field"><label for="district">偏好区域</label><select id="district"><option value="">不限</option><option>南山区</option><option>福田区</option><option>宝安区</option><option>龙岗区</option><option>龙华区</option><option>罗湖区</option></select></div>
+              </div>
+              <label class="checkbox"><input id="strict" type="checkbox">仅显示所有硬条件可确认的岗位</label>
+              <label class="checkbox"><input id="research-consent" type="checkbox">允许本机保留此次特征与曝光用于研究（不含简历正文）</label>
+              <button class="primary full-width" id="recommend" type="submit">解析并确认画像 <span>↗</span></button>
+            </form>
+          </section>
+          <div class="results-panel">
+            <section id="profile-confirmation" class="card confirmation-card hidden" aria-live="polite"></section>
+            <div id="pipeline" class="pipeline hidden"></div>
+            <div id="profile-skills" class="profile-skills hidden"></div>
+            <div class="results-heading"><h2 id="results-title">你的候选岗位</h2><span id="results-meta" class="small muted"></span></div>
+            <div id="results"><div class="empty-state"><span class="empty-glyph">⌕</span><h3>先把经历带进来</h3><p>点击左侧“解析并确认画像”，核对条件后查看匹配点与简历差距。</p><div class="empty-steps"><span>确认画像</span><span>匹配岗位</span><span>核对证据</span></div></div></div>
+          </div>
+        </div>
+        <section class="card journey-panel"><div class="card-heading"><div><span class="eyebrow">求职行动</span><h2>偏好与补证记录</h2></div><button class="secondary" id="refresh-journey">刷新记录</button></div><div id="company-preferences"></div><div id="journey-history"><p class="muted">从岗位差距中选择一项补证行动，记录真实经历后再次核对。</p></div><p class="footnote">单条证据需明确同意后才保存到本机，保留30天；完整简历不入库。</p><button class="text-button" id="delete-journey">清除本会话补证与研究记录</button></section>
+      </section>
+
+      <section id="view-lab" class="view hidden">
+        <div class="page-heading"><div><p class="eyebrow">算法对比</p><h1>用同一份简历，检验每一步。</h1><p class="subtitle">保持岗位快照与用户条件一致，对比检索和证据精排的实际输出。</p></div><button class="primary" id="run-comparison">运行三组对比 <span>↗</span></button></div>
+        <div class="experiment-context card"><span class="eyebrow">当前实验输入</span><h2 id="experiment-name">尚未选择简历</h2><p id="engine-status" class="muted"></p><div class="field"><label for="query-mode">查询表示对照</label><select id="query-mode"><option value="structured">意向＋完整经历与项目块</option><option value="experience">仅经历语义</option><option value="intent">仅求职意向</option></select></div><button class="text-button" data-go="match">修改简历与条件 →</button></div>
+        <div id="comparison-results" class="card"><div class="empty-state compact"><h3>结果来自真实运行</h3><p>三组方法共用当前简历和岗位库，不生成模拟AUC或虚构排行榜。</p></div></div>
+        <div class="lab-grid"><section class="card"><span class="eyebrow">本版已实现</span><h2>证据约束的需求匹配</h2><ul class="plain-list"><li>明确冲突排除，未知条件保留标记</li><li>关键词、自述与项目使用证据分级</li><li>替代技能按组核对，避免重复报缺口</li><li>推荐理由可定位到简历与岗位两侧</li></ul></section><section class="card"><span class="eyebrow">研究验证边界</span><h2>覆盖率不等于推荐质量</h2><p class="muted">这些是可执行的工程假设。当前对比仅提供技能证据覆盖、硬违规、公司数与耗时；人工相关性金标建立后，才能报告可信的 nDCG、MRR 和提升幅度。</p><p class="footnote">训练标签不足时，保持规则精排；不使用旧随机翻转标签训练新模型。</p></section></div>
+      </section>
+      <section id="view-research" class="view hidden">
+        <div class="page-heading"><div><p class="eyebrow">研究与标注</p><h1>把假设变成可核验的结果。</h1><p class="subtitle">核对岗位原文、独立标注候选，查看实际训练记录。</p></div><button class="secondary" id="refresh-research">刷新研究进度</button></div>
+        <div id="research-metrics" class="metrics" aria-live="polite"></div>
+        <div class="lab-grid">
+          <section class="card"><span class="eyebrow">盲审工作台</span><h2>先读证据，再给判断。</h2><p class="footnote">不会展示另一位评审者的答案。此处使用评审代号区分输入，不核实真实身份；多人一致性需线下确认。</p>
+            <div class="form-grid"><div class="field"><label for="annotator">评审代号</label><input id="annotator" value="评审甲" minlength="2" maxlength="40"></div><div class="field"><label for="annotation-kind">任务类型</label><select id="annotation-kind"><option value="requirement_extraction">需求抽取核对</option><option value="relevance">人岗相关性</option><option value="resume_synthesis">合成简历审阅</option></select></div></div>
+            <button class="primary" id="next-task">领取下一条</button><div id="annotation-task" class="detail-section"><p class="muted">尚未领取任务。原文涉及的联系方式会隐藏。</p></div>
+          </section>
+          <section class="card"><span class="eyebrow">真实训练产物</span><h2>看见增益，也记录失败。</h2><p class="footnote">文本与图对齐仅为自监督代理任务；相关性金标尚未完成时，不能据此认定人岗推荐提升。</p><section id="teacher-study" class="card"></section>
+          <div id="research-runs"><p class="loading">进入本页后读取实验…</p></div></section>
+        </div>
+      </section>
+    </main>
+    <footer>职向 · 从需求到证据<span>数据快照不代表岗位目前仍在招聘</span></footer>
+  </div>
+  <dialog id="detail-dialog" aria-label="岗位与简历证据对照"><div class="dialog-top"><span class="eyebrow">岗位与简历 · 证据对照</span><button class="icon-button" id="close-dialog" aria-label="关闭岗位详情">×</button></div><div id="detail-content"></div></dialog>
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+</body>
+</html>

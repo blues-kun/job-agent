@@ -1,0 +1,5 @@
+# 研究数据流水线和树排序器；Torch环境与平台环境分开维护。
+-r requirements-platform.txt
+lightgbm==4.6.0
+# GPU训练已验证版本：torch2.9.0+cu128、transformers5.13.0、peft0.20.0。
+# 根据机器驱动在仓库外建立环境，不自动升级现有GPU环境。
